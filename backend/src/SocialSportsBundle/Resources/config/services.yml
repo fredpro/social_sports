@@ -1,0 +1,12 @@
+parameters:
+#    projects_social_sports.example.class: Projects\SocialSportsBundle\Example
+    facebook.appId : 295928690529918
+    facebook.secret : 854b57cbe8e3df0339e9364aa25c7463
+
+services:
+#    projects_social_sports.example:
+#        class: %projects_social_sports.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    facebook:
+        class: Projects\SocialSportsBundle\Service\Facebook
+        arguments: [{ appId: %facebook.appId%, secret: %facebook.secret% }]

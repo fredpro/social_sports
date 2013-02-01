@@ -1,0 +1,8 @@
+Hello Social Sports {{ name }}!
+<p>Your friends:
+{% for key, friend in friends.data %}
+    <p>
+    friend {{key}}: </br>
+        name: {{friend.name}} </br>
+        id: {{friend.id}} </br>
+{% endfor %}

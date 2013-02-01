@@ -1,0 +1,11 @@
+# social_sports_homepage:
+#     pattern:  /hello/{name}
+#     defaults: { _controller: ProjectsSocialSportsBundle:Default:index }
+
+social_sports_default:
+    pattern: /
+    defaults: { _controller: ProjectsSocialSportsBundle:Default:facebookLoginWithSession }
+
+social_sports_facebook_login:
+    pattern: /login
+    defaults: { _controller: ProjectsSocialSportsBundle:Default:facebookLogin }
