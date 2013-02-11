@@ -84,6 +84,22 @@
 			}
 		},
 		{
+			"file": "/C/Users/Fred/AppData/Local/Temp/_tc/as2/com/dncompute/util/RandomSeed.as",
+			"settings":
+			{
+				"buffer_size": 1625,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Fred/AppData/Local/Temp/_tc/de/polygonal/math/PM_PRNG.as",
+			"settings":
+			{
+				"buffer_size": 3679,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"contents": "public function facebookLoginWithSessionAction()\n    {\n        $facebook = $this->get('facebook');\n        $uid = $facebook->getUser();\n        if ($uid) {\n            try\n            {\n                // On teste si l'utilisateur est en session\n                if (isset($_SESSION['user']) && isset($_SESSION['uid']))\n                {\n                    // On récupère les données en session: Gain en perf: économie d'appel à l'API\n                    $userProfile = $_SESSION['user'];\n                    $userFriends = $_SESSION['friends'];\n                    $uid = $_SESSION['uid'];\n                }\n                else\n                {\n                    // On récupère l'UID de l'utilisateur Facebook courant\n                    $uid = $facebook->getUser();\n                    // On récupère les infos de base de l'utilisateur\n                    $userProfile = $facebook->api('/me');\n                    $userFriends = $facebook->api('/me/friends');\n                    // On stock les infos de l'utilisateur en session: Pseudo cache\n                    $_SESSION['uid'] = $uid;\n                    $_SESSION['user'] = $userProfile;\n                    $_SESSION['friends'] = $userFriends;\n                }\n                return $this->render('ProjectsSocialSportsBundle:Default:index.html.twig',\n                    array(\n                        'name' => $userProfile['name'],\n                        'friends' => $userFriends\n                    )\n                );\n            } catch (FacebookApiException $e) {\n                // S'il y'a un problème lors de la récup, perte de session entre temps, suppression des autorisations...\n                // On récupère l'URL sur laquelle on devra rediriger l'utilisateur pour le réidentifier sur l'application\n                $loginUrl = $facebook->getLoginUrl(array('redirect_uri' => 'https://apps.facebook.com/socialsports_dev/'));\n                return new Response(\"<script type='text/javascript'>top.location.href = '\".$loginUrl.\"';</script>\");\n            }\n        } else {\n            echo \"not authenticated\";\n            // not authenticated.\n            #return $this->redirect($facebook->getLoginUrl(array('redirect_uri' => 'social_sports_facebook_login')));\n            #return $this->render('ProjectsSocialSportsBundle:Default:template.html.twig', array('facebook' => $facebook));\n            $loginUrl = $facebook->getLoginUrl(array('redirect_uri' => 'https://apps.facebook.com/socialsports_dev/'));\n            return new Response(\"<script type='text/javascript'>top.location.href = '\".$loginUrl.\"';</script>\");\n        }\n    }",
 			"settings":
 			{
@@ -302,7 +318,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 8,
 			"sheets":
 			[
 				{
@@ -1109,6 +1125,236 @@
 				},
 				{
 					"buffer": 7,
+					"file": "/C/Users/Fred/AppData/Local/Temp/_tc/as2/com/dncompute/util/RandomSeed.as",
+					"settings":
+					{
+						"buffer_size": 1625,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1376,
+								1376
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/ActionScript/ActionScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/C/Users/Fred/AppData/Local/Temp/_tc/de/polygonal/math/PM_PRNG.as",
+					"settings":
+					{
+						"buffer_size": 3679,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2275,
+								2275
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/ActionScript/ActionScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 675.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
 					"settings":
 					{
 						"buffer_size": 2614,
@@ -1124,6 +1370,94 @@
 						],
 						"settings":
 						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
@@ -1135,7 +1469,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "/C/Users/Fred/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 					"settings":
 					{
@@ -1251,7 +1585,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "/C/Users/Fred/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 					"settings":
 					{
@@ -1365,7 +1699,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 12,
 					"file": "/D/Workspace/Projects/memory-game/backend/htdocs/application/views/scripts/index/index.phtml",
 					"settings":
 					{
@@ -1481,7 +1815,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 13,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/views/Default/template.html.twig",
 					"settings":
 					{
@@ -1596,7 +1930,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 14,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Service/BaseFacebook.php",
 					"settings":
 					{
@@ -1712,7 +2046,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 15,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/services.yml",
 					"settings":
 					{
@@ -1826,7 +2160,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 16,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Service/Facebook.php",
 					"settings":
 					{
