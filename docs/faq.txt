@@ -1,0 +1,5 @@
+Erreur loading web debug toolbar
+    => check if rewrite_module activated in Apache modules
+
+Make the web debug toolbar appear
+    => add a <body> ... </body> in the rendered page
