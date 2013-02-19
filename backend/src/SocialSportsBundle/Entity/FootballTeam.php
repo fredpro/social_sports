@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Projects\SocialSportsBundle\Entity\Player;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Projects\SocialSportsBundle\Entity\FootballTeamRepository")
  * @ORM\Table(name="football_team")
  */
 class FootballTeam
@@ -93,7 +93,7 @@ class FootballTeam
     /**
      * Get footballTeamId
      *
-     * @return integer 
+     * @return integer
      */
     public function getFootballTeamId()
     {
@@ -109,14 +109,14 @@ class FootballTeam
     public function setManager(\Projects\SocialSportsBundle\Entity\Manager $manager = null)
     {
         $this->manager = $manager;
-    
+
         return $this;
     }
 
     /**
      * Get manager
      *
-     * @return \Projects\SocialSportsBundle\Entity\Manager 
+     * @return \Projects\SocialSportsBundle\Entity\Manager
      */
     public function getManager()
     {
@@ -132,14 +132,14 @@ class FootballTeam
     public function setPlayerId1(\Projects\SocialSportsBundle\Entity\Player $playerId1 = null)
     {
         $this->playerId_1 = $playerId1;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_1
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId1()
     {
@@ -155,14 +155,14 @@ class FootballTeam
     public function setPlayerId2(\Projects\SocialSportsBundle\Entity\Player $playerId2 = null)
     {
         $this->playerId_2 = $playerId2;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_2
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId2()
     {
@@ -178,14 +178,14 @@ class FootballTeam
     public function setPlayerId3(\Projects\SocialSportsBundle\Entity\Player $playerId3 = null)
     {
         $this->playerId_3 = $playerId3;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_3
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId3()
     {
@@ -201,14 +201,14 @@ class FootballTeam
     public function setPlayerId4(\Projects\SocialSportsBundle\Entity\Player $playerId4 = null)
     {
         $this->playerId_4 = $playerId4;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_4
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId4()
     {
@@ -224,14 +224,14 @@ class FootballTeam
     public function setPlayerId5(\Projects\SocialSportsBundle\Entity\Player $playerId5 = null)
     {
         $this->playerId_5 = $playerId5;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_5
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId5()
     {
@@ -247,14 +247,14 @@ class FootballTeam
     public function setPlayerId6(\Projects\SocialSportsBundle\Entity\Player $playerId6 = null)
     {
         $this->playerId_6 = $playerId6;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_6
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId6()
     {
@@ -270,14 +270,14 @@ class FootballTeam
     public function setPlayerId7(\Projects\SocialSportsBundle\Entity\Player $playerId7 = null)
     {
         $this->playerId_7 = $playerId7;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_7
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId7()
     {
@@ -293,14 +293,14 @@ class FootballTeam
     public function setPlayerId8(\Projects\SocialSportsBundle\Entity\Player $playerId8 = null)
     {
         $this->playerId_8 = $playerId8;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_8
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId8()
     {
@@ -316,14 +316,14 @@ class FootballTeam
     public function setPlayerId9(\Projects\SocialSportsBundle\Entity\Player $playerId9 = null)
     {
         $this->playerId_9 = $playerId9;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_9
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId9()
     {
@@ -339,14 +339,14 @@ class FootballTeam
     public function setPlayerId10(\Projects\SocialSportsBundle\Entity\Player $playerId10 = null)
     {
         $this->playerId_10 = $playerId10;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_10
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId10()
     {
@@ -362,14 +362,14 @@ class FootballTeam
     public function setPlayerId11(\Projects\SocialSportsBundle\Entity\Player $playerId11 = null)
     {
         $this->playerId_11 = $playerId11;
-    
+
         return $this;
     }
 
     /**
      * Get playerId_11
      *
-     * @return \Projects\SocialSportsBundle\Entity\Player 
+     * @return \Projects\SocialSportsBundle\Entity\Player
      */
     public function getPlayerId11()
     {

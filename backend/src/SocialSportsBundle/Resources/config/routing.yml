@@ -2,10 +2,10 @@
 #     pattern:  /hello/{name}
 #     defaults: { _controller: ProjectsSocialSportsBundle:Default:index }
 
-social_sports_default:
+social_sports_connection:
     pattern: /
-    defaults: { _controller: ProjectsSocialSportsBundle:Default:facebookLoginWithSession }
+    defaults: { _controller: ProjectsSocialSportsBundle:Facebook:facebookLoginWithSession }
 
-social_sports_facebook_login:
-    pattern: /login
-    defaults: { _controller: ProjectsSocialSportsBundle:Default:facebookLogin }
+# social_sports_user_profile:
+#     pattern: /user/profile
+#     defaults: { _controller: ProjectsSocialSportsBundle:User:getUserProfile }

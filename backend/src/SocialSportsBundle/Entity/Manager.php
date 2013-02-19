@@ -6,11 +6,21 @@ use Doctrine\ORM\Mapping as ORM;
 use Projects\SocialSportsBundle\Entity\People;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Projects\SocialSportsBundle\Entity\ManagerRepository")
  * @ORM\Table(name="manager")
  */
 class Manager
 {
+    //--------------------------------------------------------------------
+    // CONSTANTS
+    //--------------------------------------------------------------------
+
+    const INITAL_NUMBER_OF_UNLOCKED_PLAYERS = 11;
+
+    //--------------------------------------------------------------------
+    // ATTRIBUTES
+    //--------------------------------------------------------------------
+
     /**
      * @ORM\Id
      * @ORM\Column(name="facebook_id", length=45)
@@ -52,6 +62,10 @@ class Manager
      * @ORM\OneToOne(targetEntity="FootballTeam", mappedBy="manager")
      **/
     protected $footballTeam;
+
+    //--------------------------------------------------------------------
+    // GETTERS AND SETTERS
+    //--------------------------------------------------------------------
 
     /**
      * Set facebookId
@@ -235,5 +249,63 @@ class Manager
     public function getFootballTeam()
     {
         return $this->footballTeam;
+    }
+
+    //--------------------------------------------------------------------
+    // PUBLIC METHODS
+    //--------------------------------------------------------------------
+
+    public function initializeFromFacebookUser($facebookUser, $people, $facebookFriends)
+    {
+        $this->facebookId = $facebookUser['id'];
+        $this->people = $people;
+        $this->xp = 0;
+        $this->level = 0;
+
+        $em = $this->getDoctrine()->getManager();
+        // now we create a player for each one of the manager's friends
+        shuffle($facebookFriends);
+        foreach ($facebookFriends as $friend)
+        {
+            $player =  $em->getRepository('SocialSportsBundle:Player')
+                ->find($friend['id']);
+            if ($player)
+            {
+                // the player already exist, we just have to put him in the locked or unlocked friends array
+            }
+            else
+            {
+                // the player doesn't exist, we have to create it
+                // first check if the user entry already exist in the people table
+                $people = $em->getRepository('SocialSportsBundle:People')
+                    ->find($friend['id']);
+                if ($people)
+                {
+                    // this user already has a people entry
+                    // we just get what we need for the game
+                }
+                else
+                {
+                   // this user is totally new
+                   // we have to create his people entry
+                   $people = new People();
+                   $people->initializeFromFacebookUser($friend);
+                   $em->persist($people);
+                }
+
+                // then we create the player
+                $player = new Player();
+                $player->initializeFromFacebookUser($friend, $people);
+                $em->persist($player);
+            }
+            if (sizeof($this->unlockedPlayers) < INITAL_NUMBER_OF_UNLOCKED_PLAYERS)
+            {
+                $this->unlockedPlayers[] = $player;
+            }
+            else
+            {
+                $this->lockedPlayers[] = $player;
+            }
+        }
     }
 }

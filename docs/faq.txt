@@ -3,3 +3,6 @@ Erreur loading web debug toolbar
 
 Make the web debug toolbar appear
     => add a <body> ... </body> in the rendered page
+
+Create the symlink between Symfony and git
+    => C:\wamp\www\Symfony\src\Projects>mklink /D c:\wamp\www\Symfony\src\Projects\SocialSportsBundle d:\Workspace\Projects\social_sports\backend\src\SocialSportsBundle
