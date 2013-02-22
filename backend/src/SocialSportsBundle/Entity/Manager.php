@@ -12,12 +12,6 @@ use Projects\SocialSportsBundle\Entity\People;
 class Manager
 {
     //--------------------------------------------------------------------
-    // CONSTANTS
-    //--------------------------------------------------------------------
-
-    const INITIAL_NUMBER_OF_UNLOCKED_PLAYERS = 11;
-
-    //--------------------------------------------------------------------
     // ATTRIBUTES
     //--------------------------------------------------------------------
 
@@ -249,109 +243,5 @@ class Manager
     public function getFootballTeam()
     {
         return $this->footballTeam;
-    }
-
-    //--------------------------------------------------------------------
-    // PUBLIC METHODS
-    //--------------------------------------------------------------------
-
-    public function initializeFromFacebookUser($facebookUser, $people, $facebookFriends, $em)
-    {
-        $this->facebookId = $facebookUser['id'];
-        $this->people = $people;
-        $this->xp = 0;
-        $this->level = 0;
-        $this->coins = 0;
-        $this->unlockedPlayers = array();
-        $this->lockedPlayers = array();
-
-        // first we put the user's player as the first entry in the lockedPlayers array
-        $player =  $em->getRepository('ProjectsSocialSportsBundle:Player')
-            ->find($this->facebookId);
-        if ($player)
-        {
-            // the player already exist, we just have to put him in the locked or unlocked friends array
-        }
-        else
-        {
-            // the player doesn't exist, we have to create it
-            // first check if the user entry already exist in the people table
-            $people = $em->getRepository('ProjectsSocialSportsBundle:People')
-                ->find($this->facebookId);
-            if ($people)
-            {
-                // this user already has a people entry
-                // we just get what we need for the game
-            }
-            else
-            {
-               // this user is totally new
-               // we have to create his people entry
-               $people = new People();
-               $people->initializeFromFacebookUser($facebookUser);
-               $em->persist($people);
-            }
-
-            // then we create the player
-            $player = new Player();
-            $player->initializeFromFacebookUser($facebookUser, $people);
-            $em->persist($player);
-        }
-
-        // if the user has not enough friends to fill the initial number of unlockedPlayers, we put the user in the unlockedPlayers array
-        if (sizeof($facebookFriends) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
-        {
-            $this->unlockedPlayers[] = $player->getFacebookId();
-        }
-        // else, we put him as the first entry in the lockedPlayers array
-        else
-        {
-            $this->lockedPlayers[] = $player->getFacebookId();
-        }
-
-        // now we create a player for each one of the manager's friends
-        shuffle($facebookFriends);
-        foreach ($facebookFriends as $friend)
-        {
-            $player =  $em->getRepository('ProjectsSocialSportsBundle:Player')
-                ->find($friend['id']);
-            if ($player)
-            {
-                // the player already exist, we just have to put him in the locked or unlocked friends array
-            }
-            else
-            {
-                // the player doesn't exist, we have to create it
-                // first check if the user entry already exist in the people table
-                $people = $em->getRepository('ProjectsSocialSportsBundle:People')
-                    ->find($friend['id']);
-                if ($people)
-                {
-                    // this user already has a people entry
-                    // we just get what we need for the game
-                }
-                else
-                {
-                   // this user is totally new
-                   // we have to create his people entry
-                   $people = new People();
-                   $people->initializeFromFacebookUser($friend);
-                   $em->persist($people);
-                }
-
-                // then we create the player
-                $player = new Player();
-                $player->initializeFromFacebookUser($friend, $people);
-                $em->persist($player);
-            }
-            if (sizeof($this->unlockedPlayers) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
-            {
-                $this->unlockedPlayers[] = $player->getFacebookId();
-            }
-            else
-            {
-                $this->lockedPlayers[] = $player->getFacebookId();
-            }
-        }
     }
 }

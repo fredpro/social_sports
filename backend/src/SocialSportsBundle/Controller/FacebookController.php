@@ -56,7 +56,7 @@ class FacebookController extends Controller
                     );
                 }
 
-                return $this->forward('ProjectsSocialSportsBundle:User:getUserProfile', array(
+                return $this->forward('ProjectsSocialSportsBundle:User:getManagerProfile', array(
                     'facebookUser' => $userProfile,
                     'facebookFriends' => $userFriends
                     )

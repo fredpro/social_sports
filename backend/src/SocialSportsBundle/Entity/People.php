@@ -75,14 +75,4 @@ class People
     {
         return $this->nickname;
     }
-
-    //--------------------------------------------------------------------
-    // PUBLIC METHODS
-    //--------------------------------------------------------------------
-
-    public function initializeFromFacebookUser($facebookUser)
-    {
-        $this->facebookId = $facebookUser['id'];
-        $this->nickname = '';
-    }
 }
