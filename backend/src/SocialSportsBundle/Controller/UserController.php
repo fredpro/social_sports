@@ -4,7 +4,8 @@ namespace Projects\SocialSportsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Projects\Projects\SocialSportsBundle\Entity\Manager;
+use Projects\SocialSportsBundle\Entity\Manager;
+use Projects\SocialSportsBundle\Entity\People;
 
 class UserController extends Controller
 {
@@ -14,7 +15,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // check if the user entry already exist in the people table
-        $people = $em->getRepository('SocialSportsBundle:People')
+        $people = $em->getRepository('ProjectsSocialSportsBundle:People')
             ->find($facebookId);
         if ($people)
         {
@@ -31,7 +32,7 @@ class UserController extends Controller
         }
 
         // now we check if a manager entry exist
-        $manager = $em->getRepository('SocialSportsBundle:Manager')
+        $manager = $em->getRepository('ProjectsSocialSportsBundle:Manager')
             ->find($facebookId);
 
         if ($manager)
@@ -44,7 +45,7 @@ class UserController extends Controller
            // this user is new
            // we have to create his profile
            $manager = new Manager();
-           $manager->initializeFromFacebookUser($facebookUser, $people, $facebookFriends);
+           $manager->initializeFromFacebookUser($facebookUser, $people, $facebookFriends['data'], $em);
            $em->persist($manager);
         }
 
@@ -53,7 +54,7 @@ class UserController extends Controller
         return $this->render('ProjectsSocialSportsBundle:User:profile.html.twig',
             array(
                 'name' => $facebookUser['name'],
-                'unlockedPlayers' => $manager->unlockedPlayers
+                'unlockedPlayers' => $manager->getUnlockedPlayers()
             )
         );
     }

@@ -3,8 +3,8 @@
     <p>Your unlocked players:
     {% for player in unlockedPlayers %}
         <p>
-        player : </br>
-            attributes: {{player.attributes}} </br>
-            id: {{player.id}} </br>
+        player : {{ dump(player) }}</br>
+            {#attributes: {{player.attributes}} </br>#}
+            {#id: {{player.id}} </br>#}
     {% endfor %}
 </body>
