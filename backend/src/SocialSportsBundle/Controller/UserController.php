@@ -45,12 +45,14 @@ class UserController extends Controller
 
         $em->flush();
 
-        return $this->render('ProjectsSocialSportsBundle:User:profile.html.twig',
+        $response = new Response(json_encode(
             array(
                 'name' => $facebookUser['name'],
                 'unlockedPlayers' => $manager->getUnlockedPlayers()
             )
-        );
+        ));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     //--------------------------------------------------------------------

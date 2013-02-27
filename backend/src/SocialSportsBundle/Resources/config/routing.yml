@@ -6,6 +6,10 @@ social_sports_connection:
     pattern: /
     defaults: { _controller: ProjectsSocialSportsBundle:Facebook:facebookLoginWithSession }
 
+amf:
+    pattern: /amf
+    defaults: { _controller: tecbot_amf.controller.gateway:gatewayAction }
+
 # social_sports_user_profile:
 #     pattern: /user/profile
 #     defaults: { _controller: ProjectsSocialSportsBundle:User:getUserProfile }
