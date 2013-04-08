@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"create",
+				"createFootballTeam  (function)"
+			],
+			[
+				"unlocked",
+				"unlockedPlayerIds"
+			],
+			[
+				"unlock",
+				"unlockedPlayerIds"
+			],
+			[
+				"faceboo",
+				"facebookId"
+			],
+			[
 				"cre",
 				"createPeopleProfile  (function)"
 			],
@@ -14,10 +30,6 @@
 			[
 				"locke",
 				"lockedPlayers"
-			],
-			[
-				"unlock",
-				"unlockedPlayers"
 			],
 			[
 				"size",
@@ -56,42 +68,42 @@
 	"buffers":
 	[
 		{
+			"file": "/D/Workspace/Projects/social_sports/client/bin-debug/SocialSports.html",
+			"settings":
+			{
+				"buffer_size": 5832,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/DefaultController.php",
+			"settings":
+			{
+				"buffer_size": 4187,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
+			"settings":
+			{
+				"buffer_size": 652,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
+			"settings":
+			{
+				"buffer_size": 5860,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 			"settings":
 			{
-				"buffer_size": 9510,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/app/AppKernel.php",
-			"settings":
-			{
-				"buffer_size": 1773,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/composer.json",
-			"settings":
-			{
-				"buffer_size": 1847,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/app/config/config.yml",
-			"settings":
-			{
-				"buffer_size": 3058,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/views/Facebook/not_enough_friends.html.twig",
-			"settings":
-			{
-				"buffer_size": 156,
+				"buffer_size": 12422,
 				"line_ending": "Unix"
 			}
 		},
@@ -104,27 +116,10 @@
 			}
 		},
 		{
-			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
-			"settings":
-			{
-				"buffer_size": 4662,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
-			"settings":
-			{
-				"buffer_size": 1537,
-				"line_ending": "Unix",
-				"name": "// src/Projects/SocialSportsBundle/Entity/Product."
-			}
-		},
-		{
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/FootballTeam.php",
 			"settings":
 			{
-				"buffer_size": 8786,
+				"buffer_size": 9450,
 				"line_ending": "Unix"
 			}
 		},
@@ -134,83 +129,6 @@
 			{
 				"buffer_size": 2639,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Utils/NumberUtils.php",
-			"settings":
-			{
-				"buffer_size": 4395,
-				"line_ending": "Windows",
-				"name": "<?php"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Utils/RandomSequenceGenerator.php",
-			"settings":
-			{
-				"buffer_size": 898,
-				"line_ending": "Windows",
-				"name": "<?php"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
-			"settings":
-			{
-				"buffer_size": 502,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "package\n{\n    import com.mxp4.resourcesManager.ResourcesManager;\n    \n    import enums.Constants;\n    \n    import flash.display.Sprite;\n    import flash.display.StageScaleMode;\n    import flash.events.Event;\n    \n    import starling.core.Starling;\n    \n    [SWF(width=\"724\", height=\"558\", frameRate=\"60\", backgroundColor=\"#002143\")]\n    public class Memory extends Sprite\n    {\n        //-----------------------------------------------\n        // VARIABLES\n        //-----------------------------------------------\n        private var _starling:Starling;\n        \n        public function Memory()\n        {\n            addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);\n        }\n        \n        private function onAddedToStage(e:Event):void\n        {\n            if (loaderInfo.parameters.gatewayUrl != null) \n            {\n                Constants.MXP4_GATEWAY = loaderInfo.parameters.gatewayUrl;\n            }\n            \n            if (loaderInfo.parameters.assetsServerUrl != null) \n            {\n                ResourcesManager.BASE_PATH = loaderInfo.parameters.assetsServerUrl;\n            }\n            else\n            {\n                ResourcesManager.BASE_PATH = Constants.MXP4_BASE_URL;\n            }\n            \n            if (loaderInfo.parameters.assetsFile != null)\n            {\n                ResourcesManager.assetsListXmlPath = loaderInfo.parameters.assetsFile;\n            }\n            else\n            {\n                ResourcesManager.assetsListXmlPath = \"./assets_list.xml\";    \n            }\n\n            if (loaderInfo.parameters.cdnServerUrl != null) \n            {\n                Constants.MXP4_CDN = loaderInfo.parameters.cdnServerUrl;\n            }\n           \n            stage.scaleMode = StageScaleMode.NO_SCALE; \n            // create our Starling instance \n            _starling = new Starling(MainStarlingContainer, stage);\n            // set anti-aliasing (higher the better quality but slower performance) \n            _starling.antiAliasing = 1;\n            // start it!\n            _starling.start(); \n            \n            _starling.showStats = Constants.DEBUG_MODE;\n        }\n    }\n}",
-			"file": "/D/Workspace/Projects/memory-game/flash/src/Memory.as",
-			"file_size": 2211,
-			"file_write_time": 130004962367698740,
-			"settings":
-			{
-				"buffer_size": 2145,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/wamp/www/Symfony/app/config/parameters.yml",
-			"settings":
-			{
-				"buffer_size": 378,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/bin/php/php5.3.13/php.ini",
-			"settings":
-			{
-				"buffer_size": 68749,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Windows/System32/drivers/etc/HOSTS",
-			"settings":
-			{
-				"buffer_size": 1546,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/SocialSportsBundle/Resources/config/routing.yml",
-			"settings":
-			{
-				"buffer_size": 502,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/D/Workspace/Projects/social_sports/docs/faq.txt",
-			"settings":
-			{
-				"buffer_size": 392,
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -242,6 +160,33 @@
 	},
 	"file_history":
 	[
+		"/C/wamp/www/Symfony/app/logs/dev.log",
+		"/D/Workspace/Projects/social_sports/client/html-template/index.template.html",
+		"/C/wamp/www/Symfony/app/config/config.yml",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
+		"/C/wamp/www/Symfony/app/AppKernel.php",
+		"/C/wamp/www/Symfony/composer.json",
+		"/D/Workspace/Projects/Unity/Projectyle/Build/web/WebPlayer/WebPlayer.html",
+		"/D/Docs/Pro/Lettre type pour Poste Java.txt",
+		"/D/Docs/Pro/Lettre type pour Poste web.txt",
+		"/D/Docs/Pro/Lettre de motivation - AdSearch.txt",
+		"/D/Docs/Pro/Lettre type pour Poste AS 3.0.txt",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/views/Facebook/not_enough_friends.html.twig",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/FacebookController.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/FootballTeam.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Player.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Utils/NumberUtils.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Utils/RandomSequenceGenerator.php",
+		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
+		"/D/Workspace/Projects/memory-game/flash/src/Memory.as",
+		"/C/wamp/www/Symfony/app/config/parameters.yml",
+		"/C/wamp/bin/php/php5.3.13/php.ini",
+		"/C/Windows/System32/drivers/etc/HOSTS",
+		"/D/Workspace/Projects/social_sports/backend/src/SocialSportsBundle/Resources/config/routing.yml",
+		"/D/Workspace/Projects/social_sports/docs/faq.txt",
+		"/D/temp/zip pour profil/Prototype Unity/instructions.txt",
 		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/ManagerController.php",
 		"/D/Workspace/Projects/social_sports/client/bin-debug/Main.html",
 		"/D/Workspace/Projects/social_sports/client/bin-debug/history/historyFrame.html",
@@ -253,17 +198,11 @@
 		"/D/Workspace/Projects/social_sports/backend/src/SocialSportsBundle/Resources/config/amf.yml",
 		"/C/wamp/www/Symfony/app/config/amf.yml",
 		"/C/wamp/www/Symfony/app/config/routing.yml",
-		"/C/wamp/www/Symfony/app/config/config.yml",
 		"/C/wamp/www/Symfony/vendor/autoload.php",
 		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/views/Default/index.html.twig",
 		"/D/Workspace/Projects/social_sports/backend/src/scripts/social_sports_init_1.sql",
 		"/D/Workspace/Projects/memory-game/backend/htdocs/application/views/scripts/index/index.phtml",
 		"/D/Workspace/Projects/memory-game/backend/htdocs/public/index.php",
-		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
-		"/C/wamp/www/Symfony/app/AppKernel.php",
-		"/D/Workspace/Projects/social_sports/docs/faq.txt",
-		"/C/Windows/System32/drivers/etc/HOSTS",
-		"/C/wamp/bin/php/php5.3.13/php.ini",
 		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/DefaultController.php",
 		"/C/Users/Fred/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/Fred/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
@@ -281,10 +220,8 @@
 		"/C/wamp/www/Symfony/src/Acme/HelloBundle/Controller/HelloController.php",
 		"/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Service/base_facebook.php",
 		"/C/wamp/www/Symfony/app/config/routing_dev.yml",
-		"/C/wamp/www/Symfony/app/config/parameters.yml",
 		"/C/wamp/www/Symfony/src/Acme/HelloBundle/Resources/config/routing.yml",
 		"/C/wamp/www/Symfony/src/Acme/StoreBundle/Entity/Product.php",
-		"/C/wamp/www/Symfony/composer.json",
 		"/C/wamp/www/Symfony/src/Acme/StoreBundle/Entity/Category.php",
 		"/C/wamp/www/Symfony/src/Acme/StoreBundle/Controller/DefaultController.php",
 		"/C/wamp/www/Symfony/src/Acme/StoreBundle/Entity/ProductRepository.php",
@@ -352,6 +289,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"level",
+			"createManagerProfile",
 			"jms/security-extra",
 			"Main",
 			"760",
@@ -425,23 +364,23 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
+					"file": "/D/Workspace/Projects/social_sports/client/bin-debug/SocialSports.html",
 					"settings":
 					{
-						"buffer_size": 9510,
+						"buffer_size": 5832,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1867,
-								1867
+								1506,
+								1506
 							]
 						],
 						"settings":
@@ -534,7 +473,7 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -546,18 +485,18 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/C/wamp/www/Symfony/app/AppKernel.php",
+					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/DefaultController.php",
 					"settings":
 					{
-						"buffer_size": 1773,
+						"buffer_size": 4187,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1155,
-								1155
+								2967,
+								2967
 							]
 						],
 						"settings":
@@ -655,25 +594,25 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 720.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/C/wamp/www/Symfony/composer.json",
+					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
 					"settings":
 					{
-						"buffer_size": 1847,
+						"buffer_size": 652,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								790,
-								790
+								571,
+								571
 							]
 						],
 						"settings":
@@ -766,9 +705,7 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/YAML/YAML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -778,18 +715,18 @@
 				},
 				{
 					"buffer": 3,
-					"file": "/C/wamp/www/Symfony/app/config/config.yml",
+					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
 					"settings":
 					{
-						"buffer_size": 3058,
+						"buffer_size": 5860,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3057,
-								3057
+								278,
+								230
 							]
 						],
 						"settings":
@@ -882,30 +819,30 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/YAML/YAML.tmLanguage",
+							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 765.0,
+						"translation.y": 42.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/views/Facebook/not_enough_friends.html.twig",
+					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 					"settings":
 					{
-						"buffer_size": 156,
+						"buffer_size": 12422,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								148,
-								148
+								12265,
+								12265
 							]
 						],
 						"settings":
@@ -998,10 +935,12 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4147.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1018,8 +957,8 @@
 						"selection":
 						[
 							[
-								2641,
-								2641
+								1763,
+								1273
 							]
 						],
 						"settings":
@@ -1117,25 +1056,25 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 450.0,
+						"translation.y": 180.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
+					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/FootballTeam.php",
 					"settings":
 					{
-						"buffer_size": 4662,
+						"buffer_size": 9450,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4660,
-								4660
+								1551,
+								1551
 							]
 						],
 						"settings":
@@ -1240,239 +1179,6 @@
 				},
 				{
 					"buffer": 7,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
-					"settings":
-					{
-						"buffer_size": 1537,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1535,
-								1535
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"auto_name": "// src/Projects/SocialSportsBundle/Entity/Product.",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 225.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/FootballTeam.php",
-					"settings":
-					{
-						"buffer_size": 8786,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								211,
-								288
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Player.php",
 					"settings":
 					{
@@ -1483,8 +1189,8 @@
 						"selection":
 						[
 							[
-								185,
-								185
+								106,
+								106
 							]
 						],
 						"settings":
@@ -1582,1043 +1288,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Utils/NumberUtils.php",
-					"settings":
-					{
-						"buffer_size": 4395,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4093,
-								4093
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"auto_name": "<?php",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 585.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Utils/RandomSequenceGenerator.php",
-					"settings":
-					{
-						"buffer_size": 898,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								119,
-								75
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"auto_name": "<?php",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
-					"settings":
-					{
-						"buffer_size": 502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								156,
-								156
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/YAML/YAML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "/D/Workspace/Projects/memory-game/flash/src/Memory.as",
-					"settings":
-					{
-						"buffer_size": 2145,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1720,
-								2127
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/ActionScript/ActionScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 180.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "/C/wamp/www/Symfony/app/config/parameters.yml",
-					"settings":
-					{
-						"buffer_size": 378,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								259,
-								259
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/YAML/YAML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "/C/wamp/bin/php/php5.3.13/php.ini",
-					"settings":
-					{
-						"buffer_size": 68749,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								801,
-								801
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 4050.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "/C/Windows/System32/drivers/etc/HOSTS",
-					"settings":
-					{
-						"buffer_size": 1546,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								419,
-								419
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 17,
-					"file": "src/SocialSportsBundle/Resources/config/routing.yml",
-					"settings":
-					{
-						"buffer_size": 502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/YAML/YAML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"file": "/D/Workspace/Projects/social_sports/docs/faq.txt",
-					"settings":
-					{
-						"buffer_size": 392,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								392,
-								392
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1620.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2682,6 +1352,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 271.0,
 	"status_bar_visible": true
 }

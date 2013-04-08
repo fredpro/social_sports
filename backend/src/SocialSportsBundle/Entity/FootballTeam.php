@@ -4,6 +4,7 @@ namespace Projects\SocialSportsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Projects\SocialSportsBundle\Entity\Player;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity(repositoryClass="Projects\SocialSportsBundle\Entity\FootballTeamRepository")
@@ -11,6 +12,11 @@ use Projects\SocialSportsBundle\Entity\Player;
  */
 class FootballTeam
 {
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $sportId = 0;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="football_team_id")
@@ -21,6 +27,7 @@ class FootballTeam
     /**
      * @ORM\OneToOne(targetEntity="Manager", inversedBy="footballTeam")
      * @ORM\JoinColumn(name="manager_id", referencedColumnName="facebook_id")
+     * @Exclude
      **/
     protected $manager;
 
@@ -89,6 +96,33 @@ class FootballTeam
      * @ORM\JoinColumn(name="player_facebook_id11", referencedColumnName="facebook_id")
      **/
     protected $playerId_11;
+
+    //--------------------------------------------------------------------
+    // GETTERS AND SETTERS
+    //--------------------------------------------------------------------
+
+    /**
+     * Set sportId
+     *
+     * @param integer $sportId
+     * @return Manager
+     */
+    public function setSportId($sportId)
+    {
+        $this->sportId = $sportId;
+
+        return $this;
+    }
+
+    /**
+     * Get sportId
+     *
+     * @return integer
+     */
+    public function getSportId()
+    {
+        return $this->sportId;
+    }
 
     /**
      * Get footballTeamId

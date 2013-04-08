@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Projects\SocialSportsBundle\Entity\Manager;
 use Projects\SocialSportsBundle\Entity\People;
 use Projects\SocialSportsBundle\Entity\Player;
+use Projects\SocialSportsBundle\Entity\FootballTeam;
 use Projects\SocialSportsBundle\Utils\RandomSequenceGenerator;
 use Projects\SocialSportsBundle\Utils\NumberUtils;
 
@@ -22,35 +23,92 @@ class UserController extends Controller
     // PUBLIC METHODS
     //--------------------------------------------------------------------
 
-    public function getManagerProfileAction($facebookUser, $facebookFriends)
+    public function getManagerProfileAction($facebookId)
     {
-        $facebookId = $facebookUser['id'];
+        $facebook = $this->get('facebook');
+
+        // if the given parameter is 'me'
+        if ($facebookId == 'me')
+        {
+            if (isset($_SESSION['uid']))
+            {
+                $facebookId = $_SESSION['uid'];
+                $facebookUser = $_SESSION['user'];
+                $facebookFriends = $_SESSION['friends'];
+            }
+            else
+            {
+                // On récupère l'UID de l'utilisateur Facebook courant
+                $facebookId = $facebook->getUser();
+                // On récupère les infos de base de l'utilisateur
+                $facebookUser = $facebook->api('/me?fields=id,birthday,name,gender,picture');
+                $facebookFriends = $facebook->api('me/friends?fields=id,birthday,name,gender,picture');
+                // On stock les infos de l'utilisateur en session: Pseudo cache
+                $_SESSION['uid'] = $facebookId;
+                $_SESSION['user'] = $facebookUser;
+                $_SESSION['friends'] = $facebookFriends;
+            }
+        }
+        else
+        {
+            $facebookUser = $facebook->api($facebookId.'?fields=id,birthday,name,gender,picture');
+        }
+
+
+
         $em = $this->getDoctrine()->getManager();
 
         // now we check if a manager entry exist
         $manager = $em->getRepository('ProjectsSocialSportsBundle:Manager')
             ->find($facebookId);
 
-        if ($manager)
+        if (!$manager)
         {
-            // this user already has a manager profile
-            // we just get what we need for the game
-        }
-        else
-        {
-           // this user is new
-           // we have to create his profile
-           $manager = $this->createManagerProfile($facebookUser, $facebookFriends['data']);
+            $facebookFriends = $facebook->api($facebookId.'/friends?fields=id,birthday,name,gender,picture');
+
+            // this user is new
+            // we have to create his profile
+            $manager = $this->createManagerProfile($facebookUser, $facebookFriends['data']);
+
+            $em->flush();
         }
 
-        $em->flush();
+        // now we get the unlocked players
+        $unlockedPlayers = array();
+        $unlockedPlayerIds = $manager->getUnlockedPlayers();
+        $l = sizeof($unlockedPlayerIds);
+        for ($i = 0; $i < $l; $i++)
+        {
+            $player = $em->getRepository('ProjectsSocialSportsBundle:Player')
+                ->find($unlockedPlayerIds[$i]);
+            $unlockedPlayers[] = $player;
+        }
 
-        $response = new Response(json_encode(
-            array(
-                'name' => $facebookUser['name'],
-                'unlockedPlayers' => $manager->getUnlockedPlayers()
-            )
-        ));
+        // now we get the locked players
+        $lockedPlayers = array();
+        $lockedPlayerIds = $manager->getLockedPlayers();
+        $l = sizeof($lockedPlayerIds);
+        for ($i = 0; $i < $l; $i++)
+        {
+            $player = $em->getRepository('ProjectsSocialSportsBundle:Player')
+                ->find($lockedPlayerIds[$i]);
+            $lockedPlayers[] = $player;
+        }
+
+        $serializer = $this->container->get('serializer');
+        $responseObject = array(
+                    'facebookId' => $manager->getFacebookId(),
+                    'nickname'=> $manager->getPeople()->getNickname(),
+                    'xp' => $manager->getXp(),
+                    'level' => $manager->getLevel(),
+                    'coins' => $manager->getCoins(),
+                    'unlockingProgress' => $manager->getUnlockingProgress(),
+                    'lockedPlayers' => $lockedPlayers,
+                    'unlockedPlayers' => $unlockedPlayers,
+                    'footballTeam' => $manager->getFootballTeam()
+                );
+        $serializedResponseObject = $serializer->serialize($responseObject, 'json');
+        $response = new Response($serializedResponseObject);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
@@ -97,6 +155,7 @@ class UserController extends Controller
         $manager->setXp(0);
         $manager->setLevel(0);
         $manager->setCoins(0);
+        $manager->setUnlockingProgress(0);
         $lockedPlayers = array();
         $unlockedPlayers = array();
 
@@ -151,6 +210,7 @@ class UserController extends Controller
 
         $manager->setUnlockedPlayers($unlockedPlayers);
         $manager->setLockedPlayers($lockedPlayers);
+        $manager->setFootballTeam($this->createFootballTeam($manager));
         $em->persist($manager);
 
         return $manager;
@@ -257,5 +317,15 @@ class UserController extends Controller
         $em->persist($player);
 
         return $player;
+    }
+
+    private function createFootballTeam($manager)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $footballTeam = new FootballTeam();
+        $footballTeam->setManager($manager);
+        $em->persist($footballTeam);
+
+        return $footballTeam;
     }
 }

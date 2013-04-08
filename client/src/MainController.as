@@ -8,6 +8,8 @@ package
 	
 	import enums.Constants;
 	
+	import models.vo.ManagerVO;
+	
 	import proxies.WebServerProxy;
 	
 	import starling.display.Sprite;
@@ -17,6 +19,7 @@ package
 		//-----------------------------------------------
 		// VARIABLES
 		//-----------------------------------------------
+		private var _model:MainModel;
 		private var _teamBuildingController:TeamBuildingController;
 		private var _webServerProxy:WebServerProxy;
 		
@@ -26,15 +29,25 @@ package
 			setRootClip(rootClip);
 			debugMode = Constants.DEBUG_MODE;
 			
+			_model = new MainModel();
 			_teamBuildingController = new TeamBuildingController(this);
 			_webServerProxy = new WebServerProxy(this);
 			_webServerProxy.getUserProfile(onUserProfileResponse);
 		}
 		
 		//-----------------------------------------------
-		// PUBLIC METHODS
+		// GETTERS AND SETTERS
 		//-----------------------------------------------
 		
+		public function get model():MainModel
+		{
+			return _model;
+		}
+		
+		//-----------------------------------------------
+		// PUBLIC METHODS
+		//-----------------------------------------------
+
 		/**
 		 * Called when a new asset is loaded during a loading session. This updates the loading screen
 		 * @param nbAssets the number of assets that must be added to the loading process management
@@ -82,6 +95,10 @@ package
 		private function onUserProfileResponse(data:ResponseVo):void
 		{
 			trace("data = ", data.result);
+			
+			_model.updateUser(new ManagerVO(data.result));
+			
+			_teamBuildingController.initView(_model.createTeamBuildingViewModel());
 		}
 		
 	}

@@ -4,6 +4,8 @@ namespace Projects\SocialSportsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Projects\SocialSportsBundle\Entity\People;
+// use JMS\Serializer\Annotation\ExclusionPolicy;
+// use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity(repositoryClass="Projects\SocialSportsBundle\Entity\ManagerRepository")
@@ -51,6 +53,11 @@ class Manager
      * @ORM\Column(type="json_array", name="unlocked_players")
      */
     protected $unlockedPlayers;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $unlockingProgress;
 
     /**
      * @ORM\OneToOne(targetEntity="FootballTeam", mappedBy="manager")
@@ -223,6 +230,29 @@ class Manager
     }
 
     /**
+     * Set unlockingProgress
+     *
+     * @param integer $unlockingProgress
+     * @return Manager
+     */
+    public function setUnlockingProgress($unlockingProgress)
+    {
+        $this->unlockingProgress = $unlockingProgress;
+
+        return $this;
+    }
+
+    /**
+     * Get unlockingProgress
+     *
+     * @return integer
+     */
+    public function getUnlockingProgress()
+    {
+        return $this->unlockingProgress;
+    }
+
+    /**
      * Set footballTeam
      *
      * @param \Projects\SocialSportsBundle\Entity\FootballTeam $footballTeam
@@ -243,5 +273,22 @@ class Manager
     public function getFootballTeam()
     {
         return $this->footballTeam;
+    }
+
+    public function toJSON()
+    {
+        return json_encode(
+            array(
+                'facebookId' => $this->facebookId,
+                'nickname'=> $this->people->getNickname(),
+                'xp' => $this->xp,
+                'level' => $this->level,
+                'coins' => $this->coins,
+                'unlockingProgress' => $this->unlockingProgress,
+                'lockedPlayers' => $this->lockedPlayers,
+                'unlockedPlayers' => $this->unlockedPlayers,
+                'footballTeam' => $this->footballTeam
+            )
+        );
     }
 }

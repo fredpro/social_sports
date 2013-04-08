@@ -76,7 +76,7 @@ package proxies
         
         public function getUserProfile(callback:Function):void
         {
-            _requestQueue.push(new WebServerRequest("", null, callback));
+            _requestQueue.push(new WebServerRequest("manager/profile/me", null, callback));
             start();
             trace("___GET GAME CONFIG ___");
         }

@@ -1,6 +1,7 @@
 package controllers
 {
 	import views.TeamBuildingView;
+	import views.models.TeamBuildingViewModel;
 
 	public class TeamBuildingController extends AbstractViewController
 	{
@@ -13,7 +14,14 @@ package controllers
 		{
 			super(main);
 			_teamBuildingView= new TeamBuildingView(this);
-			_teamBuildingView.initView();
+		}
+		
+		//--------------------------------------------
+		// PUBLIC METHODS
+		//--------------------------------------------
+		public function initView(model:TeamBuildingViewModel):void
+		{
+			
 		}
 	}
 }
