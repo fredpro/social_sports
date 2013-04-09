@@ -3,17 +3,27 @@ package models.vo
 	public class PlayerVO
 	{
 		/**
-		 * The facebook id of the manager
+		 * The facebook id of the player
 		 */
 		public var facebookId:String;
 		
 		/**
-		 * The nickname of the manager (given by himself)
+		 * The name of the player
+		 */
+		public var name:String;
+		
+		/**
+		 * The nickname of the player
 		 */
 		public var nickname:String;
 		
 		/**
-		 * The level of the manager
+		 * The url of the facebook avatar of the player
+		 */
+		public var pictureUrl:String
+		
+		/**
+		 * The level of the player
 		 */
 		public var level:int;
 		
@@ -25,7 +35,9 @@ package models.vo
 		public function PlayerVO(data:Object)
 		{
 			facebookId = data.facebookId;
+			name = data.people.name;
 			nickname = data.people.nickname;
+			pictureUrl = data.people.pictureUrl;
 			level = data.level;
 			attributes = Vector.<int>(data.attributes);
 		}

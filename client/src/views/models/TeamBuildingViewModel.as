@@ -2,6 +2,9 @@ package views.models
 {
 	import com.mxp4.app.starling.MasterClass;
 	
+	import models.ManagerModel;
+	import models.PlayerModel;
+	
 	public class TeamBuildingViewModel extends MasterClass
 	{
 		//------------------
@@ -70,6 +73,40 @@ package views.models
 		public function set teams(value:Vector.<Vector.<TeamBuildingViewPlayer>>):void
 		{
 			_teams = value;
+		}
+		
+		//------------------
+		// PUBLIC METHODS
+		//------------------
+		
+		/**
+		 * creates a TeamBuildingViewModel instance from data from a ManagerModel instance. Only useful data is copied in the TeamBuildingViewModel
+		 * @return A TeamBuildingViewModel instance
+		 * 
+		 */
+		public function exportFromManagerModel(manager:ManagerModel):TeamBuildingViewModel
+		{
+			var result:TeamBuildingViewModel = new TeamBuildingViewModel();
+			
+			var l:int = manager.unlockedPlayers.length;
+			_unlockedPlayers = new Vector.<TeamBuildingViewPlayer>(l);
+			for (var i:int = 0; i < l; i++)
+			{
+				var src:PlayerModel = manager.unlockedPlayers[i];
+				var player:TeamBuildingViewPlayer = new TeamBuildingViewPlayer(src.facebookId, src.name, src.nickname, src.level, src.pictureUrl);
+				_unlockedPlayers[i] = player;
+			}
+			
+			l = manager.lockedPlayers.length;
+			_lockedPlayers = new Vector.<TeamBuildingViewPlayer>(l);
+			for (i = 0; i < l; i++)
+			{
+				src = manager.lockedPlayers[i];
+				player = new TeamBuildingViewPlayer(src.facebookId, src.name, src.nickname, src.level, src.pictureUrl);
+				_lockedPlayers[i] = player;
+			}
+			
+			return result;
 		}
 	}
 }

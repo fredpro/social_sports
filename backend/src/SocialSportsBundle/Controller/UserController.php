@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Projects\SocialSportsBundle\Entity\Manager;
 use Projects\SocialSportsBundle\Entity\People;
 use Projects\SocialSportsBundle\Entity\Player;
-use Projects\SocialSportsBundle\Entity\FootballTeam;
+use Projects\SocialSportsBundle\Entity\Team;
 use Projects\SocialSportsBundle\Utils\RandomSequenceGenerator;
 use Projects\SocialSportsBundle\Utils\NumberUtils;
 
@@ -73,41 +73,9 @@ class UserController extends Controller
             $em->flush();
         }
 
-        // now we get the unlocked players
-        $unlockedPlayers = array();
-        $unlockedPlayerIds = $manager->getUnlockedPlayers();
-        $l = sizeof($unlockedPlayerIds);
-        for ($i = 0; $i < $l; $i++)
-        {
-            $player = $em->getRepository('ProjectsSocialSportsBundle:Player')
-                ->find($unlockedPlayerIds[$i]);
-            $unlockedPlayers[] = $player;
-        }
-
-        // now we get the locked players
-        $lockedPlayers = array();
-        $lockedPlayerIds = $manager->getLockedPlayers();
-        $l = sizeof($lockedPlayerIds);
-        for ($i = 0; $i < $l; $i++)
-        {
-            $player = $em->getRepository('ProjectsSocialSportsBundle:Player')
-                ->find($lockedPlayerIds[$i]);
-            $lockedPlayers[] = $player;
-        }
-
         $serializer = $this->container->get('serializer');
-        $responseObject = array(
-                    'facebookId' => $manager->getFacebookId(),
-                    'nickname'=> $manager->getPeople()->getNickname(),
-                    'xp' => $manager->getXp(),
-                    'level' => $manager->getLevel(),
-                    'coins' => $manager->getCoins(),
-                    'unlockingProgress' => $manager->getUnlockingProgress(),
-                    'lockedPlayers' => $lockedPlayers,
-                    'unlockedPlayers' => $unlockedPlayers,
-                    'footballTeam' => $manager->getFootballTeam()
-                );
-        $serializedResponseObject = $serializer->serialize($responseObject, 'json');
+        // $responseObject = $manager;
+        $serializedResponseObject = $serializer->serialize($manager, 'json');
         $response = new Response($serializedResponseObject);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
@@ -123,7 +91,10 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $people->setFacebookId($facebookUser['id']);
+        $people->setName($facebookUser['name']);
         $people->setNickname('');
+        $people->setPictureUrl($facebookUser['picture']['data']['url']);
+        $people->setLevel(0);
         $em->persist($people);
 
         return $people;
@@ -153,34 +124,36 @@ class UserController extends Controller
         $manager->setFacebookId($people->getFacebookId());
         $manager->setPeople($people);
         $manager->setXp(0);
-        $manager->setLevel(0);
         $manager->setCoins(0);
         $manager->setUnlockingProgress(0);
-        $lockedPlayers = array();
-        $unlockedPlayers = array();
 
         // first we put the user's player as the first entry in the lockedPlayers array
         $player =  $em->getRepository('ProjectsSocialSportsBundle:Player')
             ->find($manager->getFacebookId());
+        $isNew = false;
         if ($player)
         {
             // the player already exist, we just have to put him in the locked or unlocked friends array
+            $isNew = false;
         }
         else
         {
             // then we create the player
-            $player = $this->createPlayerProfile($facebookUser, $people);
+            $player = $this->createPlayerProfile($facebookUser);
+            $isNew = true;
         }
 
         // if the user has not enough friends to fill the initial number of unlockedPlayers, we put the user in the unlockedPlayers array
         if (sizeof($facebookFriends) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
         {
-            $unlockedPlayers[] = $player->getFacebookId();
+            $manager->addUnlockedPlayer($player, $isNew);
+            $em->persist($player);
         }
         // else, we put him as the first entry in the lockedPlayers array
         else
         {
-            $lockedPlayers[] = $player->getFacebookId();
+            $manager->addLockedPeople($player, $isNew);
+            $em->persist($player->getPeople());
         }
 
         // now we create a player for each one of the manager's friends
@@ -192,30 +165,39 @@ class UserController extends Controller
             if ($player)
             {
                 // the player already exist, we just have to put him in the locked or unlocked friends array
+                $isNew = false;
             }
             else
             {
                 // then we create the player
                 $player = $this->createPlayerProfile($friend);
+                $isNew = true;
             }
-            if (sizeof($unlockedPlayers) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
+            if (sizeof($manager->getUnlockedPlayers()) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
             {
-                $unlockedPlayers[] = $player->getFacebookId();
+                $manager->addUnlockedPlayer($player, $isNew);
+                $em->persist($player);
             }
             else
             {
-                $lockedPlayers[] = $player->getFacebookId();
+                $manager->addLockedPeople($player, $isNew);
+                $em->persist($player->getPeople());
             }
         }
 
-        $manager->setUnlockedPlayers($unlockedPlayers);
-        $manager->setLockedPlayers($lockedPlayers);
-        $manager->setFootballTeam($this->createFootballTeam($manager));
+        $footballteam = $this->createFootballTeam($manager);
+        $manager->addTeam($footballteam);
+        // $em->persist($footballteam);
         $em->persist($manager);
 
         return $manager;
     }
 
+    /**
+     * This method creates a player profile from the given facebook user.
+     * @param  array $facebookUser The facebook user as given by facebook's Graph API
+     * @return Player               A Player instance
+     */
     private function createPlayerProfile($facebookUser)
     {
         $player = new Player();
@@ -240,7 +222,6 @@ class UserController extends Controller
 
         $player->setFacebookId($people->getFacebookId());
         $player->setPeople($people);
-        $player->setLevel(0);
 
         RandomSequenceGenerator::seed(intval(substr($player->getFacebookId(), -9)));
 
@@ -322,10 +303,20 @@ class UserController extends Controller
     private function createFootballTeam($manager)
     {
         $em = $this->getDoctrine()->getManager();
-        $footballTeam = new FootballTeam();
-        $footballTeam->setManager($manager);
-        $em->persist($footballTeam);
+        $team = new Team();
+        $team->setSportId(Team::FOOTBALL_ID);
 
-        return $footballTeam;
+        $players = array();
+        $unlockedPlayers = $manager->getUnlockedPlayers();
+        $l = min(sizeof($unlockedPlayers), Team::$team_size_list[$team->getSportId()]);
+        for ($i = 0; $i < $l; $i++)
+        {
+            $players[] = $unlockedPlayers[$i]->getFacebookId();
+        }
+        $team->setPlayers($players);
+
+        $em->persist($team);
+
+        return $team;
     }
 }

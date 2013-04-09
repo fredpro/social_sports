@@ -43,9 +43,9 @@ package models.vo
 		public var unlockedPlayers:Vector.<PlayerVO>;
 		
 		/**
-		 * The team of players created for football matches
+		 * The list of teams of the manager
 		 */
-		public var footballTeam:TeamVO;
+		public var teams:Vector.<TeamVO>;
 		
 		public function ManagerVO(data:Object)
 		{
@@ -73,7 +73,13 @@ package models.vo
 			
 			unlockingProgress = data.unlockingProgress;
 			
-			footballTeam = new TeamVO(data.footballTeam);
+			l = data.teams.length;
+			teams = new Vector.<TeamVO>(l);
+			for (i = 0; i < l; i++)
+			{
+				var team:TeamVO = new TeamVO(data.teams[i]);
+				teams[i] = team;
+			}
 		}
 	}
 }

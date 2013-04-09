@@ -29,7 +29,7 @@ package models
 		
 		private var _unlockingProgress:int;
 		
-		private var _footballTeam:TeamModel;
+		private var _teams:Vector.<TeamModel>;
 		
 		public function ManagerModel()
 		{
@@ -105,11 +105,11 @@ package models
 		}
 
 		/**
-		 * The team of players created for football matches
+		 * The list of teams of the manager
 		 */
-		public function get footballTeam():TeamModel
+		public function get teams():Vector.<TeamModel>
 		{
-			return _footballTeam;
+			return _teams;
 		}
 
 		
@@ -150,12 +150,15 @@ package models
 				_unlockedPlayers[i] = player;
 			}
 			
-			if (_footballTeam == null)
+			l = vo.teams.length;
+			_teams = new Vector.<TeamModel>(l);
+			for (i = 0; i < l; i++)
 			{
-				_footballTeam = new TeamModel();
+				var team:TeamModel = new TeamModel();
+				team.manager = this;
+				team.update(vo.teams[i]);
+				_teams[i] = team;
 			}
-			_footballTeam.manager = this;
-			_footballTeam.update(vo.footballTeam);
 		}
 		
 		/**
@@ -175,20 +178,6 @@ package models
 					result = _unlockedPlayers[i];
 				}
 			}
-			
-			return result;
-		}
-		
-		/**
-		 * creates a TeamBuildingViewModel instance from data from current Manager. Only useful data is copied in the TeamBuildingViewModel
-		 * @return A TeamBuildingViewModel instance
-		 * 
-		 */
-		public function exportTeamBuildingViewModel():TeamBuildingViewModel
-		{
-			var result:TeamBuildingViewModel = new TeamBuildingViewModel();
-			
-			
 			
 			return result;
 		}

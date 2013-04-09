@@ -1,6 +1,9 @@
 <?php
 // src/Projects/SocialSportsBundle/Entity/People.php
 namespace Projects\SocialSportsBundle\Entity;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,7 +27,37 @@ class People
     /**
      * @ORM\Column(length=45)
      */
+    protected $name;
+
+    /**
+     * @ORM\Column(length=45)
+     */
     protected $nickname;
+
+    /**
+     * @ORM\Column(name="picture_url", length=256)
+     */
+    protected $pictureUrl;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $level;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Manager", mappedBy="lockedPlayers")
+    * @Exclude
+    */
+    protected $linkedManagers;
+
+    //--------------------------------------------------------------------
+    // CONSTRUCTOR
+    //--------------------------------------------------------------------
+
+    public function __construct()
+    {
+        $this->linkedManagers = new ArrayCollection();
+    }
 
     //--------------------------------------------------------------------
     // GETTERS AND SETTERS
@@ -54,6 +87,29 @@ class People
     }
 
     /**
+     * Set name
+     *
+     * @param string $name
+     * @return People
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set nickname
      *
      * @param string $nickname
@@ -74,5 +130,90 @@ class People
     public function getNickname()
     {
         return $this->nickname;
+    }
+
+    /**
+     * Set pictureUrl
+     *
+     * @param string $pictureUrl
+     * @return People
+     */
+    public function setPictureUrl($pictureUrl)
+    {
+        $this->pictureUrl = $pictureUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get pictureUrl
+     *
+     * @return string
+     */
+    public function getPictureUrl()
+    {
+        return $this->pictureUrl;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return People
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set linkedManagers
+     *
+     * @param ArrayCollection $linkedManagers
+     * @return People
+     */
+    public function setLinkedManagers(ArrayCollection $linkedManagers = null)
+    {
+        $this->linkedManagers = $linkedManagers;
+
+        return $this;
+    }
+
+    /**
+     * Get linkedManagers
+     *
+     * @return ArrayCollection
+     */
+    public function getLinkedManagers()
+    {
+        return $this->linkedManagers;
+    }
+
+    //----------------------------------------------
+    // PUBLIC METHODS
+    //----------------------------------------------
+
+    /**
+     * adds a manager as one of the people's manager.
+     * @param Manager $manager the manager which will added to the managers list
+     */
+    public function addLinkedManager($manager)
+    {
+        if (!$this->linkedManagers->contains($manager))
+        {
+            $this->linkedManagers[] = $manager;
+        }
     }
 }

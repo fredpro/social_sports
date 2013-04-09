@@ -4,6 +4,9 @@ namespace Projects\SocialSportsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Projects\SocialSportsBundle\Entity\People;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Projects\SocialSportsBundle\Entity\PlayerRepository")
@@ -19,6 +22,7 @@ class Player
     /**
      * @ORM\Id
      * @ORM\Column(name="facebook_id", length=45)
+     * @Exclude
      */
     protected $facebookId;
 
@@ -29,41 +33,28 @@ class Player
     protected $people;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $level;
-
-    /**
      * @ORM\Column(type="json_array")
      */
     protected $attributes;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="Manager", mappedBy="unlockedPlayers")
+    * @Exclude
+    */
+    protected $managers;
+
+    //--------------------------------------------------------------------
+    // CONSTRUCTOR
+    //--------------------------------------------------------------------
+
+    public function __construct()
+    {
+        $this->managers = new ArrayCollection();
+    }
+
     //--------------------------------------------------------------------
     // GETTERS AND SETTERS
     //--------------------------------------------------------------------
-
-    /**
-     * Set level
-     *
-     * @param integer $level
-     * @return Player
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
 
     /**
      * Set attributes
@@ -132,5 +123,44 @@ class Player
     public function getFacebookId()
     {
         return $this->facebookId;
+    }
+
+    /**
+     * Set managers
+     *
+     * @param ArrayCollection $managers
+     * @return Player
+     */
+    public function setManager(ArrayCollection $managers = null)
+    {
+        $this->managers = $managers;
+
+        return $this;
+    }
+
+    /**
+     * Get managers
+     *
+     * @return ArrayCollection
+     */
+    public function getManager()
+    {
+        return $this->managers;
+    }
+
+    //----------------------------------------------
+    // PUBLIC METHODS
+    //----------------------------------------------
+
+    /**
+     * adds a manager as one of the player's manager.
+     * @param Manager $manager the manager which will added to the managers list
+     */
+    public function addManager($manager)
+    {
+        if (!$this->managers->contains($manager))
+        {
+            $this->managers[] = $manager;
+        }
     }
 }

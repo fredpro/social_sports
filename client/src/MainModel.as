@@ -50,9 +50,9 @@ package
 		 */
 		public function createTeamBuildingViewModel():views.models.TeamBuildingViewModel
 		{
-			var result:TeamBuildingViewModel = _user.exportTeamBuildingViewModel();
+			var result:TeamBuildingViewModel =new TeamBuildingViewModel();
 			
-			result.
+			result.exportFromManagerModel(_user);
 			
 			return result;
 		}

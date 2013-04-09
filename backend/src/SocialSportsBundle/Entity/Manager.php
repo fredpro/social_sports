@@ -4,8 +4,9 @@ namespace Projects\SocialSportsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Projects\SocialSportsBundle\Entity\People;
-// use JMS\Serializer\Annotation\ExclusionPolicy;
-// use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Projects\SocialSportsBundle\Entity\ManagerRepository")
@@ -14,12 +15,13 @@ use Projects\SocialSportsBundle\Entity\People;
 class Manager
 {
     //--------------------------------------------------------------------
-    // ATTRIBUTES
+    // VARIABLES
     //--------------------------------------------------------------------
 
     /**
      * @ORM\Id
      * @ORM\Column(name="facebook_id", length=45)
+     * @Exclude
      */
     protected $facebookId;
 
@@ -35,24 +37,9 @@ class Manager
     protected $xp;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $level;
-
-    /**
      * @ORM\Column(type="integer")
      */
     protected $coins;
-
-    /**
-     * @ORM\Column(type="json_array", name="locked_players")
-     */
-    protected $lockedPlayers;
-
-    /**
-     * @ORM\Column(type="json_array", name="unlocked_players")
-     */
-    protected $unlockedPlayers;
 
     /**
      * @ORM\Column(type="smallint")
@@ -60,9 +47,38 @@ class Manager
     protected $unlockingProgress;
 
     /**
-     * @ORM\OneToOne(targetEntity="FootballTeam", mappedBy="manager")
+    * @ORM\ManyToMany(targetEntity="People", inversedBy="linkedManagers")
+    * @ORM\JoinTable(name="manager_locked_people",
+    *  joinColumns={@ORM\JoinColumn(name="manager_id", referencedColumnName="facebook_id")},
+    *  inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="facebook_id")}
+    * )
+    */
+    protected $lockedPlayers;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Player", inversedBy="managers")
+    * @ORM\JoinTable(name="manager_unlocked_players",
+    *  joinColumns={@ORM\JoinColumn(name="manager_id", referencedColumnName="facebook_id")},
+    *  inverseJoinColumns={@ORM\JoinColumn(name="people_id", referencedColumnName="facebook_id")}
+    * )
+    */
+    protected $unlockedPlayers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="manager", cascade={"persist", "remove"})
      **/
-    protected $footballTeam;
+    protected $teams;
+
+    //--------------------------------------------------------------------
+    // CONSTRUCTOR
+    //--------------------------------------------------------------------
+
+    public function __construct()
+    {
+        $this->lockedPlayers = new ArrayCollection();
+        $this->unlockedPlayers = new ArrayCollection();
+        $this->teams = new ArrayCollection();
+    }
 
     //--------------------------------------------------------------------
     // GETTERS AND SETTERS
@@ -92,6 +108,29 @@ class Manager
     }
 
     /**
+     * Set people
+     *
+     * @param \Projects\SocialSportsBundle\Entity\People $people
+     * @return Manager
+     */
+    public function setPeople(\Projects\SocialSportsBundle\Entity\People $people = null)
+    {
+        $this->people = $people;
+
+        return $this;
+    }
+
+    /**
+     * Get people
+     *
+     * @return \Projects\SocialSportsBundle\Entity\People
+     */
+    public function getPeople()
+    {
+        return $this->people;
+    }
+
+    /**
      * Set xp
      *
      * @param integer $xp
@@ -112,29 +151,6 @@ class Manager
     public function getXp()
     {
         return $this->xp;
-    }
-
-    /**
-     * Set level
-     *
-     * @param integer $level
-     * @return Manager
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
     }
 
     /**
@@ -161,75 +177,6 @@ class Manager
     }
 
     /**
-     * Set lockedPlayers
-     *
-     * @param array $lockedPlayers
-     * @return Manager
-     */
-    public function setLockedPlayers($lockedPlayers)
-    {
-        $this->lockedPlayers = $lockedPlayers;
-
-        return $this;
-    }
-
-    /**
-     * Get lockedPlayers
-     *
-     * @return array
-     */
-    public function getLockedPlayers()
-    {
-        return $this->lockedPlayers;
-    }
-
-    /**
-     * Set unlockedPlayers
-     *
-     * @param array $unlockedPlayers
-     * @return Manager
-     */
-    public function setUnlockedPlayers($unlockedPlayers)
-    {
-        $this->unlockedPlayers = $unlockedPlayers;
-
-        return $this;
-    }
-
-    /**
-     * Get unlockedPlayers
-     *
-     * @return array
-     */
-    public function getUnlockedPlayers()
-    {
-        return $this->unlockedPlayers;
-    }
-
-    /**
-     * Set people
-     *
-     * @param \Projects\SocialSportsBundle\Entity\People $people
-     * @return Manager
-     */
-    public function setPeople(\Projects\SocialSportsBundle\Entity\People $people = null)
-    {
-        $this->people = $people;
-
-        return $this;
-    }
-
-    /**
-     * Get people
-     *
-     * @return \Projects\SocialSportsBundle\Entity\People
-     */
-    public function getPeople()
-    {
-        return $this->people;
-    }
-
-    /**
      * Set unlockingProgress
      *
      * @param integer $unlockingProgress
@@ -253,42 +200,157 @@ class Manager
     }
 
     /**
-     * Set footballTeam
+     * Set lockedPlayers
      *
-     * @param \Projects\SocialSportsBundle\Entity\FootballTeam $footballTeam
+     * @param ArrayCollection $lockedPlayers
      * @return Manager
      */
-    public function setFootballTeam(\Projects\SocialSportsBundle\Entity\FootballTeam $footballTeam = null)
+    public function setLockedPlayers($lockedPlayers)
     {
-        $this->footballTeam = $footballTeam;
+        $this->lockedPlayers = $lockedPlayers;
 
         return $this;
     }
 
     /**
-     * Get footballTeam
+     * Get lockedPlayers
      *
-     * @return \Projects\SocialSportsBundle\Entity\FootballTeam
+     * @return ArrayCollection
      */
-    public function getFootballTeam()
+    public function getLockedPlayers()
     {
-        return $this->footballTeam;
+        return $this->lockedPlayers;
     }
 
-    public function toJSON()
+    /**
+     * Set unlockedPlayers
+     *
+     * @param ArrayCollection $unlockedPlayers
+     * @return Manager
+     */
+    public function setUnlockedPlayers($unlockedPlayers)
     {
-        return json_encode(
-            array(
-                'facebookId' => $this->facebookId,
-                'nickname'=> $this->people->getNickname(),
-                'xp' => $this->xp,
-                'level' => $this->level,
-                'coins' => $this->coins,
-                'unlockingProgress' => $this->unlockingProgress,
-                'lockedPlayers' => $this->lockedPlayers,
-                'unlockedPlayers' => $this->unlockedPlayers,
-                'footballTeam' => $this->footballTeam
-            )
-        );
+        $this->unlockedPlayers = $unlockedPlayers;
+
+        return $this;
+    }
+
+    /**
+     * Get unlockedPlayers
+     *
+     * @return ArrayCollection
+     */
+    public function getUnlockedPlayers()
+    {
+        return $this->unlockedPlayers;
+    }
+
+    /**
+     * Set teams
+     *
+     * @param ArrayCollection $teams
+     * @return Manager
+     */
+    public function setTeams($teams)
+    {
+        $this->teams = $teams;
+
+        return $this;
+    }
+
+    /**
+     * Get teams
+     *
+     * @return ArrayCollection
+     */
+    public function getTeams()
+    {
+        return $this->teams;
+    }
+
+    //----------------------------------------------
+    // PUBLIC METHODS
+    //----------------------------------------------
+
+    /**
+     * adds a player to the unlockedPlayers list. If the player has just been created, we save some time and add it directly.
+     * If he is not new, we check if he soesn't already exists in the list (shouldn't happen, but we never know).
+     * If we may add him to the list, we remove the corresponding people from the lockedPlayers list if he exists in there.
+     * @param Player $player the player we want to add to the unlockedPlayers list
+     * @param bool $isNew  A boolean value indicating if the player has just been created, so we don't need to make all the checks
+     */
+    public function addUnlockedPlayer($player, $isNew = false)
+    {
+        if (!$isNew)
+        {
+            if (!$this->unlockedPlayers->contains($player))
+            {
+                $l = sizeof($lockedPlayers);
+                for($i = 0; $i < l; $i++)
+                {
+                    $pl = $this->lockedPlayers[i];
+                    if ($pl->getFacebookId() == $player->getFacebookId())
+                    {
+                        $this->lockedPlayers->remove($i);
+                        break;
+                    }
+                }
+
+                $this->unlockedPlayers[] = $player;
+            }
+        }
+        else
+        {
+            $this->unlockedPlayers[] = $player;
+        }
+        $player->addManager($this);
+    }
+
+    /**
+     * adds a player to the lockedPlayers list. If the player has just been created, we save some time and add it directly.
+     * If he is not new, we check if he doesn't already exists in the list (shouldn't happen, but we never know).
+     * @param Player $player the player we want to add to the lockedPlayers list
+     * @param bool $isNew  A boolean value indicating if the player has just been created, so we don't need to make all the checks
+     */
+    public function addLockedPlayer($player, $isNew = false)
+    {
+        $newPeople = $player->getPeople();
+        if (!$isNew)
+        {
+            if (!$this->lockedPlayers->contains($newPeople))
+            {
+
+
+                $this->lockedPlayers[] = $newPeople;
+            }
+        }
+        else
+        {
+            $this->lockedPlayers[] = $newPeople;
+        }
+        $newPeople->addLinkedManager($this);
+    }
+
+    /**
+     * adds a team to the teams list
+     * @param Player $player the player we want to add to the lockedPlayers list
+     * @param bool $isNew  A boolean value indicating if the player has just been created, so we don't need to make all the checks
+     */
+    public function addTeam($team, $isNew = false)
+    {
+        if (!$isNew)
+        {
+            if (!$this->teams->contains($team))
+            {
+
+
+                $this->teams[] = $team;
+            }
+        }
+        else
+        {
+            $this->teams[] = $team;
+        }
+        $team->setManager($this);
     }
 }

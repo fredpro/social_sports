@@ -13,7 +13,11 @@ package models
 		//------------------
 		private var _facebookId:String;
 		
+		private var _name:String;
+		
 		private var _nickname:String;
+		
+		private var _pictureUrl:String;
 		
 		private var _level:int;
 		
@@ -29,7 +33,7 @@ package models
 		//------------------
 		
 		/**
-		 * The facebook id of the manager
+		 * The facebook id of the player
 		 */
 		public function get facebookId():String
 		{
@@ -37,7 +41,15 @@ package models
 		}
 		
 		/**
-		 * The nickname of the manager (given by himself)
+		 * The name of the player
+		 */
+		public function get name():String
+		{
+			return _name;
+		}
+		
+		/**
+		 * The nickname of the player
 		 */
 		public function get nickname():String
 		{
@@ -45,7 +57,15 @@ package models
 		}
 		
 		/**
-		 * The level of the manager
+		 * The url of the facebook avatar of the player
+		 */
+		public function get pictureUrl():String
+		{
+			return _pictureUrl;
+		}
+		
+		/**
+		 * The level of the player
 		 */
 		public function get level():int
 		{
@@ -72,7 +92,9 @@ package models
 		public function update(vo:PlayerVO):void
 		{
 			_facebookId = vo.facebookId;
+			_name = vo.name;
 			_nickname = vo.nickname;
+			_pictureUrl = vo.pictureUrl;
 			_level = vo.level;
 			_attributes = vo.attributes;
 		}
