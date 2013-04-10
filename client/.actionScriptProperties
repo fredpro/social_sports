@@ -30,7 +30,7 @@
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/Facebook Web API/bin/Facebook Web API.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/Starling/bin/Starling.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/CommonSDK/bin/CommonSDK.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/CustomSDK/bin/CustomSDK.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

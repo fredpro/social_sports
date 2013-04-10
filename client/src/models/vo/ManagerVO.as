@@ -1,26 +1,11 @@
 package models.vo
 {
-	public class ManagerVO
-	{
-		/**
-		 * The facebook id of the manager
-		 */
-		public var facebookId:String;
-		
-		/**
-		 * The nickname of the manager (given by himself)
-		 */
-		public var nickname:String;
-		
+	public class ManagerVO extends UserVO
+	{		
 		/**
 		 * The XP of the manager
 		 */
 		public var xp:int;
-		
-		/**
-		 * The level of the manager
-		 */
-		public var level:int;
 		
 		/**
 		 * The number of coins of the manager
@@ -33,9 +18,9 @@ package models.vo
 		public var unlockingProgress:int;
 		
 		/**
-		 * The ordered list of players still to be unlocked (in the same order that they are supposed to be unlocked)
+		 * The ordered list of players still to be unlocked (in the same order that they are supposed to be unlocked). These are only users as their attributes must not be sent to the client to avoid 'hacking'
 		 */
-		public var lockedPlayers:Vector.<PlayerVO>;
+		public var lockedPlayers:Vector.<UserVO>;
 		
 		/**
 		 * The list of players unlocked, and thus available to add to any team
@@ -49,29 +34,27 @@ package models.vo
 		
 		public function ManagerVO(data:Object)
 		{
-			facebookId = data.facebookId;
-			nickname = data.nickname;
-			xp = data.xp;
-			level = data.level;
-			coins = data.coins;
+			super(data.people);
 			
-			var l:int = data.lockedPlayers.length;
-			lockedPlayers = new Vector.<PlayerVO>(l);
+			xp = data.xp;
+			coins = data.coins;			
+			unlockingProgress = data.unlocking_progress;
+			
+			var l:int = data.locked_players.length;
+			lockedPlayers = new Vector.<UserVO>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				var player:PlayerVO = new PlayerVO(data.lockedPlayers[i]);
-				lockedPlayers[i] = player;
+				var user:UserVO = new UserVO(data.locked_players[i].people);
+				lockedPlayers[i] = user;
 			}
 			
-			l = data.unlockedPlayers.length;
+			l = data.unlocked_players.length;
 			unlockedPlayers = new Vector.<PlayerVO>(l);
 			for (i = 0; i < l; i++)
 			{
-				player = new PlayerVO(data.unlockedPlayers[i]);
+				var player:PlayerVO = new PlayerVO(data.unlocked_players[i]);
 				unlockedPlayers[i] = player;
 			}
-			
-			unlockingProgress = data.unlockingProgress;
 			
 			l = data.teams.length;
 			teams = new Vector.<TeamVO>(l);

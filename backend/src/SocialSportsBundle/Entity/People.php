@@ -45,9 +45,9 @@ class People
     protected $level;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Manager", mappedBy="lockedPlayers")
-    * @Exclude
-    */
+     * @ORM\OneToMany(targetEntity="ManagerToLockedPeople", mappedBy="people")
+     * @Exclude
+     **/
     protected $linkedManagers;
 
     //--------------------------------------------------------------------
@@ -207,13 +207,22 @@ class People
 
     /**
      * adds a manager as one of the people's manager.
-     * @param Manager $manager the manager which will added to the managers list
+     * @param ManagerToLockedPeople $relation the relation entity between the current people and a manager
      */
-    public function addLinkedManager($manager)
+    public function addLinkedManager($relation)
     {
-        if (!$this->linkedManagers->contains($manager))
+        if ($relation != null)
         {
-            $this->linkedManagers[] = $manager;
+            $this->linkedManager[] = $relation;
         }
+    }
+
+    /**
+     * Removes a relation between a manager and a people through the manager's lockedPeople list
+     * @param  ManagerToLockedPeople $relation the relation between a manager and a people
+     */
+    public function removeManagerRelation($relation)
+    {
+        $this->linkedManagers->removeElement($relation);
     }
 }

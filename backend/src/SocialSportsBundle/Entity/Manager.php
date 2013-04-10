@@ -47,12 +47,8 @@ class Manager
     protected $unlockingProgress;
 
     /**
-    * @ORM\ManyToMany(targetEntity="People", inversedBy="linkedManagers")
-    * @ORM\JoinTable(name="manager_locked_people",
-    *  joinColumns={@ORM\JoinColumn(name="manager_id", referencedColumnName="facebook_id")},
-    *  inverseJoinColumns={@ORM\JoinColumn(name="player_id", referencedColumnName="facebook_id")}
-    * )
-    */
+     * @ORM\OneToMany(targetEntity="ManagerToLockedPeople", mappedBy="manager")
+     **/
     protected $lockedPlayers;
 
     /**
@@ -279,31 +275,21 @@ class Manager
      * @param Player $player the player we want to add to the unlockedPlayers list
      * @param bool $isNew  A boolean value indicating if the player has just been created, so we don't need to make all the checks
      */
-    public function addUnlockedPlayer($player, $isNew = false)
+    public function addUnlockedPlayer($em, $player, $isNew = false)
     {
         if (!$isNew)
         {
             if (!$this->unlockedPlayers->contains($player))
             {
-                $l = sizeof($lockedPlayers);
-                for($i = 0; $i < l; $i++)
-                {
-                    $pl = $this->lockedPlayers[i];
-                    if ($pl->getFacebookId() == $player->getFacebookId())
-                    {
-                        $this->lockedPlayers->remove($i);
-                        break;
-                    }
-                }
+                $this->breakManagerToLockedPeopleRelation($em, $player);
 
-                $this->unlockedPlayers[] = $player;
+                $this->createManagerToPlayerRelation($em, $player);
             }
         }
         else
         {
-            $this->unlockedPlayers[] = $player;
+            $this->createManagerToPlayerRelation($em, $player);
         }
-        $player->addManager($this);
     }
 
     /**
@@ -312,23 +298,24 @@ class Manager
      * @param Player $player the player we want to add to the lockedPlayers list
      * @param bool $isNew  A boolean value indicating if the player has just been created, so we don't need to make all the checks
      */
-    public function addLockedPlayer($player, $isNew = false)
+    public function addLockedPeople($em, $player, $isNew = false)
     {
         $newPeople = $player->getPeople();
         if (!$isNew)
         {
-            if (!$this->lockedPlayers->contains($newPeople))
+            if (!$this->lockedPlayers->exists(function($key, $lockedPeople) use ($newPeople) {
+                        return $lockedPeople->getPeople()->getFacebookId() == $newPeople->getFacebookId();
+                    }
+                )
+            )
             {
-
-
-                $this->lockedPlayers[] = $newPeople;
+                $this->createManagerToLockedPeopleRelation($em, $newPeople);
             }
         }
         else
         {
-            $this->lockedPlayers[] = $newPeople;
+            $this->createManagerToLockedPeopleRelation($em, $newPeople);
         }
-        $newPeople->addLinkedManager($this);
     }
 
     /**
@@ -336,7 +323,7 @@ class Manager
      * @param Player $player the player we want to add to the lockedPlayers list
      * @param bool $isNew  A boolean value indicating if the player has just been created, so we don't need to make all the checks
      */
-    public function addTeam($team, $isNew = false)
+    public function addTeam($em, $team, $isNew = false)
     {
         if (!$isNew)
         {
@@ -352,5 +339,43 @@ class Manager
             $this->teams[] = $team;
         }
         $team->setManager($this);
+    }
+
+    //------------------------------------------------------
+    // PRIVATE METHODS
+    //------------------------------------------------------
+
+    private function breakManagerToLockedPeopleRelation($em, $newPeople)
+    {
+        $l = sizeof($this->lockedPlayers);
+        for($i = 0; $i < $l; $i++)
+        {
+            $pl = $this->lockedPlayers[$i]->getPeople();
+            if ($pl->getFacebookId() == $newPeople->getFacebookId())
+            {
+                $pl->removeManagerRelation($this->lockedPlayers[$i]);
+                $em->remove($this->lockedPlayers[$i]);
+                $this->lockedPlayers->remove($i);
+                break;
+            }
+        }
+    }
+
+    private function createManagerToLockedPeopleRelation($em, $newPeople)
+    {
+        $managerToLockedPeople = new ManagerToLockedPeople($this, $newPeople);
+        $this->lockedPlayers[] = $managerToLockedPeople;
+        $newPeople->addLinkedManager($managerToLockedPeople);
+        $em->persist($managerToLockedPeople);
+        $em->persist($newPeople);
+        $em->persist($this);
+    }
+
+    private function createManagerToPlayerRelation($em, $newPlayer)
+    {
+        $this->unlockedPlayers[] = $newPlayer;
+        $newPlayer->addManager($this);
+        $em->persist($newPlayer);
+        $em->persist($this);
     }
 }

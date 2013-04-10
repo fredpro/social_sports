@@ -1,6 +1,7 @@
 package models
 {	
 	import models.vo.ManagerVO;
+	import models.vo.UserVO;
 	
 	import views.models.TeamBuildingViewModel;
 
@@ -13,17 +14,11 @@ package models
 		//------------------
 		// VARIABLES
 		//------------------
-		private var _facebookId:String;
-		
-		private var _nickname:String;
-		
 		private var _xp:int;
-		
-		private var _level:int;
 		
 		private var _coins:int;
 		
-		private var _lockedPlayers:Vector.<PlayerModel>;
+		private var _lockedPlayers:Vector.<UserModel>;
 		
 		private var _unlockedPlayers:Vector.<PlayerModel>;
 		
@@ -41,35 +36,11 @@ package models
 		//------------------
 
 		/**
-		 * The facebook id of the manager
-		 */
-		public function get facebookId():String
-		{
-			return _facebookId;
-		}
-
-		/**
-		 * The nickname of the manager (given by himself)
-		 */
-		public function get nickname():String
-		{
-			return _nickname;
-		}
-
-		/**
 		 * The XP of the manager
 		 */
 		public function get xp():int
 		{
 			return _xp;
-		}
-
-		/**
-		 * The level of the manager
-		 */
-		public function get level():int
-		{
-			return _level;
 		}
 
 		/**
@@ -81,9 +52,9 @@ package models
 		}
 
 		/**
-		 * The ordered list of players still to be unlocked (in the same order that they are supposed to be unlocked)
+		 * The ordered list of users still to be unlocked (in the same order that they are supposed to be unlocked)
 		 */
-		public function get lockedPlayers():Vector.<PlayerModel>
+		public function get lockedPlayers():Vector.<UserModel>
 		{
 			return _lockedPlayers;
 		}
@@ -122,30 +93,30 @@ package models
 		 * @param vo the ManagerVO which comes from the server (or has been created from a JSON object)
 		 * 
 		 */
-		public function update(vo:ManagerVO):void
+		override public function update(uservo:UserVO):void
 		{
-			_facebookId = vo.facebookId;
-			_nickname = vo.nickname;
+			super.update(uservo);
+			
+			var vo:ManagerVO = uservo as ManagerVO;
 			_xp = vo.xp;
-			_level = vo.level;
 			_coins = vo.coins;
 			_unlockingProgress = vo.unlockingProgress;
 			
 			// #TODO : find the best solution to reuse existing PlayerModel, and use same reference for several Managers
 			var l:int = vo.lockedPlayers.length;
-			_lockedPlayers = new Vector.<PlayerModel>(l);
+			_lockedPlayers = new Vector.<UserModel>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				var player:PlayerModel = new PlayerModel();
-				player.update(vo.lockedPlayers[i]);
-				_lockedPlayers[i] = player;
+				var user:UserModel = new UserModel();
+				user.update(vo.lockedPlayers[i]);
+				_lockedPlayers[i] = user;
 			}
 			
 			l = vo.unlockedPlayers.length;
 			_unlockedPlayers = new Vector.<PlayerModel>(l);
 			for (i = 0; i < l; i++)
 			{
-				player = new PlayerModel();
+				var player:PlayerModel = new PlayerModel();
 				player.update(vo.unlockedPlayers[i]);
 				_unlockedPlayers[i] = player;
 			}

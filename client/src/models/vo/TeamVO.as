@@ -4,18 +4,24 @@ package models.vo
 
 	public class TeamVO
 	{
+		/**
+		 * The id of the sport represented by this team
+		 */
 		public var sportId:int;
 		
+		/**
+		 * The list of players' facebook id which are currently in the team. The players shall be found in the manager's unlockedPlayers list
+		 */
 		public var players:Vector.<String>;
 		
 		public function TeamVO(data:Object)
 		{
-			sportId = data.sportId;
-			var l:int = Constants.TEAM_SIZE[sportId];
+			sportId = data.sport_id;
+			var l:int = data.players.length;
 			players = new Vector.<String>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				players[i] = data["playerId_" + (i+1)];
+				players[i] = data.players[i];
 			}
 		}
 	}

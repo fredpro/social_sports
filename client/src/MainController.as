@@ -2,7 +2,7 @@ package
 {
 	import amfvo.ResponseVo;
 	
-	import com.mxp4.app.starling.MasterClass;
+	import com.fourcade.app.starling.MasterClass;
 	
 	import controllers.TeamBuildingController;
 	
@@ -96,7 +96,7 @@ package
 		{
 			trace("data = ", data.result);
 			
-			_model.updateUser(new ManagerVO(data.result));
+			_model.updateManager(new ManagerVO(data.result));
 			
 			_teamBuildingController.initView(_model.createTeamBuildingViewModel());
 		}

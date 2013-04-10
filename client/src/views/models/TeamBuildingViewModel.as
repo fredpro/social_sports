@@ -1,9 +1,10 @@
 package views.models
 {
-	import com.mxp4.app.starling.MasterClass;
+	import com.fourcade.app.starling.MasterClass;
 	
 	import models.ManagerModel;
 	import models.PlayerModel;
+	import models.UserModel;
 	
 	public class TeamBuildingViewModel extends MasterClass
 	{
@@ -14,9 +15,10 @@ package views.models
 		//------------------
 		// VARIABLES
 		//------------------
-		private var _unlockedPlayers:Vector.<TeamBuildingViewPlayer>;
-		private var _lockedPlayers:Vector.<TeamBuildingViewPlayer>;
-		private var _teams:Vector.<Vector.<TeamBuildingViewPlayer>>;
+		private var _unlockedPlayers:Vector.<TeamBuildingViewUser>;
+		private var _lockedPlayers:Vector.<TeamBuildingViewUser>;
+		private var _teams:Vector.<Vector.<TeamBuildingViewUser>>;
+		private var _teamsId:Vector.<int>;
 		
 		public function TeamBuildingViewModel()
 		{
@@ -26,53 +28,37 @@ package views.models
 		//------------------
 		// GETTERS AND SETTERS
 		//------------------
-		
+
 		/**
 		 * The list of unlocked players that the manager can add to his teams. The players are instances of TeamBuildingViewPlayer.
 		 */
-		public function get unlockedPlayers():Vector.<TeamBuildingViewPlayer>
+		public function get unlockedPlayers():Vector.<TeamBuildingViewUser>
 		{
 			return _unlockedPlayers;
 		}
 
 		/**
-		 * @private
-		 */
-		public function set unlockedPlayers(value:Vector.<TeamBuildingViewPlayer>):void
-		{
-			_unlockedPlayers = value;
-		}
-
-		/**
 		 * The list of locked players that the manager can add to his teams. The players are instances of TeamBuildingViewPlayer.
 		 */
-		public function get lockedPlayers():Vector.<TeamBuildingViewPlayer>
+		public function get lockedPlayers():Vector.<TeamBuildingViewUser>
 		{
 			return _lockedPlayers;
 		}
 
 		/**
-		 * @private
-		 */
-		public function set lockedPlayers(value:Vector.<TeamBuildingViewPlayer>):void
-		{
-			_lockedPlayers = value;
-		}
-
-		/**
 		 * The list of teams belonging to the manager. Each team is a list of TeamBuildingViewPlayer (which are the same instances from the _unlockedPlayers and _lockedPlayers variables).
 		 */
-		public function get teams():Vector.<Vector.<TeamBuildingViewPlayer>>
+		public function get teams():Vector.<Vector.<TeamBuildingViewUser>>
 		{
 			return _teams;
 		}
-
+		
 		/**
-		 * @private
+		 * The sport ids of the team displayed in the TeamBuildingView. It goes along with the _teams vector.
 		 */
-		public function set teams(value:Vector.<Vector.<TeamBuildingViewPlayer>>):void
+		public function get teamsId():Vector.<int>
 		{
-			_teams = value;
+			return _teamsId;
 		}
 		
 		//------------------
@@ -89,72 +75,63 @@ package views.models
 			var result:TeamBuildingViewModel = new TeamBuildingViewModel();
 			
 			var l:int = manager.unlockedPlayers.length;
-			_unlockedPlayers = new Vector.<TeamBuildingViewPlayer>(l);
+			_unlockedPlayers = new Vector.<TeamBuildingViewUser>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				var src:PlayerModel = manager.unlockedPlayers[i];
-				var player:TeamBuildingViewPlayer = new TeamBuildingViewPlayer(src.facebookId, src.name, src.nickname, src.level, src.pictureUrl);
-				_unlockedPlayers[i] = player;
+				var unlockedPlayer:PlayerModel = manager.unlockedPlayers[i];
+				var user:TeamBuildingViewUser = new TeamBuildingViewUser(unlockedPlayer.facebookId, unlockedPlayer.name, unlockedPlayer.nickname, unlockedPlayer.level, unlockedPlayer.pictureUrl);
+				_unlockedPlayers[i] = user;
 			}
 			
 			l = manager.lockedPlayers.length;
-			_lockedPlayers = new Vector.<TeamBuildingViewPlayer>(l);
+			_lockedPlayers = new Vector.<TeamBuildingViewUser>(l);
 			for (i = 0; i < l; i++)
 			{
-				src = manager.lockedPlayers[i];
-				player = new TeamBuildingViewPlayer(src.facebookId, src.name, src.nickname, src.level, src.pictureUrl);
-				_lockedPlayers[i] = player;
+				var lockedUser:UserModel = manager.lockedPlayers[i];
+				user = new TeamBuildingViewUser(lockedUser.facebookId, lockedUser.name, lockedUser.nickname, lockedUser.level, lockedUser.pictureUrl);
+				_lockedPlayers[i] = user;
+			}
+			
+			l = manager.teams.length;
+			_teams = new Vector.<Vector.<TeamBuildingViewUser>>(l);
+			_teamsId = new Vector.<int>(l);
+			for (i = 0; i < l; i++)
+			{
+				_teamsId[i] = manager.teams[i].sportId;
+				
+				var tl:int = manager.teams[i].players.length;
+				_teams[i] = new Vector.<TeamBuildingViewUser>(tl);
+				for (var j:int = 0; j < tl; j++)
+				{
+					if (manager.teams[i].players[j] != null)
+					{
+						_teams[i][j] = getUnlockedPlayerFromId(manager.teams[i].players[j].facebookId);
+					}
+				}
 			}
 			
 			return result;
 		}
-	}
-}
-
-/**
- * Internal class used to store only useful data copied from PlayerModel's instances
- * @author Fred
- * 
- */
-class TeamBuildingViewPlayer
-{
-	private var _facebookId:String;
-	private var _name:String;
-	private var _nickname:String;
-	private var _level:int;
-	private var _pictureUrl:String;
-	
-	public function TeamBuildingViewPlayer(facebookId:String, name:String, nickname:String, level:int, pictureUrl:String):void
-	{
-		_facebookId = facebookId;
-		_name = name;
-		_nickname = nickname;
-		_level = level;
-		_pictureUrl = pictureUrl;
-	}
-
-	public function get facebookId():String
-	{
-		return _facebookId;
-	}
-
-	public function get name():String
-	{
-		return _name;
-	}
-
-	public function get nickname():String
-	{
-		return _nickname;
-	}
-
-	public function get level():int
-	{
-		return _level;
-	}
-
-	public function get pictureUrl():String
-	{
-		return _pictureUrl;
+		
+		//----------------------------------------
+		// PRIVATE METHODS
+		//----------------------------------------
+		
+		private function getUnlockedPlayerFromId(id:String):TeamBuildingViewUser
+		{
+			var result:TeamBuildingViewUser = null;
+			
+			var l:int = _unlockedPlayers.length;
+			for (var i:int = 0; (i < l && result == null); i++)
+			{
+				var user:TeamBuildingViewUser = _unlockedPlayers[i];
+				if (user.facebookId == id)
+				{
+					result = user;
+				}
+			}
+			
+			return result;
+		}
 	}
 }

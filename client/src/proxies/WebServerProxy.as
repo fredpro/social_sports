@@ -5,8 +5,8 @@ package proxies
     
     import amfvo.ResponseVo;
     
-    import com.mxp4.app.starling.proxy.AbstractProxy;
-    import com.mxp4.utils.StringUtils;
+    import com.fourcade.app.starling.proxy.AbstractProxy;
+    import com.fourcade.utils.StringUtils;
     
     import enums.Constants;
     

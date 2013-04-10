@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"mana",
+				"managers"
+			],
+			[
 				"getUnloc",
 				"getUnlockedPlayers"
 			],
@@ -99,7 +103,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 			"settings":
 			{
-				"buffer_size": 12268,
+				"buffer_size": 11886,
 				"line_ending": "Unix"
 			}
 		},
@@ -115,7 +119,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
 			"settings":
 			{
-				"buffer_size": 5941,
+				"buffer_size": 8662,
 				"line_ending": "Unix"
 			}
 		},
@@ -131,7 +135,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Player.php",
 			"settings":
 			{
-				"buffer_size": 2741,
+				"buffer_size": 3621,
 				"line_ending": "Unix"
 			}
 		},
@@ -139,7 +143,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
 			"settings":
 			{
-				"buffer_size": 2480,
+				"buffer_size": 4256,
 				"line_ending": "Unix"
 			}
 		},
@@ -312,6 +316,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"level",
+			"setLevel",
 			"public",
 			"level",
 			"createManagerProfile",
@@ -388,7 +394,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -742,15 +748,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 					"settings":
 					{
-						"buffer_size": 12268,
+						"buffer_size": 11886,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3588,
-								3588
+								2851,
+								2858
 							]
 						],
 						"settings":
@@ -848,7 +854,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1089.0,
+						"translation.y": 771.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -974,15 +980,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
 					"settings":
 					{
-						"buffer_size": 5941,
+						"buffer_size": 8662,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								715,
-								715
+								8659,
+								8659
 							]
 						],
 						"settings":
@@ -1080,7 +1086,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4635.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1097,18 +1103,106 @@
 						"selection":
 						[
 							[
-								673,
-								673
+								2132,
+								2132
 							]
 						],
 						"settings":
 						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 966.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1118,15 +1212,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Player.php",
 					"settings":
 					{
-						"buffer_size": 2741,
+						"buffer_size": 3621,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								866,
-								866
+								1724,
+								1724
 							]
 						],
 						"settings":
@@ -1224,7 +1318,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 630.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1234,15 +1328,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
 					"settings":
 					{
-						"buffer_size": 2480,
+						"buffer_size": 4256,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								606,
-								606
+								3086,
+								3092
 							]
 						],
 						"settings":
@@ -1340,7 +1434,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1722.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

@@ -74,10 +74,11 @@ class UserController extends Controller
         }
 
         $serializer = $this->container->get('serializer');
-        // $responseObject = $manager;
+        $responseObject = $manager;
         $serializedResponseObject = $serializer->serialize($manager, 'json');
         $response = new Response($serializedResponseObject);
         $response->headers->set('Content-Type', 'application/json');
+        // $response = new Response(var_dump($manager));
         return $response;
     }
 
@@ -146,14 +147,12 @@ class UserController extends Controller
         // if the user has not enough friends to fill the initial number of unlockedPlayers, we put the user in the unlockedPlayers array
         if (sizeof($facebookFriends) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
         {
-            $manager->addUnlockedPlayer($player, $isNew);
-            $em->persist($player);
+            $manager->addUnlockedPlayer($em, $player, $isNew);
         }
         // else, we put him as the first entry in the lockedPlayers array
         else
         {
-            $manager->addLockedPeople($player, $isNew);
-            $em->persist($player->getPeople());
+            $manager->addLockedPeople($em, $player, $isNew);
         }
 
         // now we create a player for each one of the manager's friends
@@ -175,18 +174,16 @@ class UserController extends Controller
             }
             if (sizeof($manager->getUnlockedPlayers()) < self::INITIAL_NUMBER_OF_UNLOCKED_PLAYERS)
             {
-                $manager->addUnlockedPlayer($player, $isNew);
-                $em->persist($player);
+                $manager->addUnlockedPlayer($em, $player, $isNew);
             }
             else
             {
-                $manager->addLockedPeople($player, $isNew);
-                $em->persist($player->getPeople());
+                $manager->addLockedPeople($em, $player, $isNew);
             }
         }
 
         $footballteam = $this->createFootballTeam($manager);
-        $manager->addTeam($footballteam);
+        $manager->addTeam($em, $footballteam);
         // $em->persist($footballteam);
         $em->persist($manager);
 
