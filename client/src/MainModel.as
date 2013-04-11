@@ -6,6 +6,7 @@ package
 	import models.vo.ManagerVO;
 	
 	import views.models.TeamBuildingViewModel;
+	import models.PlayerModel;
 	
 	/**
 	* @author Fred
@@ -53,6 +54,19 @@ package
 			var result:TeamBuildingViewModel = new TeamBuildingViewModel();
 			
 			result.exportFromManagerModel(_manager);
+			
+			return result;
+		}
+		
+		/**
+		 * returns the player model instance whose details are to be displayed in the PlayerDetailView.
+		 * @param facebookId the id of the player to be displayed
+		 * @return A PlayerModel instance
+		 * 
+		 */
+		public function getPlayerDetails(facebookId:String):PlayerModel
+		{
+			var result:PlayerModel = _manager.getUnlockedPlayerById(facebookId);
 			
 			return result;
 		}

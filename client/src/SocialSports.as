@@ -1,5 +1,7 @@
 package
 {
+	import com.fourcade.resourcesManager.ResourcesManager;
+	
 	import enums.Constants;
 	
 	import flash.display.Sprite;
@@ -25,6 +27,8 @@ package
 		
 		private function onAddedToStage(e:Event):void
 		{
+			ResourcesManager.assetsListXmlPath = "./assets_list.xml";
+			
 			stage.scaleMode = StageScaleMode.NO_SCALE; 
 			// create our Starling instance 
 			_starling = new Starling(MainStarlingContainer, stage);

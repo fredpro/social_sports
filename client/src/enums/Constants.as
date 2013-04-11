@@ -8,6 +8,11 @@ package enums
         
 		public static const TEAM_SIZE:Array = [11];
 		public static const FOOTBALL_ID:int = 0;
-
+		
+		// atlas names
+		public static const PLAYER_PROFILE_ATLAS:String = "PlayerProfile";
+		
+		// Texture names
+		public static const PLAYER_PROFILE_BG:String = "bg_mc";
     }
 }

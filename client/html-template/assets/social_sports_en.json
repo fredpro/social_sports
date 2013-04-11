@@ -1,0 +1,12 @@
+{
+   "PLAYER_PROFILE_NAME": {"format":{"font":"Hobo Std"}, "content":"[%NAME%]"},
+   "PLAYER_PROFILE_AGE": {"format":{"font":"Hobo Std"}, "content":"[%AGE%] years old"},
+   "PLAYER_PROFILE_GENDER": {"format":{"font":"Hobo Std"}, "content":"[%GENDER%]"},
+   "PLAYER_PROFILE_LEVEL": {"format":{"font":"Hobo Std"}, "content":"Lvl\n[%LEVEL%]"},
+   "PLAYER_PROFILE_PHYSICAL_TITLE": {"format":{"font":"CollegiateHeavyOutline"}, "content":"Physical"},
+   "PLAYER_PROFILE_MENTAL_TITLE": {"format":{"font":"CollegiateHeavyOutline"}, "content":"Mental"},
+   "PLAYER_PROFILE_PHYSICAL_ATTRIBUTES": {"format":{"font":"Luckiest Guy"}, "content":"Acceleration\nAccuracy\nAgility\nFoot Dexterity\nHand Dexterity\nHead Dexterity\nJumping\nPace\nStamina\nStrength"},
+   "PLAYER_PROFILE_MENTAL_ATTRIBUTES": {"format":{"font":"Luckiest Guy"}, "content":"Anticipation\nComposure\nConcentration\nCreativity\nDetermination\nInfluence\nIntelligence\nLuck\nPositioning\nWork Rate"},
+   "PLAYER_PROFILE_PHYSICAL_VALUES": {"format":{"font":"Luckiest Guy"}, "content":"[%VALUES%]"},
+   "PLAYER_PROFILE_MENTAL_VALUES": {"format":{"font":"Luckiest Guy"}, "content":"[%VALUES%]"}
+}

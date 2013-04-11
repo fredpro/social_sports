@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"remove",
+				"removeElement  (function)"
+			],
+			[
+				"Mana",
+				"ManagerToLockedPeople  (class)"
+			],
+			[
 				"mana",
 				"managers"
 			],
@@ -103,7 +111,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 			"settings":
 			{
-				"buffer_size": 11886,
+				"buffer_size": 11791,
 				"line_ending": "Unix"
 			}
 		},
@@ -119,8 +127,16 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
 			"settings":
 			{
-				"buffer_size": 8662,
+				"buffer_size": 9625,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/ManagerToLockedPeople.php",
+			"settings":
+			{
+				"buffer_size": 2521,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -143,7 +159,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
 			"settings":
 			{
-				"buffer_size": 4256,
+				"buffer_size": 4596,
 				"line_ending": "Unix"
 			}
 		},
@@ -316,6 +332,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"$manager->",
+			"$lockedPlayers",
 			"level",
 			"setLevel",
 			"public",
@@ -748,15 +766,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 					"settings":
 					{
-						"buffer_size": 11886,
+						"buffer_size": 11791,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2851,
-								2858
+								1049,
+								1049
 							]
 						],
 						"settings":
@@ -854,7 +872,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 771.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -980,15 +998,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Manager.php",
 					"settings":
 					{
-						"buffer_size": 8662,
+						"buffer_size": 9625,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8659,
-								8659
+								7766,
+								7766
 							]
 						],
 						"settings":
@@ -1086,13 +1104,39 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4635.0,
+						"translation.y": 3801.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 6,
+					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/ManagerToLockedPeople.php",
+					"settings":
+					{
+						"buffer_size": 2521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								747,
+								754
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Team.php",
 					"settings":
 					{
@@ -1103,8 +1147,8 @@
 						"selection":
 						[
 							[
-								2132,
-								2132
+								673,
+								657
 							]
 						],
 						"settings":
@@ -1202,13 +1246,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 966.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/Player.php",
 					"settings":
 					{
@@ -1324,19 +1368,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Entity/People.php",
 					"settings":
 					{
-						"buffer_size": 4256,
+						"buffer_size": 4596,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3086,
-								3092
+								978,
+								978
 							]
 						],
 						"settings":
@@ -1434,13 +1478,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1722.0,
+						"translation.y": 210.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 10,
 					"file": "/C/wamp/www/Symfony/app/config/config.yml",
 					"settings":
 					{

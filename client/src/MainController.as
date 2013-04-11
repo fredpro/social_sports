@@ -3,6 +3,7 @@ package
 	import amfvo.ResponseVo;
 	
 	import com.fourcade.app.starling.MasterClass;
+	import com.fourcade.resourcesManager.EasySwfLoader;
 	
 	import controllers.TeamBuildingController;
 	
@@ -17,6 +18,12 @@ package
 	public class MainController extends MasterClass
 	{
 		//-----------------------------------------------
+		// CONSTANTS
+		//-----------------------------------------------
+		private static const NUMBER_OF_DOWNLOAD_ATTEMPTS:int = 4;
+		private static const DELAY_BETWEEN_DOWNLOAD_ATTEMPTS:int = 500; // in milliseconds
+		
+		//-----------------------------------------------
 		// VARIABLES
 		//-----------------------------------------------
 		private var _model:MainModel;
@@ -28,6 +35,9 @@ package
 			super();
 			setRootClip(rootClip);
 			debugMode = Constants.DEBUG_MODE;
+			EasySwfLoader.errorEventHandler = uncaughtErrorHandler;
+			EasySwfLoader.attemptsNumber = NUMBER_OF_DOWNLOAD_ATTEMPTS;
+			EasySwfLoader.attemptsDelay = DELAY_BETWEEN_DOWNLOAD_ATTEMPTS;
 			
 			_model = new MainModel();
 			_teamBuildingController = new TeamBuildingController(this);
