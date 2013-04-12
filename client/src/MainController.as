@@ -3,6 +3,7 @@ package
 	import amfvo.ResponseVo;
 	
 	import com.fourcade.app.starling.MasterClass;
+	import com.fourcade.lang.LanguageFile;
 	import com.fourcade.resourcesManager.EasySwfLoader;
 	
 	import controllers.TeamBuildingController;
@@ -43,6 +44,8 @@ package
 			_teamBuildingController = new TeamBuildingController(this);
 			_webServerProxy = new WebServerProxy(this);
 			_webServerProxy.getUserProfile(onUserProfileResponse);
+			
+			LanguageFile.getInstance().loadLanguageFile("SOCIAL_SPORTS_JSON");
 		}
 		
 		//-----------------------------------------------

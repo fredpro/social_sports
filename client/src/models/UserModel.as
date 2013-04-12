@@ -9,15 +9,15 @@ package models
 		//------------------
 		// VARIABLES
 		//------------------
-		private var _facebookId:String;
+		protected var _facebookId:String;
 		
-		private var _name:String;
+		protected var _name:String;
 		
-		private var _nickname:String;
+		protected var _nickname:String;
 		
-		private var _pictureUrl:String;
+		protected var _pictureUrl:String;
 		
-		private var _level:int;
+		protected var _level:int;
 		
 		public function UserModel()
 		{

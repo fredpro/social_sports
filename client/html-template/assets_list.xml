@@ -1,3 +1,5 @@
 <assets_list>
   <PLAYER_POPUP_SWF>./assets/PlayerPopup.swf</PLAYER_POPUP_SWF>
+  
+  <SOCIAL_SPORTS_JSON>./assets/social_sports_en.json</SOCIAL_SPORTS_JSON>
 </assets_list>

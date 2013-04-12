@@ -49,5 +49,18 @@ package models
 		}
 
 
+		public function replaceVariableInText(variableInText:String):String
+		{
+			var result:String = "";
+			
+			switch (variableInText)
+			{
+				case "NAME":
+					result = _name;
+					break;
+			}
+			
+			return result;
+		}
 	}
 }
