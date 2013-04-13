@@ -58,6 +58,23 @@ package models
 				case "NAME":
 					result = _name;
 					break;
+				case "AGE":
+					// #TODO : add age to UserModel
+					//result = _age;
+					break;
+				case "GENDER":
+					// #TODO : add gender to UserModel
+					//result = _gender;
+					break;
+				case "LEVEL":
+					result = String(_level);
+					break;
+				case "PHYSICAL_VALUES":
+					result = _attributes.slice(0, 10).join("\n");
+					break;
+				case "MENTAL_VALUES":
+					result = _attributes.slice(10).join("\n");
+					break;
 			}
 			
 			return result;

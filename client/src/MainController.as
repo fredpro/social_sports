@@ -9,6 +9,7 @@ package
 	import controllers.TeamBuildingController;
 	
 	import enums.Constants;
+	import enums.Resources;
 	
 	import models.vo.ManagerVO;
 	
@@ -46,6 +47,7 @@ package
 			_webServerProxy.getUserProfile(onUserProfileResponse);
 			
 			LanguageFile.getInstance().loadLanguageFile("SOCIAL_SPORTS_JSON");
+			Resources.initResources();
 		}
 		
 		//-----------------------------------------------
