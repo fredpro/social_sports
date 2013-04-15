@@ -16,6 +16,9 @@ package controllers
 		{
 			super(main);
 			_teamBuildingView = new TeamBuildingView(this);
+			_playerDetailsView = new PlayerDetailsView();
+			_playerDetailsView.initView();
+			_playerDetailsView.hide();
 		}
 		
 		//--------------------------------------------
@@ -38,12 +41,8 @@ package controllers
 		 */
 		public function onPlayerLineClicked(facebookId:String):void
 		{
-			if (_playerDetailsView != null)
-			{
-				_playerDetailsView.destroyView();
-			}
-			_playerDetailsView = new PlayerDetailsView();
-			_playerDetailsView.initView(_main.model.getPlayerDetails(facebookId));
+			_playerDetailsView.update(_main.model.getPlayerDetails(facebookId));
+			_playerDetailsView.show();
 		}
 	}
 }

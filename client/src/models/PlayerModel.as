@@ -53,6 +53,16 @@ package models
 		{
 			var result:String = "";
 			
+			var pos:int = variableInText.lastIndexOf("_");
+			if (pos > -1)
+			{
+				var id:int = parseInt(variableInText.substring(pos+1));
+				if (!isNaN(id))
+				{
+					variableInText = variableInText.substring(0, pos);
+				}
+			}
+			
 			switch (variableInText)
 			{
 				case "NAME":
@@ -70,10 +80,25 @@ package models
 					result = String(_level);
 					break;
 				case "PHYSICAL_VALUES":
-					result = _attributes.slice(0, 10).join("\n");
+					if (!isNaN(id))
+					{
+						result = String(_attributes[id-1]);
+					}
+					else
+					{
+						throw ("Error when accessing text variable " + variableInText + ". The id (number after last _) should be a number !");
+					}
 					break;
 				case "MENTAL_VALUES":
-					result = _attributes.slice(10).join("\n");
+					if (!isNaN(id))
+					{
+						result = String(_attributes[10 + id - 1]);
+					}
+					else
+					{
+						throw ("Error when accessing text variable " + variableInText + ". The id (number after last _) should be a number !");
+					}
+					break;
 					break;
 			}
 			

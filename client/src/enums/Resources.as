@@ -10,11 +10,11 @@ package enums
         [Embed(source='../../ressources/fonts/collegiateHeavyOutline Medium.ttf', embedAsCFF='false', mimeType="application/x-font-truetype", unicodeRange = "U+0020,U+0041-005A,U+0061-007A", fontName='CollegiateHeavyOutline')]
         public static var CollegiateHeavyOutline:Class;
 		
-		public static const LUCKIEST_FONT:Font = new LuckiestGuy();
-		public static const HOBO_STD_FONT:Font = new HoboStd();
-        public static const COLLEGIATE_HEAVY_OUTLINE_FONT:Font = new CollegiateHeavyOutline();
+//		public static const LUCKIEST_FONT:Font = new LuckiestGuy();
+//		public static const HOBO_STD_FONT:Font = new HoboStd();
+//        public static const COLLEGIATE_HEAVY_OUTLINE_FONT:Font = new CollegiateHeavyOutline();
 		
-		public static const fontList:Object = {"Hobo Std":HOBO_STD_FONT, "Luckiest Guy":LUCKIEST_FONT, "CollegiateHeavyOutline":COLLEGIATE_HEAVY_OUTLINE_FONT};
+//		public static const fontList:Object = {"Hobo Std":HOBO_STD_FONT, "Luckiest Guy":LUCKIEST_FONT, "CollegiateHeavyOutline":COLLEGIATE_HEAVY_OUTLINE_FONT};
 		
 		public static const VERDANA_FONT_NAME:String = "Verdana";
 		

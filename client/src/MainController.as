@@ -41,12 +41,11 @@ package
 			EasySwfLoader.attemptsNumber = NUMBER_OF_DOWNLOAD_ATTEMPTS;
 			EasySwfLoader.attemptsDelay = DELAY_BETWEEN_DOWNLOAD_ATTEMPTS;
 			
+			LanguageFile.getInstance().loadLanguageFile("SOCIAL_SPORTS_JSON");
+			
 			_model = new MainModel();
-			_teamBuildingController = new TeamBuildingController(this);
 			_webServerProxy = new WebServerProxy(this);
 			_webServerProxy.getUserProfile(onUserProfileResponse);
-			
-			LanguageFile.getInstance().loadLanguageFile("SOCIAL_SPORTS_JSON");
 			Resources.initResources();
 		}
 		
@@ -113,6 +112,7 @@ package
 			
 			_model.updateManager(new ManagerVO(data.result));
 			
+			_teamBuildingController = new TeamBuildingController(this);
 			_teamBuildingController.initView(_model.createTeamBuildingViewModel());
 		}
 		
