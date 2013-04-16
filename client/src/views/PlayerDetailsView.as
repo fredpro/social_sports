@@ -14,6 +14,7 @@ package views
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	import flash.text.Font;
 	import flash.text.TextFormat;
 	
@@ -23,6 +24,9 @@ package views
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
@@ -37,18 +41,24 @@ package views
 		private static const PLAYER_DATA_CONTAINER_POS_Y:int = 81;
 		private static const PLAYER_DATA_CONTAINER_ROT:int = -5;
 		private static const PLAYER_DATA_PICTURE_HOLDER_NAME:String = "PICTURE_HOLDER";
+		private static const PLAYER_SHADOW_OFFSET_POS_Y:int = 27;
+		private static const PREVENT_CLICK_ZONE_COLOR:uint = 0x000000;
+		private static const PREVENT_CLICK_ZONE_ALPHA:Number = 0.0;
 		
 		//-----------------------------------------------
 		// VARIABLES
 		//-----------------------------------------------
 		private var _controller:TeamBuildingController;
 		private var _model:PlayerModel;
+		private var _preventClickZone:Image;
 		private var _playerBg:Image;
+		private var _playerShadow:Image;
 		private var _dataContainer:Sprite;
 		
-		public function PlayerDetailsView()
+		public function PlayerDetailsView(controller:TeamBuildingController)
 		{
 			super();
+			_controller = controller;
 		}
 		
 		override public function destroyView():void
@@ -111,6 +121,43 @@ package views
 			_dataContainer.flatten();
 		}
 		
+		/**
+		 * Enables or disables click in the view
+		 * @param on Boolean value indicating if the clicks must be enabled or disabled
+		 * 
+		 */
+		public function setInteractivity(on:Boolean):void
+		{
+			if (on)
+			{
+				container.stage.addEventListener(TouchEvent.TOUCH, onStageTouched);
+			}
+			else
+			{
+				container.stage.removeEventListener(TouchEvent.TOUCH, onStageTouched);
+			}
+		}
+		
+		/**
+		 * Removes interactivity at the same time the view is hidden
+		 * 
+		 */
+		override public function hide():void
+		{
+			super.hide();
+			setInteractivity(false);
+		}
+		
+		/**
+		 * Sets the interactivity at the same time that the view is displayed
+		 * 
+		 */
+		override public function show():void
+		{
+			super.show();
+			setInteractivity(true);
+		}
+		
 		//-----------------------------------------------
 		// PRIVATE METHODS
 		//-----------------------------------------------
@@ -122,6 +169,13 @@ package views
 		
 		private function onResourcesLoaded():void
 		{
+			var bdt:BitmapData = new BitmapData(container.stage.stageWidth, container.stage.stageHeight, false, PREVENT_CLICK_ZONE_COLOR);
+			_preventClickZone = TextureManager.instance.imageFromBitmap(Constants.PREVENT_CLICK_ZONE_TEXTURE_NAME, new Bitmap(bdt), true);
+			bdt.dispose();
+			_preventClickZone.alpha = PREVENT_CLICK_ZONE_ALPHA;
+			_preventClickZone.touchable = true;
+			container.addChildAt(_preventClickZone, 0);
+			
 			var playerProfileContainer:Sprite = new Sprite();
 			container.addChild(playerProfileContainer);
 			var playerProfileTextureAtlas:TextureAtlas = TextureManager.instance.textureAtlasFromMovieClipContainer(ResourcesManager.getInstance().newMovieClip("McPlayerProfilePopupFinal"), Constants.PLAYER_PROFILE_ATLAS);
@@ -131,11 +185,18 @@ package views
 			_playerBg.x = playerProfileContainer.stage.stageWidth >> 1;
 			_playerBg.y = playerProfileContainer.stage.stageHeight >> 1;
 			playerProfileContainer.addChild(_playerBg);
+			_playerShadow = TextureManager.instance.imageFromTextureAtlas(Constants.PLAYER_PROFILE_ATLAS, Constants.PLAYER_PROFILE_SHADOWS);
+			_playerShadow.pivotX = _playerShadow.width >> 1;
+			_playerShadow.pivotY = _playerShadow.height >> 1;
+			_playerShadow.x = _playerBg.x;
+			_playerShadow.y = _playerBg.y + PLAYER_SHADOW_OFFSET_POS_Y;
+			playerProfileContainer.addChildAt(_playerShadow, 0);
 			
 			_dataContainer = new Sprite();
 			_dataContainer.x = _playerBg.x - _playerBg.width / 2 + PLAYER_DATA_CONTAINER_POS_X;
 			_dataContainer.y = _playerBg.y - _playerBg.height / 2 + PLAYER_DATA_CONTAINER_POS_Y;
 			_dataContainer.rotation = MathUtils.degreesToRadians(PLAYER_DATA_CONTAINER_ROT);
+			_dataContainer.touchable = false;
 			playerProfileContainer.addChild(_dataContainer);
 			
 			var mc:flash.display.MovieClip = ResourcesManager.getInstance().newMovieClip("McPlayerProfileDataReference");
@@ -207,6 +268,21 @@ package views
 			pictureHolder.visible = true;
 			
 			_dataContainer.flatten();
+		}
+		
+		private function onStageTouched(e:TouchEvent):void
+		{
+			var touch:Touch = e.getTouch(container.stage);
+			if (touch.phase == TouchPhase.ENDED && e.getTouch(_playerBg) == null)
+			{
+				// the player has clicked outside the player sheet, so we hide it
+				onClosePlayerDetails();
+			}
+		}
+		
+		private function onClosePlayerDetails():void
+		{
+			_controller.onClosePlayerDetails();
 		}
 	}
 }

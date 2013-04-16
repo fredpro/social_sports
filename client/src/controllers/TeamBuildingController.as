@@ -16,7 +16,7 @@ package controllers
 		{
 			super(main);
 			_teamBuildingView = new TeamBuildingView(this);
-			_playerDetailsView = new PlayerDetailsView();
+			_playerDetailsView = new PlayerDetailsView(this);
 			_playerDetailsView.initView();
 			_playerDetailsView.hide();
 		}
@@ -43,6 +43,15 @@ package controllers
 		{
 			_playerDetailsView.update(_main.model.getPlayerDetails(facebookId));
 			_playerDetailsView.show();
+		}
+		
+		/**
+		 * The player details view has been closed
+		 * 
+		 */
+		public function onClosePlayerDetails():void
+		{
+			_playerDetailsView.hide();
 		}
 	}
 }

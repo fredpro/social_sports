@@ -134,6 +134,7 @@ package views
 			var touch:Touch = e.getTouch(_playersContainer);
 			if (touch != null && touch.phase == TouchPhase.ENDED)
 			{
+				e.stopImmediatePropagation();
 				var point:Point = touch.getLocation(_playersContainer);
 				var index:int = Math.floor(point.y / PLAYER_LINE_TF_HEIGHT);
 				var player:TeamBuildingViewUser;

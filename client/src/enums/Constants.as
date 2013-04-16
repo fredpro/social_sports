@@ -14,5 +14,7 @@ package enums
 		
 		// Texture names
 		public static const PLAYER_PROFILE_BG:String = "bg_mc";
+		public static const PLAYER_PROFILE_SHADOWS:String = "shadow_mc";
+		public static const PREVENT_CLICK_ZONE_TEXTURE_NAME:String = "preventClickZoneTexture";
     }
 }

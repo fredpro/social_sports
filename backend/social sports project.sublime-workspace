@@ -119,7 +119,7 @@
 			"file": "/D/Workspace/Projects/social_sports/client/html-template/assets/social_sports_en.json",
 			"settings":
 			{
-				"buffer_size": 1163,
+				"buffer_size": 4748,
 				"line_ending": "Windows"
 			}
 		},
@@ -896,15 +896,15 @@
 					"file": "/D/Workspace/Projects/social_sports/client/html-template/assets/social_sports_en.json",
 					"settings":
 					{
-						"buffer_size": 1163,
+						"buffer_size": 4748,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								305,
-								305
+								2482,
+								2482
 							]
 						],
 						"settings":
