@@ -12,15 +12,17 @@ package views.models
 		private var _name:String;
 		private var _nickname:String;
 		private var _level:int;
-		private var _pictureUrl:String;
+		private var _normalPictureUrl:String;
+		private var _smallPictureUrl:String;
 		
-		public function TeamBuildingViewUser(facebookId:String, name:String, nickname:String, level:int, pictureUrl:String):void
+		public function TeamBuildingViewUser(facebookId:String, name:String, nickname:String, level:int, normalPictureUrl:String, smallPictureUrl:String):void
 		{
 			_facebookId = facebookId;
 			_name = name;
 			_nickname = nickname;
 			_level = level;
-			_pictureUrl = pictureUrl;
+			_normalPictureUrl = normalPictureUrl;;
+			_smallPictureUrl = smallPictureUrl;
 		}
 		
 		public function get facebookId():String
@@ -43,9 +45,14 @@ package views.models
 			return _level;
 		}
 		
-		public function get pictureUrl():String
+		public function get normalPictureUrl():String
 		{
-			return _pictureUrl;
+			return _normalPictureUrl;
+		}
+		
+		public function get smallPictureUrl():String
+		{
+			return _smallPictureUrl;
 		}
 	}
 }

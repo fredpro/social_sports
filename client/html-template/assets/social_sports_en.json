@@ -44,5 +44,15 @@
    "PLAYER_PROFILE_MENTAL_VALUES_7": {"format":{"font":"Luckiest Guy"}, "content":"[%MENTAL_VALUES_7%]"},
    "PLAYER_PROFILE_MENTAL_VALUES_8": {"format":{"font":"Luckiest Guy"}, "content":"[%MENTAL_VALUES_8%]"},
    "PLAYER_PROFILE_MENTAL_VALUES_9": {"format":{"font":"Luckiest Guy"}, "content":"[%MENTAL_VALUES_9%]"},
-   "PLAYER_PROFILE_MENTAL_VALUES_10": {"format":{"font":"Luckiest Guy"}, "content":"[%MENTAL_VALUES_10%]"}
+   "PLAYER_PROFILE_MENTAL_VALUES_10": {"format":{"font":"Luckiest Guy"}, "content":"[%MENTAL_VALUES_10%]"},
+
+   "TEAM_BUILDING_TITLE_CHECK": {"format":{"italic":"1", "bold":"1"}, "content":"a"},
+   "TEAM_BUILDING_TITLE_NAME": {"format":{"italic":"1", "bold":"1"}, "content":"Name"},
+   "TEAM_BUILDING_TITLE_LEVEL": {"format":{"italic":"1", "bold":"1"}, "content":"Level"},
+   "TEAM_BUILDING_PLAYER_SLOT_NAME": {"format":{"font":"Hobo Std"}, "content":"[%NAME%]"},
+   "TEAM_BUILDING_PLAYER_SLOT_LEVEL": {"format":{"font":"Hobo Std"}, "content":"[%LEVEL%]"},
+   "TEAM_BUILDING_LOCKED_PLAYER_LINE_NAME": {"format":{"font":"Hobo Std"}, "content":"[%NAME%]"},
+   "TEAM_BUILDING_LOCKED_PLAYER_LINE_LEVEL": {"format":{"font":"Hobo Std"}, "content":"[%LEVEL%]"},
+   "TEAM_BUILDING_UNLOCKED_PLAYER_LINE_NAME": {"format":{"font":"Hobo Std"}, "content":"[%NAME%]"},
+   "TEAM_BUILDING_UNLOCKED_PLAYER_LINE_LEVEL": {"format":{"font":"Hobo Std"}, "content":"[%LEVEL%]"}
 }

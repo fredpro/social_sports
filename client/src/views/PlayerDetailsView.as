@@ -5,6 +5,7 @@ package views
 	import com.fourcade.resourcesManager.ResourcesManager;
 	import com.fourcade.utils.ClassicTextFieldWrapper;
 	import com.fourcade.utils.MathUtils;
+	import com.fourcade.utils.StarlingTextFieldUtils;
 	import com.fourcade.utils.TextureManager;
 	
 	import controllers.TeamBuildingController;
@@ -113,7 +114,7 @@ package views
 					var sprite:Sprite = disobj as Sprite;
 					if (sprite.name == PLAYER_DATA_PICTURE_HOLDER_NAME)
 					{
-						ResourcesManager.getInstance().loadResource(_model.pictureUrl, onPictureLoaded);
+						ResourcesManager.getInstance().loadResource(_model.normalPictureUrl, onPictureLoaded);
 					}
 				}
 			}
@@ -178,16 +179,12 @@ package views
 			
 			var playerProfileContainer:Sprite = new Sprite();
 			container.addChild(playerProfileContainer);
-			var playerProfileTextureAtlas:TextureAtlas = TextureManager.instance.textureAtlasFromMovieClipContainer(ResourcesManager.getInstance().newMovieClip("McPlayerProfilePopupFinal"), Constants.PLAYER_PROFILE_ATLAS);
+			var playerProfileTextureAtlas:TextureAtlas = TextureManager.instance.textureAtlasFromMovieClipContainer(ResourcesManager.getInstance().newMovieClip("McPlayerProfilePopupFinal"), Constants.PLAYER_PROFILE_ATLAS, 1, 2);
 			_playerBg = TextureManager.instance.imageFromTextureAtlas(Constants.PLAYER_PROFILE_ATLAS, Constants.PLAYER_PROFILE_BG);
-			_playerBg.pivotX = _playerBg.width >> 1;
-			_playerBg.pivotY = _playerBg.height >> 1;
 			_playerBg.x = playerProfileContainer.stage.stageWidth >> 1;
 			_playerBg.y = playerProfileContainer.stage.stageHeight >> 1;
 			playerProfileContainer.addChild(_playerBg);
 			_playerShadow = TextureManager.instance.imageFromTextureAtlas(Constants.PLAYER_PROFILE_ATLAS, Constants.PLAYER_PROFILE_SHADOWS);
-			_playerShadow.pivotX = _playerShadow.width >> 1;
-			_playerShadow.pivotY = _playerShadow.height >> 1;
 			_playerShadow.x = _playerBg.x;
 			_playerShadow.y = _playerBg.y + PLAYER_SHADOW_OFFSET_POS_Y;
 			playerProfileContainer.addChildAt(_playerShadow, 0);
@@ -208,16 +205,7 @@ package views
 				if (ClassicTextFieldWrapper.isClassicTextField(disobj))
 				{
 					trace("tf ", disobj.name);
-					var ref:ClassicTextFieldWrapper = new ClassicTextFieldWrapper(disobj);
-					var langObj:Object = LanguageFile.getInstance().getObjectFromId(ref.name);
-					var tf:starling.text.TextField = new starling.text.TextField(disobj.width, disobj.height, "");
-					tf.name = ref.name;
-					tf.x = ref.x;
-					tf.y = ref.y;
-					tf.vAlign = VAlign.TOP;
-					tf.hAlign = ref.defaultTextFormat.align;
-					tf.fontName = langObj.format.font;
-					tf.fontSize = (ref.defaultTextFormat.size == null) ? 12 : Number(ref.defaultTextFormat.size);
+					var tf:starling.text.TextField = StarlingTextFieldUtils.createStarlingTextFieldFromClassic(disobj);
 					_dataContainer.addChild(tf);
 				}
 				else
@@ -260,7 +248,7 @@ package views
 		private function onPictureLoaded():void
 		{
 			var pictureHolder:Sprite = _dataContainer.getChildByName(PLAYER_DATA_PICTURE_HOLDER_NAME) as Sprite;
-			var picture:Image = TextureManager.instance.imageFromBitmap(_model.pictureUrl, ResourcesManager.getInstance().newBitmap(_model.pictureUrl));
+			var picture:Image = TextureManager.instance.imageFromBitmap(_model.normalPictureUrl, ResourcesManager.getInstance().newBitmap(_model.normalPictureUrl));
 			
 			picture.pivotX = picture.width >> 1;
 			picture.pivotY = picture.height >> 1;

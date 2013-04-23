@@ -7,6 +7,13 @@ package models
 	public class UserModel extends MasterClass
 	{
 		//------------------
+		// CONSTANTS
+		//------------------
+		public static const LARGE_PICTURE_SIZE:int = 150;
+		public static const NORMAL_PICTURE_SIZE:int = 80;
+		public static const SMALL_PICTURE_SIZE:int = 20;
+		
+		//------------------
 		// VARIABLES
 		//------------------
 		protected var _facebookId:String;
@@ -14,8 +21,10 @@ package models
 		protected var _name:String;
 		
 		protected var _nickname:String;
-		
-		protected var _pictureUrl:String;
+				
+		protected var _largePictureUrl:String;
+		protected var _normalPictureUrl:String;
+		protected var _smallPictureUrl:String;
 		
 		protected var _level:int;
 		
@@ -53,11 +62,27 @@ package models
 		}
 		
 		/**
-		 * The url of the manager's facebook picture
+		 * The url of the manager's facebook large picture
 		 */
-		public function get pictureUrl():String
+		public function get largePictureUrl():String
 		{
-			return _pictureUrl;
+			return _largePictureUrl;
+		}
+		
+		/**
+		 * The url of the manager's facebook normal picture
+		 */
+		public function get normalPictureUrl():String
+		{
+			return _normalPictureUrl;
+		}
+		
+		/**
+		 * The url of the manager's facebook small picture
+		 */
+		public function get smallPictureUrl():String
+		{
+			return _smallPictureUrl;
 		}
 		
 		/**
@@ -82,7 +107,10 @@ package models
 			_facebookId = vo.facebookId;
 			_name = vo.name;
 			_nickname = vo.nickname;
-			_pictureUrl = vo.pictureUrl;
+			//_pictureUrl = vo.pictureUrl;
+			_largePictureUrl = "https://graph.facebook.com/" + _facebookId + "/picture?width=" + LARGE_PICTURE_SIZE + "&height=" + LARGE_PICTURE_SIZE;
+			_normalPictureUrl = "https://graph.facebook.com/" + _facebookId + "/picture?width=" + NORMAL_PICTURE_SIZE + "&height=" + NORMAL_PICTURE_SIZE;
+			_smallPictureUrl = "https://graph.facebook.com/" + _facebookId + "/picture?width=" + SMALL_PICTURE_SIZE + "&height=" + SMALL_PICTURE_SIZE;
 			_level = vo.level;				
 		}
 		

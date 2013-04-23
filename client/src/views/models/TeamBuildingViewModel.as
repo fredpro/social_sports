@@ -79,7 +79,7 @@ package views.models
 			for (var i:int = 0; i < l; i++)
 			{
 				var unlockedPlayer:PlayerModel = manager.unlockedPlayers[i];
-				var user:TeamBuildingViewUser = new TeamBuildingViewUser(unlockedPlayer.facebookId, unlockedPlayer.name, unlockedPlayer.nickname, unlockedPlayer.level, unlockedPlayer.pictureUrl);
+				var user:TeamBuildingViewUser = new TeamBuildingViewUser(unlockedPlayer.facebookId, unlockedPlayer.name, unlockedPlayer.nickname, unlockedPlayer.level, unlockedPlayer.normalPictureUrl, unlockedPlayer.smallPictureUrl);
 				_unlockedPlayers[i] = user;
 			}
 			
@@ -88,7 +88,7 @@ package views.models
 			for (i = 0; i < l; i++)
 			{
 				var lockedUser:UserModel = manager.lockedPlayers[i];
-				user = new TeamBuildingViewUser(lockedUser.facebookId, lockedUser.name, lockedUser.nickname, lockedUser.level, lockedUser.pictureUrl);
+				user = new TeamBuildingViewUser(lockedUser.facebookId, lockedUser.name, lockedUser.nickname, lockedUser.level, lockedUser.normalPictureUrl, lockedUser.smallPictureUrl);
 				_lockedPlayers[i] = user;
 			}
 			

@@ -5,7 +5,7 @@ package enums
     {
         [Embed(source='../../ressources/fonts/LuckiestGuy.ttf', embedAsCFF='false', mimeType="application/x-font-truetype", unicodeRange = "U+0020-007E", fontName='Luckiest Guy')]
         public static var LuckiestGuy:Class;
-        [Embed(source='../../ressources/fonts/HoboStd.otf', embedAsCFF='false', mimeType="application/x-font", unicodeRange = "U+0020-007E,U+00A1-00FF,U+2000-206F,U+20A0-20CF,U+2100-2183", fontName='Hobo Std')]
+        [Embed(source='../../ressources/fonts/HoboStd.otf', embedAsCFF='false', mimeType="application/x-font-truetype", unicodeRange = "U+0020-007E,U+00A1-00FF,U+2000-206F,U+20A0-20CF,U+2100-2183", fontName='Hobo Std')]
         public static var HoboStd:Class;
         [Embed(source='../../ressources/fonts/collegiateHeavyOutline Medium.ttf', embedAsCFF='false', mimeType="application/x-font-truetype", unicodeRange = "U+0020,U+0041-005A,U+0061-007A", fontName='CollegiateHeavyOutline')]
         public static var CollegiateHeavyOutline:Class;
