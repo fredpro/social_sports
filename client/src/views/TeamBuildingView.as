@@ -47,9 +47,10 @@ package views
 		private static const PITCH_POS_Y:Number = 273;
 		private static const PLAYER_LINE_CONTAINER_POS_X:int = 160;
 		private static const PLAYER_LINE_CONTAINER_POS_Y:int = 81;
-		static private const SCROLLBAR_POS_X:Number = 310;
-		static private const SCROLLBAR_POS_Y:Number = 78;
-		static private const SLIDER_MASK_HEIGHT:Number = 425;
+		private static const SCROLLBAR_POS_X:Number = 310;
+		private static const SCROLLBAR_POS_Y:Number = 78;
+		private static const SLIDER_MASK_HEIGHT:Number = 425;
+		private static const DRAGGED_PLAYER_SLOT_ALPHA:Number = 0.5;
 		
 		private static const SOCCER_EMPTY_SLOTS_POS_LIST:Vector.<Number> = new <Number>[552, 474, 404, 340, 501, 369, 600, 369, 698, 340, 404, 215, 501, 244, 600, 244, 698, 215, 501, 121, 600, 121];
 		
@@ -69,12 +70,19 @@ package views
 		private var _downArrowButton:Button;        
 		private var _scrollbar:Sprite;
 		
-		private var _slotsList:Vector.<PlayerSlotSprite>;
+		private var _teamsSpriteContainerList:Vector.<Sprite>;
+		private var _draggedPlayerSlot:PlayerSlotSprite;
+		private var _draggedOverTeamSlotIndex:int;
+		private var _savedDraggedTeamSlotIndex:int;
+		
+		private var _currentlyVisibleTeamId:int = 0;
 		
 		public function TeamBuildingView(controller:TeamBuildingController)
 		{
 			super();
 			_controller = controller;
+			_draggedOverTeamSlotIndex = -1;
+			_savedDraggedTeamSlotIndex = -1;
 		}
 		
 		//-----------------------------------------------
@@ -89,8 +97,21 @@ package views
 		public function initView(model:TeamBuildingViewModel):void
 		{
 			_model = model;
+			_model.parentView = this;
 			
 			loadResources();
+		}
+		
+		/**
+		 * Updates a player slot in the given team
+		 * @param teamId The id of the team which slot is updated
+		 * @param playerIndex The index of the slot updated in the team
+		 * 
+		 */
+		public function updatePlayerTeamSlot(teamId:int, playerIndex:int):void
+		{
+			var currentTeamSprite:Sprite = _teamsSpriteContainerList[teamId];
+			PlayerSlotSprite(currentTeamSprite.getChildAt(playerIndex)).playerProfile = _model.teams[teamId][playerIndex];
 		}
 		
 		//-----------------------------------------------
@@ -144,20 +165,32 @@ package views
 			initScrollbar();
 			
 			initScrollList();
+			
+			_draggedPlayerSlot = new PlayerSlotSprite();
+			_draggedPlayerSlot.alpha = DRAGGED_PLAYER_SLOT_ALPHA;
+			_draggedPlayerSlot.visible = false;
+			container.addChild(_draggedPlayerSlot);
 		}
 		
 		private function initTeam():void
 		{
-			var l:int = _model.teams[0].length;
-			_slotsList = new Vector.<PlayerSlotSprite>(l);
+			var l:int = _model.teams.length;
+			_teamsSpriteContainerList = new Vector.<Sprite>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				var slot:PlayerSlotSprite = new PlayerSlotSprite();
-				_slotsList[i] = slot;
-				slot.x = SOCCER_EMPTY_SLOTS_POS_LIST[2*i];
-				slot.y = SOCCER_EMPTY_SLOTS_POS_LIST[2*i+1];
-				slot.playerProfile = _model.teams[0][i];
-				container.addChild(slot);
+				_teamsSpriteContainerList[i] = new Sprite();
+				var tl:int = _model.teams[i].length;
+				for (var j:int = 0; j < tl; j++)
+				{
+					var slot:PlayerSlotSprite = new PlayerSlotSprite();
+					_teamsSpriteContainerList[i].addChild(slot);
+					slot.x = SOCCER_EMPTY_SLOTS_POS_LIST[2*j];
+					slot.y = SOCCER_EMPTY_SLOTS_POS_LIST[2*j+1];
+					slot.playerProfile = _model.teams[i][j];
+				}
+				_teamsSpriteContainerList[i].addEventListener(TouchEvent.TOUCH, onPlayerInteraction);
+				_teamsSpriteContainerList[i].useHandCursor = true;
+				container.addChild(_teamsSpriteContainerList[i]);
 			}
 		}
 		
@@ -167,7 +200,7 @@ package views
 			_playersLineContainer.x = PLAYER_LINE_CONTAINER_POS_X;
 			_playersLineContainer.y = PLAYER_LINE_CONTAINER_POS_Y;
 			container.addChild(_playersLineContainer);
-			_sliderSprite = new ClippedSprite();			
+			_sliderSprite = new ClippedSprite();
 			var sliderContainer:Sprite = new Sprite();
 			sliderContainer.addChild(_sliderSprite);
 			_playersLineContainer.addChild(sliderContainer);
@@ -197,7 +230,7 @@ package views
 			var point:Point = _sliderSprite.localToGlobal(new Point(0, 0));
 			_sliderMask = new Rectangle(0, point.y, Starling.current.stage.width, SLIDER_MASK_HEIGHT);
 			
-			_playersLineContainer.addEventListener(TouchEvent.TOUCH, onPlayerLineTouched);
+			_playersLineContainer.addEventListener(TouchEvent.TOUCH, onPlayerInteraction);
 		}
 		
 		private function initScrollbar():void
@@ -247,26 +280,188 @@ package views
 			_scrollbar.addChild(_downArrowButton);
 		} 
 		
-		private function onPlayerLineTouched(e:TouchEvent):void
+		private function onPlayerInteraction(e:TouchEvent):void
 		{
-			var touch:Touch = e.getTouch(_sliderSprite);
-			if (touch != null && touch.phase == TouchPhase.ENDED)
+			var touch:Touch = e.getTouch(container.stage);
+			if (touch != null)
 			{
-				e.stopImmediatePropagation();
-				var point:Point = touch.getLocation(_sliderSprite);
-				var index:int = Math.floor(point.y / UnlockedPlayerLineSprite.LINE_HEIGHT);
-				var player:TeamBuildingViewUser;
-				if (index < _model.unlockedPlayers.length)
+				var index:int = -1;
+				var doStopImmediatePropagation:Boolean = false;
+				var point:Point = _playersLineContainer.globalToLocal(new Point(touch.globalX, touch.globalY));
+				if (point.x > -PLAYER_LINE_CONTAINER_POS_X && point.x < -PLAYER_LINE_CONTAINER_POS_X + _playersLineContainer.width && point.y > -PLAYER_LINE_CONTAINER_POS_Y && point.y < -PLAYER_LINE_CONTAINER_POS_Y + SLIDER_MASK_HEIGHT)
 				{
-					player = _model.unlockedPlayers[index];
+					doStopImmediatePropagation = handlePlayerLinesTouchInteraction(touch);
 				}
 				else
 				{
-					player = _model.lockedPlayers[index - _model.unlockedPlayers.length];
+					doStopImmediatePropagation = handleTeamTouchInteraction(touch);
 				}
-				trace("Player line touched : " + player.facebookId + " " + player.name);
-				_controller.onPlayerLineClicked(player.facebookId);
+				
+				if (doStopImmediatePropagation)
+				{
+					e.stopImmediatePropagation();
+				}
 			}
+		}
+		
+		private function handlePlayerLinesTouchInteraction(touch:Touch):Boolean
+		{
+			var doStopImmediatePropagation:Boolean = false;
+			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
+			
+			if (_draggedPlayerSlot != null)
+			{
+				_draggedPlayerSlot.x = touch.globalX;
+				_draggedPlayerSlot.y = touch.globalY;
+			}
+			
+			var point:Point = _playersLineContainer.globalToLocal(new Point(touch.globalX, touch.globalY));
+			var index:int = Math.floor(point.y / UnlockedPlayerLineSprite.LINE_HEIGHT);
+			point = _sliderSprite.globalToLocal(new Point(touch.globalX, touch.globalY));
+			var player:TeamBuildingViewUser;
+			if (index > -1 && index < _model.unlockedPlayers.length)
+			{
+				player = _model.unlockedPlayers[index];
+			}
+			else if (index > -1 && index < _model.unlockedPlayers.length + _model.lockedPlayers.length)
+			{
+				player = _model.lockedPlayers[index - _model.unlockedPlayers.length];
+			}
+			
+			if (player != null && touch.phase == TouchPhase.ENDED)
+			{
+				if (player.isUnlocked)
+				{
+					_controller.onUnlockedPlayerLineClicked(player.facebookId);
+				}
+				else
+				{
+					_controller.onLockedPlayerLineClicked(player.facebookId);
+				}
+				_draggedPlayerSlot.playerProfile = null;
+				_draggedPlayerSlot.visible = false;
+				_savedDraggedTeamSlotIndex = -1;
+				doStopImmediatePropagation = true;
+			}
+			else if (player != null && touch.phase == TouchPhase.BEGAN)
+			{
+				_draggedPlayerSlot.playerProfile = player;
+			}
+			else if (touch.phase == TouchPhase.MOVED && _draggedPlayerSlot.playerProfile != null)
+			{
+				_draggedPlayerSlot.visible = true;
+				_draggedPlayerSlot.x = touch.globalX;
+				_draggedPlayerSlot.y = touch.globalY;
+			}
+			else if (touch.phase == TouchPhase.ENDED)
+			{
+				_draggedPlayerSlot.playerProfile = null;
+				_draggedPlayerSlot.visible = false;
+				_savedDraggedTeamSlotIndex = -1;
+			}
+			
+			return doStopImmediatePropagation;
+		}
+		
+		private function handleTeamTouchInteraction(touch:Touch):Boolean
+		{
+			var doStopImmediatePropagation:Boolean = false;
+			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
+			
+			if (_draggedPlayerSlot != null)
+			{
+				_draggedPlayerSlot.x = touch.globalX;
+				_draggedPlayerSlot.y = touch.globalY;
+			}
+			
+			var teamSlotIndex:int = getTeamPlayerSlotIndexAtPoint(new Point(touch.globalX, touch.globalY));
+			if (touch.phase == TouchPhase.BEGAN && teamSlotIndex > -1)
+			{
+				_draggedPlayerSlot.playerProfile = _model.teams[_currentlyVisibleTeamId][teamSlotIndex];
+				_draggedPlayerSlot.visible = true;
+				_savedDraggedTeamSlotIndex = teamSlotIndex;
+				setTeamSlot(teamSlotIndex, null);
+			}
+			else if (touch.phase == TouchPhase.MOVED && _draggedPlayerSlot.playerProfile != null)
+			{
+				_draggedPlayerSlot.visible = true;
+				if (teamSlotIndex > -1)
+				{
+					if (teamSlotIndex != _draggedOverTeamSlotIndex)
+					{
+						if (_draggedOverTeamSlotIndex > -1)
+						{
+							currentTeamSprite.getChildAt(_draggedOverTeamSlotIndex).visible = true;
+						}	
+						_draggedOverTeamSlotIndex = teamSlotIndex;
+						currentTeamSprite.getChildAt(_draggedOverTeamSlotIndex).visible = (_draggedOverTeamSlotIndex == _savedDraggedTeamSlotIndex);
+					}
+					if (_draggedOverTeamSlotIndex != _savedDraggedTeamSlotIndex)
+					{
+						_draggedPlayerSlot.x = currentTeamSprite.getChildAt(_draggedOverTeamSlotIndex).x;
+						_draggedPlayerSlot.y = currentTeamSprite.getChildAt(_draggedOverTeamSlotIndex).y;
+					}
+				}
+				else
+				{
+					if (_draggedOverTeamSlotIndex > -1)
+					{
+						currentTeamSprite.getChildAt(_draggedOverTeamSlotIndex).visible = true;
+						_draggedOverTeamSlotIndex = -1;
+					}
+					_draggedPlayerSlot.x = touch.globalX;
+					_draggedPlayerSlot.y = touch.globalY;
+				}
+			}
+			else if (touch.phase == TouchPhase.ENDED && _draggedPlayerSlot != null && _draggedOverTeamSlotIndex > -1)
+			{
+				setTeamSlot(_draggedOverTeamSlotIndex, _draggedPlayerSlot.playerProfile);
+				_draggedPlayerSlot.visible = false;
+				currentTeamSprite.getChildAt(_draggedOverTeamSlotIndex).visible = true;
+				_savedDraggedTeamSlotIndex = -1;
+				doStopImmediatePropagation = true;
+			}
+			else if (touch.phase == TouchPhase.ENDED)
+			{
+				if (_draggedPlayerSlot != null)
+				{
+					setTeamSlot(_savedDraggedTeamSlotIndex, _draggedPlayerSlot.playerProfile);
+				}
+				_draggedPlayerSlot.playerProfile = null;
+				_draggedPlayerSlot.visible = false;
+				_savedDraggedTeamSlotIndex = -1;
+			}
+			
+			return doStopImmediatePropagation;
+		}
+		
+		private function setTeamSlot(teamSlotIndex:int, playerProfile:TeamBuildingViewUser):void
+		{
+			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
+			if (_savedDraggedTeamSlotIndex > -1)
+			{
+				_model.setTeamPlayer(_currentlyVisibleTeamId, _savedDraggedTeamSlotIndex, _model.teams[_currentlyVisibleTeamId][teamSlotIndex]);
+			}
+			_model.setTeamPlayer(_currentlyVisibleTeamId, teamSlotIndex, playerProfile);
+		}
+		
+		private function getTeamPlayerSlotIndexAtPoint(point:Point):int
+		{
+			var result:int = -1;
+			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
+			
+			var l:int = currentTeamSprite.numChildren;
+			for (var i:int = 0; (i < l && result < 0); i++)
+			{
+				var slot:PlayerSlotSprite = PlayerSlotSprite(currentTeamSprite.getChildAt(i));
+				var rect:Rectangle = slot.getBounds(container.stage);
+				if (point.x > rect.x && point.x < rect.x + rect.width && point.y > rect.y && point.y < rect.y + rect.height)
+				{
+					result = i;
+				}
+			}
+			
+			return result;
 		}
 	}
 }

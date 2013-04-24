@@ -30,7 +30,8 @@ package views.sprites
 		private var _nameTxt:TextField;
 		private var _levelTxt:TextField;
 		private var _pictureHolder:Sprite;
-		private var _icon:Image;
+		private var _iconHolder:Sprite;
+		private var _iconHeight:Number;
 		
 		public function UnlockedPlayerLineSprite()
 		{
@@ -52,14 +53,11 @@ package views.sprites
 			_levelTxt = StarlingTextFieldUtils.createStarlingTextFieldFromClassic(slotRefMc.getChildByName("TEAM_BUILDING_UNLOCKED_PLAYER_LINE_LEVEL"));
 			addChild(_levelTxt);
 			disobj = slotRefMc.getChildByName("icon_mc");
-			_icon = TextureManager.instance.imageFromTextureAtlas(Constants.TEAM_BUILDING_ATLAS, Constants.TEAM_BUILDING_SOCCER_ICON);
-			var ratio:Number = disobj.height/_icon.height;
-			_icon.width *= ratio;
-			_icon.height *= ratio;
-			_icon.x = disobj.x;
-			_icon.y = disobj.y;
-			_icon.visible = false;
-			addChild(_icon);
+			_iconHeight = disobj.height;
+			_iconHolder = new Sprite();
+			_iconHolder.x = disobj.x;
+			_iconHolder.y = disobj.y;
+			addChild(_iconHolder);
 		}
 		
 		public function destroy():void
@@ -69,12 +67,6 @@ package views.sprites
 				TextureManager.instance.freeTextureFromTextureAtlas(Constants.TEAM_BUILDING_ATLAS, Constants.TEAM_BUILDING_LOCKED_PLAYER_LINE_BG);
 				_bgImg.dispose();
 				_bgImg = null;
-			}
-			if (_icon != null)
-			{
-				TextureManager.instance.freeTextureFromTextureAtlas(Constants.TEAM_BUILDING_ATLAS, Constants.TEAM_BUILDING_LOCK_ICON);
-				_icon.dispose();
-				_icon = null;
 			}
 			if (_levelTxt != null)
 			{
@@ -98,8 +90,18 @@ package views.sprites
 					Image(displayObject).dispose();
 				}
 			}
-			_pictureHolder.removeChildren(0, -1, true);
-			_pictureHolder = null;
+			for (i = 0; i < _iconHolder.numChildren; i++)
+			{
+				displayObject = _iconHolder.getChildAt(i);
+				if (displayObject is Image)
+				{
+					picture = _iconHolder.getChildAt(0) as Image;
+					TextureManager.instance.freeTexture(picture.name);
+					Image(displayObject).dispose();
+				}
+			}
+			_iconHolder.removeChildren(0, -1, true);
+			_iconHolder = null;
 		}
 		
 		//-----------------------------------------------
@@ -127,7 +129,27 @@ package views.sprites
 			}
 			if (_pictureHolder.numChildren == 0)
 			{
-				ResourcesManager.getInstance().loadResource(_playerProfile.smallPictureUrl, onPictureLoaded);
+				if (TextureManager.instance.doTextureExists(_playerProfile.smallPictureUrl) || ResourcesManager.getInstance().isBaseClassExist(_playerProfile.smallPictureUrl))
+				{
+					onPictureLoaded();
+				}
+				else
+				{
+					ResourcesManager.getInstance().loadResource(_playerProfile.smallPictureUrl, onPictureLoaded);
+				}
+			}
+			if (_iconHolder.numChildren > 0 && _iconHolder.getChildAt(0).name != Constants.TEAM_BUILDING_ICONS_LIST[_playerProfile.teamId])
+			{
+				TextureManager.instance.freeTexture(_iconHolder.getChildAt(0).name);
+				_iconHolder.removeChildAt(0);
+			}
+			if (_iconHolder.numChildren == 0 && _playerProfile.teamId > -1)
+			{
+				var icon:Image = TextureManager.instance.imageFromTextureAtlas(Constants.TEAM_BUILDING_ATLAS, Constants.TEAM_BUILDING_ICONS_LIST[_playerProfile.teamId]);
+				var ratio:Number = _iconHeight / icon.height;
+				icon.width *= ratio;
+				icon.height *= ratio;
+				_iconHolder.addChild(icon);
 			}
 			
 			flatten();
@@ -139,7 +161,15 @@ package views.sprites
 		
 		private function onPictureLoaded():void
 		{
-			var picture:Image = TextureManager.instance.imageFromBitmap(_playerProfile.smallPictureUrl, ResourcesManager.getInstance().newBitmap(_playerProfile.smallPictureUrl));
+			var picture:Image;
+			if (TextureManager.instance.doTextureExists(_playerProfile.smallPictureUrl))
+			{
+				picture = TextureManager.instance.imageFromTexture(_playerProfile.smallPictureUrl);
+			}
+			else
+			{
+				picture = TextureManager.instance.imageFromBitmap(_playerProfile.smallPictureUrl, ResourcesManager.getInstance().newBitmap(_playerProfile.smallPictureUrl));
+			}
 			picture.name = _playerProfile.smallPictureUrl;
 			if (picture.width > UserModel.SMALL_PICTURE_SIZE)
 			{

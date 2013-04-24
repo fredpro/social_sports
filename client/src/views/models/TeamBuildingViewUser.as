@@ -14,15 +14,18 @@ package views.models
 		private var _level:int;
 		private var _normalPictureUrl:String;
 		private var _smallPictureUrl:String;
+		private var _teamId:int;
+		private var _isUnlocked:Boolean;
 		
-		public function TeamBuildingViewUser(facebookId:String, name:String, nickname:String, level:int, normalPictureUrl:String, smallPictureUrl:String):void
+		public function TeamBuildingViewUser(facebookId:String, name:String, nickname:String, level:int, normalPictureUrl:String, smallPictureUrl:String, isUnlocked:Boolean):void
 		{
 			_facebookId = facebookId;
 			_name = name;
 			_nickname = nickname;
 			_level = level;
-			_normalPictureUrl = normalPictureUrl;;
+			_normalPictureUrl = normalPictureUrl;
 			_smallPictureUrl = smallPictureUrl;
+			_teamId = -1;
 		}
 		
 		public function get facebookId():String
@@ -54,5 +57,22 @@ package views.models
 		{
 			return _smallPictureUrl;
 		}
+
+		public function get teamId():int
+		{
+			return _teamId;
+		}
+
+		public function set teamId(value:int):void
+		{
+			_teamId = value;
+		}
+
+		public function get isUnlocked():Boolean
+		{
+			return _isUnlocked;
+		}
+
+
 	}
 }

@@ -35,14 +35,24 @@ package controllers
 		}
 		
 		/**
-		 * A player line in the TeamBuildingView has been clicked. So we display the PlayerDetailView for the given player
+		 * A player line, corresponding to an unlocked player, in the TeamBuildingView has been clicked. So we display the PlayerDetailView for the given player
 		 * @param facebookId the facebook id of the player we want to display the stats
 		 * 
 		 */
-		public function onPlayerLineClicked(facebookId:String):void
+		public function onUnlockedPlayerLineClicked(facebookId:String):void
 		{
 			_playerDetailsView.update(_main.model.getPlayerDetails(facebookId));
 			_playerDetailsView.show();
+		}
+		
+		/**
+		 * A player line, corresponding to a locked player, in the TeamBuildingView has been clicked.
+		 * @param facebookId the facebook id of the player
+		 * 
+		 */
+		public function onLockedPlayerLineClicked(facebookId:String):void
+		{
+			// #TODO : do something with locked player's line
 		}
 		
 		/**

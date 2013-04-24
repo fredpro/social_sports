@@ -126,8 +126,13 @@ package views.sprites
 		}
 		
 		//-----------------------------------------------
-		// PUBLIC METHODS
+		// GETTERS AND SETTERS
 		//-----------------------------------------------
+		
+		public function get playerProfile():TeamBuildingViewUser
+		{
+			return _playerProfile;
+		}
 		
 		public function set playerProfile(player:TeamBuildingViewUser):void
 		{
@@ -152,9 +157,21 @@ package views.sprites
 				_playerSlotContainer.visible= true;
 				_nameTxt.text = _playerProfile.name;
 				_levelTxt.text = String(_playerProfile.level);
+				if (_pictureHolder.numChildren > 0 && _pictureHolder.getChildAt(0).name != _playerProfile.normalPictureUrl)
+				{
+					TextureManager.instance.freeTexture(_pictureHolder.getChildAt(0).name);
+					_pictureHolder.removeChildAt(0);
+				}
 				if (_pictureHolder.numChildren == 0 || _pictureHolder.getChildAt(0).name != _playerProfile.normalPictureUrl)
 				{
-					ResourcesManager.getInstance().loadResource(_playerProfile.normalPictureUrl, onPictureLoaded);
+					if (TextureManager.instance.doTextureExists(_playerProfile.normalPictureUrl) || ResourcesManager.getInstance().isBaseClassExist(_playerProfile.normalPictureUrl))
+					{
+						onPictureLoaded();
+					}
+					else
+					{
+						ResourcesManager.getInstance().loadResource(_playerProfile.normalPictureUrl, onPictureLoaded);
+					}
 				}
 			}
 			
@@ -167,7 +184,15 @@ package views.sprites
 		
 		private function onPictureLoaded():void
 		{
-			var picture:Image = TextureManager.instance.imageFromBitmap(_playerProfile.normalPictureUrl, ResourcesManager.getInstance().newBitmap(_playerProfile.normalPictureUrl));
+			var picture:Image;
+			if (TextureManager.instance.doTextureExists(_playerProfile.normalPictureUrl))
+			{
+				picture = TextureManager.instance.imageFromTexture(_playerProfile.normalPictureUrl);
+			}
+			else
+			{
+				picture = TextureManager.instance.imageFromBitmap(_playerProfile.normalPictureUrl, ResourcesManager.getInstance().newBitmap(_playerProfile.normalPictureUrl));
+			}
 			
 			picture.pivotX = picture.width >> 1;
 			picture.pivotY = picture.height >> 1;

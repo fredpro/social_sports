@@ -6,6 +6,8 @@ package views.models
 	import models.PlayerModel;
 	import models.UserModel;
 	
+	import views.TeamBuildingView;
+	
 	public class TeamBuildingViewModel extends MasterClass
 	{
 		//------------------
@@ -15,6 +17,7 @@ package views.models
 		//------------------
 		// VARIABLES
 		//------------------
+		private var _parentView:TeamBuildingView;
 		private var _unlockedPlayers:Vector.<TeamBuildingViewUser>;
 		private var _lockedPlayers:Vector.<TeamBuildingViewUser>;
 		private var _teams:Vector.<Vector.<TeamBuildingViewUser>>;
@@ -28,6 +31,14 @@ package views.models
 		//------------------
 		// GETTERS AND SETTERS
 		//------------------
+
+		/**
+		 * The view which uses this model
+		 */
+		public function set parentView(value:TeamBuildingView):void
+		{
+			_parentView = value;
+		}
 
 		/**
 		 * The list of unlocked players that the manager can add to his teams. The players are instances of TeamBuildingViewPlayer.
@@ -79,7 +90,7 @@ package views.models
 			for (var i:int = 0; i < l; i++)
 			{
 				var unlockedPlayer:PlayerModel = manager.unlockedPlayers[i];
-				var user:TeamBuildingViewUser = new TeamBuildingViewUser(unlockedPlayer.facebookId, unlockedPlayer.name, unlockedPlayer.nickname, unlockedPlayer.level, unlockedPlayer.normalPictureUrl, unlockedPlayer.smallPictureUrl);
+				var user:TeamBuildingViewUser = new TeamBuildingViewUser(unlockedPlayer.facebookId, unlockedPlayer.name, unlockedPlayer.nickname, unlockedPlayer.level, unlockedPlayer.normalPictureUrl, unlockedPlayer.smallPictureUrl, true);
 				_unlockedPlayers[i] = user;
 			}
 			
@@ -88,7 +99,7 @@ package views.models
 			for (i = 0; i < l; i++)
 			{
 				var lockedUser:UserModel = manager.lockedPlayers[i];
-				user = new TeamBuildingViewUser(lockedUser.facebookId, lockedUser.name, lockedUser.nickname, lockedUser.level, lockedUser.normalPictureUrl, lockedUser.smallPictureUrl);
+				user = new TeamBuildingViewUser(lockedUser.facebookId, lockedUser.name, lockedUser.nickname, lockedUser.level, lockedUser.normalPictureUrl, lockedUser.smallPictureUrl, false);
 				_lockedPlayers[i] = user;
 			}
 			
@@ -106,7 +117,53 @@ package views.models
 					if (manager.teams[i].players[j] != null)
 					{
 						_teams[i][j] = getUnlockedPlayerFromId(manager.teams[i].players[j].facebookId);
+						_teams[i][j].teamId = _teamsId[i];
 					}
+				}
+			}
+			
+			return result;
+		}
+		
+		/**
+		 * Changes the player associated to a given slot in a given team
+		 * @param teamId The id of the team to update
+		 * @param playerIndex The index of the slot to update in the team
+		 * @param playerProfile The new profile associated to this slot
+		 * 
+		 */
+		public function setTeamPlayer(teamId:int, playerIndex:int, playerProfile:TeamBuildingViewUser):void
+		{
+			if (playerProfile != null)
+			{
+				var existingPlayerSlotIndex:int = getTeamSlotIndexByFacebookId(teamId, playerProfile.facebookId);
+				if (existingPlayerSlotIndex > -1)
+				{
+					_teams[teamId][existingPlayerSlotIndex] = null;
+					_parentView.updatePlayerTeamSlot(teamId, existingPlayerSlotIndex);
+				}
+			}
+			_teams[teamId][playerIndex] = playerProfile;
+			_parentView.updatePlayerTeamSlot(teamId, playerIndex);
+		}
+		
+		/**
+		 * Get the index of the slot in the given team corresponding to the given facebookId
+		 * @param teamId The id of the team from which we want to find the slot
+		 * @param facebookId The id of the player used to find the right slot
+		 * @return The index of the slot in the team list
+		 * 
+		 */
+		public function getTeamSlotIndexByFacebookId(teamId:int, facebookId:String):int
+		{
+			var result:int = -1;
+			
+			var l:int = _teams[teamId].length;
+			for (var i:int = 0; (i < l && result < 0); i++)
+			{
+				if (_teams[teamId][i] != null && _teams[teamId][i].facebookId == facebookId)
+				{
+					result = i;
 				}
 			}
 			

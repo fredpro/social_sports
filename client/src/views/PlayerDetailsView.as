@@ -114,7 +114,14 @@ package views
 					var sprite:Sprite = disobj as Sprite;
 					if (sprite.name == PLAYER_DATA_PICTURE_HOLDER_NAME)
 					{
-						ResourcesManager.getInstance().loadResource(_model.normalPictureUrl, onPictureLoaded);
+						if (TextureManager.instance.doTextureExists(_model.normalPictureUrl) || ResourcesManager.getInstance().isBaseClassExist(_model.normalPictureUrl))
+						{
+							onPictureLoaded();
+						}
+						else
+						{
+							ResourcesManager.getInstance().loadResource(_model.normalPictureUrl, onPictureLoaded);
+						}
 					}
 				}
 			}
@@ -248,10 +255,15 @@ package views
 		private function onPictureLoaded():void
 		{
 			var pictureHolder:Sprite = _dataContainer.getChildByName(PLAYER_DATA_PICTURE_HOLDER_NAME) as Sprite;
-			var picture:Image = TextureManager.instance.imageFromBitmap(_model.normalPictureUrl, ResourcesManager.getInstance().newBitmap(_model.normalPictureUrl));
-			
-			picture.pivotX = picture.width >> 1;
-			picture.pivotY = picture.height >> 1;
+			var picture:Image;
+			if (TextureManager.instance.doTextureExists(_model.normalPictureUrl))
+			{
+				picture = TextureManager.instance.imageFromTexture(_model.normalPictureUrl);
+			}
+			else
+			{
+				picture = TextureManager.instance.imageFromBitmap(_model.normalPictureUrl, ResourcesManager.getInstance().newBitmap(_model.normalPictureUrl));
+			}
 			pictureHolder.addChild(picture);
 			pictureHolder.visible = true;
 			

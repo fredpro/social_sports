@@ -126,7 +126,14 @@ package views.sprites
 			}
 			if (_pictureHolder.numChildren == 0)
 			{
-				ResourcesManager.getInstance().loadResource(_playerProfile.smallPictureUrl, onPictureLoaded);
+				if (TextureManager.instance.doTextureExists(_playerProfile.smallPictureUrl) || ResourcesManager.getInstance().isBaseClassExist(_playerProfile.smallPictureUrl))
+				{
+					onPictureLoaded();
+				}
+				else
+				{
+					ResourcesManager.getInstance().loadResource(_playerProfile.smallPictureUrl, onPictureLoaded);
+				}
 			}
 			
 			flatten();
@@ -138,7 +145,15 @@ package views.sprites
 		
 		private function onPictureLoaded():void
 		{
-			var picture:Image = TextureManager.instance.imageFromBitmap(_playerProfile.smallPictureUrl, ResourcesManager.getInstance().newBitmap(_playerProfile.smallPictureUrl));
+			var picture:Image;
+			if (TextureManager.instance.doTextureExists(_playerProfile.smallPictureUrl))
+			{
+				picture = TextureManager.instance.imageFromTexture(_playerProfile.smallPictureUrl);
+			}
+			else
+			{
+				picture = TextureManager.instance.imageFromBitmap(_playerProfile.smallPictureUrl, ResourcesManager.getInstance().newBitmap(_playerProfile.smallPictureUrl));
+			}
 			picture.name = _playerProfile.smallPictureUrl;
 			if (picture.width > UserModel.SMALL_PICTURE_SIZE)
 			{
