@@ -3,6 +3,7 @@ package controllers
 	import views.PlayerDetailsView;
 	import views.TeamBuildingView;
 	import views.models.TeamBuildingViewModel;
+	import views.models.TeamBuildingViewUser;
 
 	public class TeamBuildingController extends AbstractViewController
 	{
@@ -62,6 +63,23 @@ package controllers
 		public function onClosePlayerDetails():void
 		{
 			_playerDetailsView.hide();
+		}
+		
+		/**
+		 * The team has been updated, so we must send the modification to the server
+		 * @teamId the id of the team that has been updated
+		 * @team the list of players of the corresponding team
+		 * 
+		 */
+		public function onTeamUpdated(teamId:int, playersList:Vector.<TeamBuildingViewUser>):void
+		{
+			var l:int = team.length;
+			var team:Vector.<String> = new Vector.<String>(l);
+			for (var i:int = 0; i < l; i++)
+			{
+				team[i] = playersList[i].facebookId;
+			}
+			_main.onTeamUpdated(teamId, team);
 		}
 	}
 }

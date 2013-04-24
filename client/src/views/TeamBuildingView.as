@@ -112,6 +112,7 @@ package views
 		{
 			var currentTeamSprite:Sprite = _teamsSpriteContainerList[teamId];
 			PlayerSlotSprite(currentTeamSprite.getChildAt(playerIndex)).playerProfile = _model.teams[teamId][playerIndex];
+			_controller.onTeamUpdated(teamId, _model.teams[teamId]);
 		}
 		
 		//-----------------------------------------------

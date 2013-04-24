@@ -79,7 +79,22 @@ package proxies
             _requestQueue.push(new WebServerRequest("manager/profile/me", null, callback));
             start();
             trace("___GET GAME CONFIG ___");
-        }
+        }           
+		
+		/**
+		 * The team has been updated, so we must send the modification to the server
+		 * @teamId the id of the team that has been updated
+		 * @team the list of players of the corresponding team
+		 * 
+		 */
+		public function onTeamUpdated(teamId:int, team:Vector.<String>):void
+		{
+			var params:Object = new Object();
+			params["teamId"] = teamId;
+			params["team"] = team.join();
+			_requestQueue.push(new WebServerRequest("manager/team/update", params));
+			start();
+		}
         
         //-----------------------------------------------
 	    // PRIVATE METHODS
@@ -216,8 +231,8 @@ package proxies
             params.boosterId = boosterId;
 //            _requestQueue.push(new Mxp4Request("Application_Amf_ShopManager.useBooster", params, callback));
 //            start(); //#TODO remove when server call works
-        }              
-    }
+        }   
+	}
 }
 
 class WebServerRequest

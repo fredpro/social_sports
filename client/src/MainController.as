@@ -100,6 +100,17 @@ package
 			super.displayBasicErrorPopup();
 		}
 		
+		/**
+		 * The team has been updated, so we must send the modification to the server
+		 * @teamId the id of the team that has been updated
+		 * @team the list of players of the corresponding team
+		 * 
+		 */
+		public function onTeamUpdated(teamId:int, team:Vector.<String>):void
+		{
+			_webServerProxy.onTeamUpdated(teamId, team);
+		}
+		
 		//-----------------------------------------------
 		// PRIVATE METHODS
 		//-----------------------------------------------
@@ -115,6 +126,5 @@ package
 			_teamBuildingController = new TeamBuildingController(this);
 			_teamBuildingController.initView(_model.createTeamBuildingViewModel());
 		}
-		
 	}
 }
