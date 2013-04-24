@@ -1,6 +1,7 @@
 package models
 {	
 	import models.vo.ManagerVO;
+	import models.vo.TeamVO;
 	import models.vo.UserVO;
 	
 	import views.models.TeamBuildingViewModel;
@@ -151,6 +152,17 @@ package models
 			}
 			
 			return result;
+		}
+		
+		/**
+		 * updates the given team of the current user
+		 * @param teamId the id of the team to update
+		 * @param team The new composition of the team (a list of facebookIds) 
+		 * 
+		 */
+		public function updateTeam(teamId:int, team:Vector.<String>):void
+		{
+			_teams[teamId].update(new TeamVO({sport_id:teamId, players:team}));
 		}
 		
 		//------------------

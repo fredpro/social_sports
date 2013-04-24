@@ -74,11 +74,56 @@ class UserController extends Controller
         }
 
         $serializer = $this->container->get('serializer');
-        $responseObject = $manager;
         $serializedResponseObject = $serializer->serialize($manager, 'json');
         $response = new Response($serializedResponseObject);
         $response->headers->set('Content-Type', 'application/json');
         // $response = new Response(var_dump($manager));
+        return $response;
+    }
+
+    public function updateTeamAction()
+    {
+        $facebook = $this->get('facebook');
+        if (isset($_SESSION['uid']))
+        {
+            $facebookId = $_SESSION['uid'];
+            $facebookUser = $_SESSION['user'];
+            $facebookFriends = $_SESSION['friends'];
+        }
+        else
+        {
+            // On récupère l'UID de l'utilisateur Facebook courant
+            $facebookId = $facebook->getUser();
+            // On récupère les infos de base de l'utilisateur
+            $facebookUser = $facebook->api('/me?fields=id,birthday,name,gender,picture');
+            $facebookFriends = $facebook->api('me/friends?fields=id,birthday,name,gender,picture');
+            // On stock les infos de l'utilisateur en session: Pseudo cache
+            $_SESSION['uid'] = $facebookId;
+            $_SESSION['user'] = $facebookUser;
+            $_SESSION['friends'] = $facebookFriends;
+        }
+
+        $request = $this->getRequest();
+        $teamId = $request->request->get('teamId');
+        $team = $request->request->get('team');
+
+        $em = $this->getDoctrine()->getManager();
+
+        // now we check if a manager entry exist
+        $manager = $em->getRepository('ProjectsSocialSportsBundle:Manager')
+            ->find($facebookId);
+
+        $managerTeams = $manager->getTeams();
+        $modifiedTeam = $managerTeams[$teamId];
+        $modifiedTeam->setPlayers(explode(",", $team));
+        $em->persist($modifiedTeam);
+        $em->flush();
+
+        // $response = var_dump($modifiedTeam);
+        $serializer = $this->container->get('serializer');
+        $serializedResponseObject = $serializer->serialize($modifiedTeam, 'json');
+        $response = new Response($serializedResponseObject);
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 

@@ -71,6 +71,17 @@ package
 			return result;
 		}
 		
+		/**
+		 * updates the given team of the current user
+		 * @param teamId the id of the team to update
+		 * @param team The new composition of the team (a list of facebookIds) 
+		 * 
+		 */
+		public function updateUserTeam(teamId:int, team:Vector.<String>):void
+		{
+			_manager.updateTeam(teamId, team);
+		}
+		
 		//------------------
 		// PRIVATE METHODS
 		//------------------

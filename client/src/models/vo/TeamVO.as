@@ -24,5 +24,15 @@ package models.vo
 				players[i] = data.players[i];
 			}
 		}
+		
+		public function destroy():void
+		{
+			var l:int = players.length;
+			for (var i:int = 0; i < l; i++)
+			{
+				players[i] = null;
+			}
+			players = null;
+		}
 	}
 }

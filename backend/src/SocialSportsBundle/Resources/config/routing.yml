@@ -6,6 +6,14 @@ social_sports_connection:
    pattern: /
    defaults: { _controller: ProjectsSocialSportsBundle:Facebook:facebookLoginWithSession }
 
+social_sports_user_profile:
+    pattern: /manager/profile/{facebookId}
+    defaults: { _controller: ProjectsSocialSportsBundle:User:getManagerProfile }
+
+social_sports_team_update:
+    pattern: /manager/team/update
+    defaults: { _controller: ProjectsSocialSportsBundle:User:updateTeam }
+
 # social_sports_connection:
 #     pattern: /
 #     defaults: { _controller: ProjectsSocialSportsBundle:Default:facebookLoginWithSession }
@@ -13,7 +21,3 @@ social_sports_connection:
 amf:
     pattern: /amf
     defaults: { _controller: tecbot_amf.controller.gateway:gatewayAction }
-
-social_sports_user_profile:
-    pattern: /manager/profile/{facebookId}
-    defaults: { _controller: ProjectsSocialSportsBundle:User:getManagerProfile }

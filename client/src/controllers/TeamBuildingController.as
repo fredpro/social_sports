@@ -68,16 +68,19 @@ package controllers
 		/**
 		 * The team has been updated, so we must send the modification to the server
 		 * @teamId the id of the team that has been updated
-		 * @team the list of players of the corresponding team
+		 * @playersList the list of players of the corresponding team
 		 * 
 		 */
 		public function onTeamUpdated(teamId:int, playersList:Vector.<TeamBuildingViewUser>):void
 		{
-			var l:int = team.length;
+			var l:int = playersList.length;
 			var team:Vector.<String> = new Vector.<String>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				team[i] = playersList[i].facebookId;
+				if (playersList[i] != null)
+				{
+					team[i] = playersList[i].facebookId;
+				}
 			}
 			_main.onTeamUpdated(teamId, team);
 		}

@@ -68,6 +68,27 @@ package models
 			{
 				_players[i] = _manager.getUnlockedPlayerById(team.players[i]);
 			}
+			
+			team.destroy();
+		}
+		
+		/**
+		 * Returns the list of the team's players as a String with the players' facebook ids seprated by ,
+		 * @return String
+		 * 
+		 */
+		public function exportPlayersListAsString():String
+		{
+			var l:int = _players.length;
+			var list:Vector.<String> = new Vector.<String>(l);
+			for (var i:int = 0; i < l; i++)
+			{
+				if (_players[i] != null)
+				{
+					list[i] = _players[i].facebookId;
+				}
+			}
+			return list.join();
 		}
 		
 		

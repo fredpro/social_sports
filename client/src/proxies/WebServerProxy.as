@@ -25,6 +25,8 @@ package proxies
     import flash.system.Security;
     import flash.utils.describeType;
     
+    import models.TeamModel;
+    
     public class WebServerProxy extends AbstractProxy
     {
         //-----------------------------------------------
@@ -87,12 +89,12 @@ package proxies
 		 * @team the list of players of the corresponding team
 		 * 
 		 */
-		public function onTeamUpdated(teamId:int, team:Vector.<String>):void
+		public function onTeamUpdated(team:TeamModel, callback:Function):void
 		{
 			var params:Object = new Object();
-			params["teamId"] = teamId;
-			params["team"] = team.join();
-			_requestQueue.push(new WebServerRequest("manager/team/update", params));
+			params["teamId"] = team.sportId;
+			params["team"] = team.exportPlayersListAsString();
+			_requestQueue.push(new WebServerRequest("manager/team/update", params, callback));
 			start();
 		}
         
@@ -146,7 +148,7 @@ package proxies
 				var variables:URLVariables = new URLVariables();
 				for (var key:String in request.params)
 				{
-					variables[key] = request[key];
+					variables[key] = request.params[key];
 				}
 				urlRequest.data = variables;
 			}

@@ -108,7 +108,8 @@ package
 		 */
 		public function onTeamUpdated(teamId:int, team:Vector.<String>):void
 		{
-			_webServerProxy.onTeamUpdated(teamId, team);
+			_model.updateUserTeam(teamId, team);
+			_webServerProxy.onTeamUpdated(_model.manager.teams[teamId], onTeamUpdatedResponse);
 		}
 		
 		//-----------------------------------------------
@@ -125,6 +126,11 @@ package
 			
 			_teamBuildingController = new TeamBuildingController(this);
 			_teamBuildingController.initView(_model.createTeamBuildingViewModel());
+		}
+		
+		private function onTeamUpdatedResponse(data:ResponseVo):void
+		{
+			trace("data = ", data.result);
 		}
 	}
 }
