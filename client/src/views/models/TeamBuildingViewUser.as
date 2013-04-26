@@ -26,6 +26,7 @@ package views.models
 			_normalPictureUrl = normalPictureUrl;
 			_smallPictureUrl = smallPictureUrl;
 			_teamId = -1;
+			_isUnlocked = isUnlocked;
 		}
 		
 		public function get facebookId():String

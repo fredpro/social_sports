@@ -17,6 +17,8 @@ package views
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import flashx.textLayout.formats.TextAlign;
+	
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
@@ -45,12 +47,15 @@ package views
 		private static const BG_POS_Y:Number = 252;
 		private static const PITCH_POS_X:Number = 548;
 		private static const PITCH_POS_Y:Number = 273;
+		private static const SAVE_BUTTON_POS_X:Number = 698;
+		private static const SAVE_BUTTON_POS_Y:Number = 25;
 		private static const PLAYER_LINE_CONTAINER_POS_X:int = 160;
 		private static const PLAYER_LINE_CONTAINER_POS_Y:int = 81;
 		private static const SCROLLBAR_POS_X:Number = 310;
 		private static const SCROLLBAR_POS_Y:Number = 78;
 		private static const SLIDER_MASK_HEIGHT:Number = 425;
 		private static const DRAGGED_PLAYER_SLOT_ALPHA:Number = 0.5;
+		private static const SAVE_BUTTON_DISABLE_ALPHA:Number = 0.5;
 		
 		private static const SOCCER_EMPTY_SLOTS_POS_LIST:Vector.<Number> = new <Number>[552, 474, 404, 340, 501, 369, 600, 369, 698, 340, 404, 215, 501, 244, 600, 244, 698, 215, 501, 121, 600, 121];
 		
@@ -61,6 +66,7 @@ package views
 		private var _model:TeamBuildingViewModel;
 		private var _bg:Image;
 		private var _pitch:Image;
+		private var _saveButton:Button;
 		private var _playersLineContainer:Sprite;
 		private var _viewPort:StarlingViewPort;
 		private var _sliderSprite:ClippedSprite;
@@ -112,7 +118,50 @@ package views
 		{
 			var currentTeamSprite:Sprite = _teamsSpriteContainerList[teamId];
 			PlayerSlotSprite(currentTeamSprite.getChildAt(playerIndex)).playerProfile = _model.teams[teamId][playerIndex];
-			_controller.onTeamUpdated(teamId, _model.teams[teamId]);
+			setSaveButtonInteractivity(true);
+		}
+		
+		/**
+		 * Updates an unlocked player line in the players list
+		 * @param index The index of the player line in the unlockedPlayersList whose line we want to update
+		 * 
+		 */
+		public function updateUnlockedPlayerLine(index:int):void
+		{
+			var unlockedPlayerLine:UnlockedPlayerLineSprite = _sliderSprite.getChildAt(index) as UnlockedPlayerLineSprite;
+			unlockedPlayerLine.updatePlayerProfile();
+		}
+		
+		/**
+		 * Updates a locked player line in the players list
+		 * @param index The index of the player line in the lockedPlayersList whose line we want to update
+		 * 
+		 */
+		public function updateLockedPlayerLine(index:int):void
+		{
+			var lockedPlayerLine:LockedPlayerLineSprite = _sliderSprite.getChildAt(index + _model.unlockedPlayers.length) as LockedPlayerLineSprite;
+			lockedPlayerLine.updatePlayerProfile();
+		}
+		
+		/**
+		 * Sets the interactivity of the save button. if the button is disabled, it appears slightly transparent
+		 * @param on Tells if the button must be disabled or not
+		 * 
+		 */
+		public function setSaveButtonInteractivity(on:Boolean):void
+		{
+			if (on)
+			{
+				_saveButton.enabled = true;
+//				_saveButton.addEventListener(TouchEvent.TOUCH, onSaveButtonTouched);
+//				_saveButton.alpha = 1;
+			}
+			else
+			{
+				_saveButton.enabled = false;
+//				_saveButton.removeEventListener(TouchEvent.TOUCH, onSaveButtonTouched);
+//				_saveButton.alpha = SAVE_BUTTON_DISABLE_ALPHA;
+			}
 		}
 		
 		//-----------------------------------------------
@@ -145,9 +194,23 @@ package views
 			_pitch.y = PITCH_POS_Y;
 			bgContainer.addChild(_pitch);
 			
+			_saveButton = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_ATLAS, Constants.TEAM_BUILDING_SAVE_BUTTON);
+			_saveButton.x = SAVE_BUTTON_POS_X;
+			_saveButton.y = SAVE_BUTTON_POS_Y;
+			var langObj:Object = LanguageFile.getInstance().getObjectFromId("TEAM_BUILDING_SAVE_BUTTON_TEXT");
+			_saveButton.textHAlign = TextAlign.LEFT;
+			var rect:Rectangle = _saveButton.textBounds;
+			rect.left = 35;
+			_saveButton.textBounds = rect;
+			_saveButton.fontName = langObj.format.font;
+			_saveButton.text = langObj.content;
+			_saveButton.addEventListener(TouchEvent.TOUCH, onSaveButtonTouched);
+			setSaveButtonInteractivity(false);
+			bgContainer.addChild(_saveButton);
+			
 			var slotRefMc:flash.display.MovieClip = ResourcesManager.getInstance().newMovieClip("McTeamBuildingView");
 			var nameTitleTxt:TextField = StarlingTextFieldUtils.createStarlingTextFieldFromClassic(slotRefMc.getChildByName("TEAM_BUILDING_TITLE_NAME"));
-			var langObj:Object = LanguageFile.getInstance().getObjectFromId(nameTitleTxt.name);
+			langObj = LanguageFile.getInstance().getObjectFromId(nameTitleTxt.name);
 			nameTitleTxt.text = langObj.content;
 			bgContainer.addChild(nameTitleTxt);
 			var levelTitleTxt:TextField = StarlingTextFieldUtils.createStarlingTextFieldFromClassic(slotRefMc.getChildByName("TEAM_BUILDING_TITLE_LEVEL"));
@@ -263,19 +326,19 @@ package views
 			bgScrollbar.name = StarlingViewPort.SCROLL_BAR_BG_NAME;
 			_scrollbar.addChild(bgScrollbar); 
 			
-			var scrollbarCursor:Button = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_SCROLLBAR_ATLAS, Constants.TEAM_BUILDING_SCROLLBAR_CURSOR);
+			var scrollbarCursor:Button = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_SCROLLBAR_ATLAS, Constants.TEAM_BUILDING_SCROLLBAR_CURSOR, null, false);
 			scrollbarCursor.pivotY += 2;
 			scrollbarCursor.x = bgScrollbar.x + bgScrollbar.width / 2 - scrollbarCursor.width / 2;
 			scrollbarCursor.y = bgScrollbar.y;
 			scrollbarCursor.name = StarlingViewPort.SCROLL_BAR_CURSOR_NAME;
 			_scrollbar.addChild(scrollbarCursor);          
 			
-			_upArrowButton = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_SCROLLBAR_ATLAS, Constants.TEAM_BUILDING_SCROLLBAR_UP_BUTTON);
+			_upArrowButton = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_SCROLLBAR_ATLAS, Constants.TEAM_BUILDING_SCROLLBAR_UP_BUTTON, null, false);
 			_upArrowButton.x = bgScrollbar.x + bgScrollbar.width / 2 - _upArrowButton.width / 2 + 0.5;
 			_upArrowButton.y = bgScrollbar.y - _upArrowButton.height + 2;
 			_scrollbar.addChild(_upArrowButton);
 			
-			_downArrowButton = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_SCROLLBAR_ATLAS, Constants.TEAM_BUILDING_SCROLLBAR_DOWN_BUTTON);
+			_downArrowButton = TextureManager.instance.buttonFromTextureAtlas(Constants.TEAM_BUILDING_SCROLLBAR_ATLAS, Constants.TEAM_BUILDING_SCROLLBAR_DOWN_BUTTON, null, false);
 			_downArrowButton.x = bgScrollbar.x + bgScrollbar.width / 2 - _downArrowButton.width / 2 + 0.5;
 			_downArrowButton.y = bgScrollbar.y + bgScrollbar.height - 3;
 			_scrollbar.addChild(_downArrowButton);
@@ -310,7 +373,7 @@ package views
 			var doStopImmediatePropagation:Boolean = false;
 			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
 			
-			if (_draggedPlayerSlot != null)
+			if (_draggedPlayerSlot.visible)
 			{
 				_draggedPlayerSlot.x = touch.globalX;
 				_draggedPlayerSlot.y = touch.globalY;
@@ -331,13 +394,16 @@ package views
 			
 			if (player != null && touch.phase == TouchPhase.ENDED)
 			{
-				if (player.isUnlocked)
+				if (!_draggedPlayerSlot.visible)
 				{
-					_controller.onUnlockedPlayerLineClicked(player.facebookId);
-				}
-				else
-				{
-					_controller.onLockedPlayerLineClicked(player.facebookId);
+					if (player.isUnlocked)
+					{
+						_controller.onUnlockedPlayerLineClicked(player.facebookId);
+					}
+					else
+					{
+						_controller.onLockedPlayerLineClicked(player.facebookId);
+					}
 				}
 				_draggedPlayerSlot.playerProfile = null;
 				_draggedPlayerSlot.visible = false;
@@ -369,17 +435,20 @@ package views
 			var doStopImmediatePropagation:Boolean = false;
 			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
 			
-			if (_draggedPlayerSlot != null)
+			if (_draggedPlayerSlot.visible)
 			{
 				_draggedPlayerSlot.x = touch.globalX;
 				_draggedPlayerSlot.y = touch.globalY;
 			}
 			
 			var teamSlotIndex:int = getTeamPlayerSlotIndexAtPoint(new Point(touch.globalX, touch.globalY));
-			if (touch.phase == TouchPhase.BEGAN && teamSlotIndex > -1)
+			if (touch.phase == TouchPhase.BEGAN && teamSlotIndex > -1 && _model.teams[_currentlyVisibleTeamId][teamSlotIndex] != null)
 			{
+				_draggedPlayerSlot.x = touch.globalX;
+				_draggedPlayerSlot.y = touch.globalY;
 				_draggedPlayerSlot.playerProfile = _model.teams[_currentlyVisibleTeamId][teamSlotIndex];
 				_draggedPlayerSlot.visible = true;
+				_draggedOverTeamSlotIndex = teamSlotIndex;
 				_savedDraggedTeamSlotIndex = teamSlotIndex;
 				setTeamSlot(teamSlotIndex, null);
 			}
@@ -414,7 +483,7 @@ package views
 					_draggedPlayerSlot.y = touch.globalY;
 				}
 			}
-			else if (touch.phase == TouchPhase.ENDED && _draggedPlayerSlot != null && _draggedOverTeamSlotIndex > -1)
+			else if (touch.phase == TouchPhase.ENDED && _draggedPlayerSlot.visible && _draggedOverTeamSlotIndex > -1)
 			{
 				setTeamSlot(_draggedOverTeamSlotIndex, _draggedPlayerSlot.playerProfile);
 				_draggedPlayerSlot.visible = false;
@@ -424,7 +493,7 @@ package views
 			}
 			else if (touch.phase == TouchPhase.ENDED)
 			{
-				if (_draggedPlayerSlot != null)
+				if (_draggedPlayerSlot.visible)
 				{
 					setTeamSlot(_savedDraggedTeamSlotIndex, _draggedPlayerSlot.playerProfile);
 				}
@@ -438,7 +507,6 @@ package views
 		
 		private function setTeamSlot(teamSlotIndex:int, playerProfile:TeamBuildingViewUser):void
 		{
-			var currentTeamSprite:Sprite = _teamsSpriteContainerList[_currentlyVisibleTeamId];
 			if (_savedDraggedTeamSlotIndex > -1)
 			{
 				_model.setTeamPlayer(_currentlyVisibleTeamId, _savedDraggedTeamSlotIndex, _model.teams[_currentlyVisibleTeamId][teamSlotIndex]);
@@ -463,6 +531,16 @@ package views
 			}
 			
 			return result;
+		}
+		
+		private function onSaveButtonTouched(e:TouchEvent):void
+		{
+			var touch:Touch = e.getTouch(_saveButton);
+			if (touch != null && touch.phase == TouchPhase.ENDED)
+			{
+				_controller.onTeamUpdated(_model.teams);
+				setSaveButtonInteractivity(false);
+			}
 		}
 	}
 }

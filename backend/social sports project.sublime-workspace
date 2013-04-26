@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"json_",
+				"json_encode"
+			],
+			[
+				"team",
+				"teamId"
+			],
+			[
 				"remove",
 				"removeElement  (function)"
 			],
@@ -103,7 +111,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
 			"settings":
 			{
-				"buffer_size": 652,
+				"buffer_size": 791,
 				"line_ending": "Unix"
 			}
 		},
@@ -111,7 +119,7 @@
 			"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 			"settings":
 			{
-				"buffer_size": 11791,
+				"buffer_size": 13597,
 				"line_ending": "Unix"
 			}
 		},
@@ -119,7 +127,7 @@
 			"file": "/D/Workspace/Projects/social_sports/client/html-template/assets/social_sports_en.json",
 			"settings":
 			{
-				"buffer_size": 5597,
+				"buffer_size": 5684,
 				"line_ending": "Windows"
 			}
 		},
@@ -350,6 +358,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"found a slot",
+			"found",
+			"found a slot",
 			"bla",
 			"content",
 			"font",
@@ -437,7 +448,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -677,15 +688,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Resources/config/routing.yml",
 					"settings":
 					{
-						"buffer_size": 652,
+						"buffer_size": 791,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								571,
-								571
+								470,
+								470
 							]
 						],
 						"settings":
@@ -791,15 +802,15 @@
 					"file": "/C/wamp/www/Symfony/src/Projects/SocialSportsBundle/Controller/UserController.php",
 					"settings":
 					{
-						"buffer_size": 11791,
+						"buffer_size": 13597,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1006,
-								1006
+								4789,
+								4789
 							]
 						],
 						"settings":
@@ -897,7 +908,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1133.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -907,15 +918,15 @@
 					"file": "/D/Workspace/Projects/social_sports/client/html-template/assets/social_sports_en.json",
 					"settings":
 					{
-						"buffer_size": 5597,
+						"buffer_size": 5684,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5012,
-								5012
+								5634,
+								5675
 							]
 						],
 						"settings":
@@ -1144,8 +1155,8 @@
 						"selection":
 						[
 							[
-								1763,
-								1273
+								2716,
+								2736
 							]
 						],
 						"settings":
@@ -1243,7 +1254,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1260,8 +1271,8 @@
 						"selection":
 						[
 							[
-								7766,
-								7766
+								1782,
+								1782
 							]
 						],
 						"settings":
@@ -1359,7 +1370,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3801.0,
+						"translation.y": 489.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1492,8 +1503,8 @@
 						"selection":
 						[
 							[
-								673,
-								657
+								915,
+								915
 							]
 						],
 						"settings":

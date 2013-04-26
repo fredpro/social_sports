@@ -77,11 +77,10 @@ class UserController extends Controller
         $serializedResponseObject = $serializer->serialize($manager, 'json');
         $response = new Response($serializedResponseObject);
         $response->headers->set('Content-Type', 'application/json');
-        // $response = new Response(var_dump($manager));
         return $response;
     }
 
-    public function updateTeamAction()
+    public function updateTeamsAction()
     {
         $facebook = $this->get('facebook');
         if (isset($_SESSION['uid']))
@@ -104,8 +103,7 @@ class UserController extends Controller
         }
 
         $request = $this->getRequest();
-        $teamId = $request->request->get('teamId');
-        $team = $request->request->get('team');
+        $teams = json_decode($request->request->get('teams'));
 
         $em = $this->getDoctrine()->getManager();
 
@@ -114,14 +112,19 @@ class UserController extends Controller
             ->find($facebookId);
 
         $managerTeams = $manager->getTeams();
-        $modifiedTeam = $managerTeams[$teamId];
-        $modifiedTeam->setPlayers(explode(",", $team));
-        $em->persist($modifiedTeam);
+        $l = sizeof($teams);
+        for ($i = 0; $i < $l; $i++)
+        {
+            $team = $teams[$i];
+            $modifiedTeam = $managerTeams[$i];
+            $modifiedTeam->setPlayers($team);
+            $em->persist($modifiedTeam);
+        }
         $em->flush();
 
         // $response = var_dump($modifiedTeam);
         $serializer = $this->container->get('serializer');
-        $serializedResponseObject = $serializer->serialize($modifiedTeam, 'json');
+        $serializedResponseObject = $serializer->serialize($managerTeams, 'json');
         $response = new Response($serializedResponseObject);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

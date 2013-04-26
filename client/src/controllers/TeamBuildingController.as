@@ -71,18 +71,29 @@ package controllers
 		 * @playersList the list of players of the corresponding team
 		 * 
 		 */
-		public function onTeamUpdated(teamId:int, playersList:Vector.<TeamBuildingViewUser>):void
+		public function onTeamUpdated(teamsList:Vector.<Vector.<TeamBuildingViewUser>>):void
 		{
-			var l:int = playersList.length;
-			var team:Vector.<String> = new Vector.<String>(l);
+			var l:int = teamsList.length;
+			var teams:Vector.<Vector.<String>> = new Vector.<Vector.<String>>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				if (playersList[i] != null)
+				var players:Vector.<TeamBuildingViewUser> = teamsList[i];
+				var tl:int = players.length;
+				var team:Vector.<String> = new Vector.<String>(tl);
+				teams[i] = team;
+				for (var j:int = 0; j < tl; j++)
 				{
-					team[i] = playersList[i].facebookId;
+					if (players[j] != null)
+					{
+						team[j] = players[j].facebookId;
+					}
+					else
+					{
+						team[j] = "";
+					}
 				}
 			}
-			_main.onTeamUpdated(teamId, team);
+			_main.onTeamUpdated(teams);
 		}
 	}
 }

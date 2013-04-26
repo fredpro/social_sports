@@ -101,15 +101,15 @@ package
 		}
 		
 		/**
-		 * The team has been updated, so we must send the modification to the server
+		 * The team has been updated, we update the model
 		 * @teamId the id of the team that has been updated
 		 * @team the list of players of the corresponding team
 		 * 
 		 */
-		public function onTeamUpdated(teamId:int, team:Vector.<String>):void
+		public function onTeamUpdated(teams:Vector.<Vector.<String>>):void
 		{
-			_model.updateUserTeam(teamId, team);
-			_webServerProxy.onTeamUpdated(_model.manager.teams[teamId], onTeamUpdatedResponse);
+//			_model.updateUserTeam(teamId, team);
+			_webServerProxy.onTeamUpdated(teams, onTeamUpdatedResponse);
 		}
 		
 		//-----------------------------------------------

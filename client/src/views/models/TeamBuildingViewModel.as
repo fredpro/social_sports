@@ -136,15 +136,46 @@ package views.models
 		{
 			if (playerProfile != null)
 			{
+				// first we check if the given player is already in the team
 				var existingPlayerSlotIndex:int = getTeamSlotIndexByFacebookId(teamId, playerProfile.facebookId);
 				if (existingPlayerSlotIndex > -1)
 				{
+					// if he is in the team, we remove the player from the already existing slot
 					_teams[teamId][existingPlayerSlotIndex] = null;
 					_parentView.updatePlayerTeamSlot(teamId, existingPlayerSlotIndex);
 				}
+				// if the team slot is filled with a real player, we change this player's teamId
+				changePlayersTeam(playerProfile, teamId);
 			}
+			else if (_teams[teamId][playerIndex] != null)
+			{
+				// if the team slot is emptied, and if there is a player in this slot and before we remove him, we change this player's teamId 
+				changePlayersTeam(_teams[teamId][playerIndex], -1);
+			}
+			
 			_teams[teamId][playerIndex] = playerProfile;
 			_parentView.updatePlayerTeamSlot(teamId, playerIndex);
+		}
+		
+		/**
+		 * Changes the team associated to the given player, so we can update the graphics regarding this player
+		 * @param playerProfile The user to update
+		 * @param teamId The id of the team to which the player belongs (-1 means it belongs to no team)
+		 * 
+		 */
+		public function changePlayersTeam(playerProfile:TeamBuildingViewUser, teamId:int):void
+		{
+			playerProfile.teamId = teamId;
+			var index:int = getUnlockedPlayerIndexFromId(playerProfile.facebookId);
+			if (index > -1)
+			{
+				_parentView.updateUnlockedPlayerLine(index);
+			}
+			else
+			{
+				index = getLockedPlayerIndexFromId(playerProfile.facebookId);
+				_parentView.updateLockedPlayerLine(index);
+			}
 		}
 		
 		/**
@@ -178,13 +209,56 @@ package views.models
 		{
 			var result:TeamBuildingViewUser = null;
 			
+			var index:int = getUnlockedPlayerIndexFromId(id);
+			if (index >= 0)
+			{
+				result = _unlockedPlayers[index];
+			}
+			
+			return result;
+		}
+		
+		private function getUnlockedPlayerIndexFromId(facebookId:String):int
+		{
+			var result:int = -1;
+			
 			var l:int = _unlockedPlayers.length;
-			for (var i:int = 0; (i < l && result == null); i++)
+			for (var i:int = 0; (i < l && result < 0); i++)
 			{
 				var user:TeamBuildingViewUser = _unlockedPlayers[i];
-				if (user.facebookId == id)
+				if (user.facebookId == facebookId)
 				{
-					result = user;
+					result = i;
+				}
+			}
+			
+			return result;
+		}
+		
+		private function getLockedPlayerFromId(id:String):TeamBuildingViewUser
+		{
+			var result:TeamBuildingViewUser = null;
+			
+			var index:int = getLockedPlayerIndexFromId(id);
+			if (index >= 0)
+			{
+				result = _lockedPlayers[index];
+			}
+			
+			return result;
+		}
+		
+		private function getLockedPlayerIndexFromId(facebookId:String):int
+		{
+			var result:int = -1;
+			
+			var l:int = _lockedPlayers.length;
+			for (var i:int = 0; (i < l && result < 0); i++)
+			{
+				var user:TeamBuildingViewUser = _lockedPlayers[i];
+				if (user.facebookId == facebookId)
+				{
+					result = i;
 				}
 			}
 			

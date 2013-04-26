@@ -11,8 +11,8 @@ social_sports_user_profile:
     defaults: { _controller: ProjectsSocialSportsBundle:User:getManagerProfile }
 
 social_sports_team_update:
-    pattern: /manager/team/update
-    defaults: { _controller: ProjectsSocialSportsBundle:User:updateTeam }
+    pattern: /manager/teams/update
+    defaults: { _controller: ProjectsSocialSportsBundle:User:updateTeams }
 
 # social_sports_connection:
 #     pattern: /

@@ -89,12 +89,11 @@ package proxies
 		 * @team the list of players of the corresponding team
 		 * 
 		 */
-		public function onTeamUpdated(team:TeamModel, callback:Function):void
+		public function onTeamUpdated(teams:Vector.<Vector.<String>>, callback:Function):void
 		{
 			var params:Object = new Object();
-			params["teamId"] = team.sportId;
-			params["team"] = team.exportPlayersListAsString();
-			_requestQueue.push(new WebServerRequest("manager/team/update", params, callback));
+			params["teams"] = JSON.stringify(teams);
+			_requestQueue.push(new WebServerRequest("manager/teams/update", params, callback));
 			start();
 		}
         

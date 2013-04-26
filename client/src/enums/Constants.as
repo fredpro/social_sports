@@ -31,5 +31,6 @@ package enums
 		public static const TEAM_BUILDING_SCROLLBAR_CURSOR:String = "cursor_mc";
 		public static const TEAM_BUILDING_SCROLLBAR_UP_BUTTON:String = "up_btn";
 		public static const TEAM_BUILDING_SCROLLBAR_DOWN_BUTTON:String = "down_btn";
+		public static const TEAM_BUILDING_SAVE_BUTTON:String = "save_btn";
     }
 }

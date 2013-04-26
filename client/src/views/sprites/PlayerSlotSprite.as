@@ -136,6 +136,10 @@ package views.sprites
 		
 		public function set playerProfile(player:TeamBuildingViewUser):void
 		{
+			if (_playerProfile != null)
+			{
+				ResourcesManager.getInstance().cancelLoading(_playerProfile.normalPictureUrl, onPictureLoaded);
+			}
 			_playerProfile = player;
 			updatePlayerProfile();
 		}

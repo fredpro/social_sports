@@ -21,7 +21,10 @@ package models.vo
 			players = new Vector.<String>(l);
 			for (var i:int = 0; i < l; i++)
 			{
-				players[i] = data.players[i];
+				if (data.players[i] != "" || data.players[i] != "null")
+				{
+					players[i] = data.players[i];
+				}
 			}
 		}
 		

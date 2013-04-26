@@ -138,7 +138,7 @@ package views.sprites
 					ResourcesManager.getInstance().loadResource(_playerProfile.smallPictureUrl, onPictureLoaded);
 				}
 			}
-			if (_iconHolder.numChildren > 0 && _iconHolder.getChildAt(0).name != Constants.TEAM_BUILDING_ICONS_LIST[_playerProfile.teamId])
+			if (_iconHolder.numChildren > 0 && (_playerProfile.teamId == -1 || _iconHolder.getChildAt(0).name != Constants.TEAM_BUILDING_ICONS_LIST[_playerProfile.teamId]))
 			{
 				TextureManager.instance.freeTexture(_iconHolder.getChildAt(0).name);
 				_iconHolder.removeChildAt(0);
