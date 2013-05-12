@@ -19,15 +19,44 @@ package views.sprites
 	
 	import views.models.TeamBuildingViewUser;
 
+	/**
+	 * This class is a Sprite containing all graphics and data to represent a player slot in a team (displayed on the team part of the TeamBuildingScreen)
+	 * @author Fred
+	 * 
+	 */
 	public class PlayerSlotSprite extends Sprite
 	{
+		/**
+		 * The image representing an empty slot
+		 */
 		private var _emptyImg:Image;
+		/**
+		 * The container of all the graphics to display player's data
+		 */
 		private var _playerSlotContainer:Sprite;
+		/**
+		 * The profile of the player to display in the slot
+		 */
 		private var _playerProfile:TeamBuildingViewUser;
+		/**
+		 * The bg of the slot
+		 */
 		private var _playerBg:Image;
+		/**
+		 * The bg of the player's textual data (thay will be in front of the player's picture)
+		 */
 		private var _playerTextBg:Image;
+		/**
+		 * The textfield for the player's name
+		 */
 		private var _nameTxt:TextField;
+		/**
+		 * The textfield for the player's level
+		 */
 		private var _levelTxt:TextField;
+		/**
+		 * The container of the player's picture
+		 */
 		private var _pictureHolder:Sprite;
 		
 		public function PlayerSlotSprite()
@@ -134,8 +163,14 @@ package views.sprites
 			return _playerProfile;
 		}
 		
+		/**
+		 * Sets the player profile associated to the current slot. Causes an update of the slot
+		 * @param player
+		 * 
+		 */
 		public function set playerProfile(player:TeamBuildingViewUser):void
 		{
+			// if there was already a player profile assigned, we cancel the loading of the player's picture
 			if (_playerProfile != null)
 			{
 				ResourcesManager.getInstance().cancelLoading(_playerProfile.normalPictureUrl, onPictureLoaded);
@@ -148,6 +183,10 @@ package views.sprites
 		// PUBLIC METHODS
 		//-----------------------------------------------
 		
+		/**
+		 * Updates the player's data displayed in the slot (name, level, picture)
+		 * 
+		 */
 		public function updatePlayerProfile():void
 		{
 			if (_playerProfile == null)
@@ -186,6 +225,10 @@ package views.sprites
 		// PRIVATE METHODS
 		//-----------------------------------------------
 		
+		/**
+		 * The picture has been loaded, we can add it to the picture holder)
+		 * 
+		 */
 		private function onPictureLoaded():void
 		{
 			var picture:Image;

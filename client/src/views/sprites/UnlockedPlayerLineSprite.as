@@ -21,16 +21,42 @@ package views.sprites
 	
 	import views.models.TeamBuildingViewUser;
 	
+	/**
+	 * This class is a Sprite that contains graphics and TextField to represent an unlocked player in the user's players list 
+	 * @author Fred
+	 * 
+	 */
 	public class UnlockedPlayerLineSprite extends Sprite
 	{
 		public static const LINE_HEIGHT:Number = 25;
 		
+		/**
+		 * The player profile
+		 */
 		private var _playerProfile:TeamBuildingViewUser;
+		/**
+		 * The bg image of the line
+		 */
 		private var _bgImg:Image;
+		/**
+		 * The textfield containing th ename of the player
+		 */
 		private var _nameTxt:TextField;
+		/**
+		 * The textfield containing the level of the player
+		 */
 		private var _levelTxt:TextField;
+		/**
+		 * The sprite that will contain the picture of the player
+		 */
 		private var _pictureHolder:Sprite;
+		/**
+		 * The container for the team icon
+		 */
 		private var _iconHolder:Sprite;
+		/**
+		 * The height of the icon
+		 */
 		private var _iconHeight:Number;
 		
 		public function UnlockedPlayerLineSprite()
@@ -108,6 +134,11 @@ package views.sprites
 		// PUBLIC METHODS
 		//-----------------------------------------------
 		
+		/**
+		 * Sets the player profile of the line, which requires an udpate of the player's data
+		 * @param player The new player profile of the line
+		 * 
+		 */
 		public function set playerProfile(player:TeamBuildingViewUser):void
 		{
 			_playerProfile = player;
@@ -118,6 +149,10 @@ package views.sprites
 		// PUBLIC METHODS
 		//-----------------------------------------------
 		
+		/**
+		 * Updates the player's data in the line (updates name, level, picture and icon)
+		 * 
+		 */
 		public function updatePlayerProfile():void
 		{
 			_nameTxt.text = _playerProfile.name;
@@ -159,6 +194,10 @@ package views.sprites
 		// PRIVATE METHODS
 		//-----------------------------------------------
 		
+		/**
+		 * The picture is loaded, so we remove the one in the picture holder (if any, or if different), and add the new one
+		 * 
+		 */
 		private function onPictureLoaded():void
 		{
 			var picture:Image;

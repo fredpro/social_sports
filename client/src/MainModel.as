@@ -31,6 +31,9 @@ package
 		//------------------
 		// GETTERS AND SETTERS
 		//------------------
+		/**
+		 * The ManagerModel currently stored in the MainModel, which actually is the manager profile of the currently playing user
+		 */
 		public function get manager():ManagerModel
 		{
 			return _manager;

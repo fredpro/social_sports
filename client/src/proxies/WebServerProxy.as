@@ -76,6 +76,11 @@ package proxies
         // PUBLIC METHODS
         //-----------------------------------------------
         
+		/**
+		 * Gets the profile of the current user (the one playing the game) from the server
+		 * @param callback The function to call when the response has been received
+		 * 
+		 */
         public function getUserProfile(callback:Function):void
         {
             _requestQueue.push(new WebServerRequest("manager/profile/me", null, callback));
